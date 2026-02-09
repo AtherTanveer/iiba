@@ -12,11 +12,7 @@ const Home = () => {
         <div className='p-2 md:w-[50%] md:pt-[6vw] ps-9 relative' >
             <h1 className='md:text-5xl text-center md:text-left font-medium uppercase pt-6'><span className='text-sky-950'>INDIAN </span>INDUSTIRES & <br></br>BUSINESS ASSOCIATION (REGD,)INDIA</h1>
         <p className='text-center md:text-left text-sm md:text-[17px] pt-4 md:w-[60%] p-3 font-medium'>The Indian Industries Business Association (IIBA) works on a broad-based objective of fostering cooperation and providing support for the promotion and development of Micro, Small & Medium Enterprises (MSMEs).</p>
-        {/* <div>
-             <img src={iiba} alt="" className='w-[80vw] md:w-lg'/>
 
-        </div> */}
-       
 
 
 
@@ -29,9 +25,7 @@ const Home = () => {
 
         <div className='p-2 md:w-[50%] pt-[5vw] relative md:mt-9'>
             <img src={rain} alt="" className='w-[100vw]' />
-            {/* <p className='md:text-lg md:text-2xl'> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed autem facilis ducimus fugit possimus soluta praesentium, placeat delectus unde vel! Minus recusandae veritatis nihil ipsum architecto harum velit in quisquam!</p> */}
-
-            {/* <button className='bg-sky-950 p-2 rounded text-white mt-3 px-4' type='submit'>Click Here</button> */}
+      
         </div>
     </div>
     </>

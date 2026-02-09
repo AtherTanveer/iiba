@@ -1,6 +1,7 @@
 import React from 'react'
 import IIBA_LOGO from "./assets/IIBA_logo1.png"
 import { FiAlignJustify } from "react-icons/fi";
+import { Link } from 'react-router-dom';
 
 const Nevbar = () => {
   return (
@@ -14,7 +15,8 @@ const Nevbar = () => {
        
        
           <ul className='text-white font-medium hidden md:flex gap-10 m-3 md:m-5 md:w-[80%] pt-1 text-[18px]'>
-            <li>Home</li>
+            <li><Link to={"/"}>Home</Link></li>
+            <li><Link to={"/membership"}>Membership</Link></li>
             <li>Mission</li>
             <li>About</li>
             <li>Goal</li>

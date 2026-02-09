@@ -1,18 +1,15 @@
 import React from 'react'
 import Nevbar from './Nevbar'
-import Home from './Home'
-import Hero from './Component/Hero'
-import Services from './Component/Services'
-import MemberLayout from './Component/MemberLayout'
+import Page from './Component/Page'
+
 
 const App = () => {
   return (
    <>
    <Nevbar/>
-   <Home/>
-   <Hero/>
-   <Services/>
-   <MemberLayout/>
+   <Page/>
+
+   
    </>
   )
 }
