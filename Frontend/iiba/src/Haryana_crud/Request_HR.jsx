@@ -1,97 +1,88 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function RequestUK() {
-
-  const navigate = useNavigate();
-
-  const [userData, setUserData] = useState([])
-
-  const AllRequest = async () => {
-    const data = await fetch("http://localhost:4500/getuser");
-    const result = await data.json();
-    // console.log(result)
-    setUserData(result);
-  }
-
-  useEffect(() => {
-    AllRequest()
-  }, [])
-
-
-
-  const acceptRequest = async (e) => {
-    let e_val = e
-    const data = await fetch(`http://localhost:4500/findUser/${e}`, {
-
-      method: "post",
-      headers: {
-        "content-Type": "application/json"
+const Request_HR = () => {
+     const navigate = useNavigate();
+    
+      const [userData, setUserData] = useState([])
+    
+      const AllRequest = async () => {
+        const data = await fetch("http://localhost:4500/getHRuser");
+        const result = await data.json();
+        // console.log(result)
+        setUserData(result);
       }
-
-    })
-
-    const result = await data.json()
-
-
-
-
-    const Senddata = await fetch("http://localhost:4500/addMember", {
-
-      method: "post",
-      body: JSON.stringify(result),
-      headers: {
-        "content-Type": "application/json"
+    
+      useEffect(() => {
+        AllRequest()
+      }, [])
+    
+    
+    
+      const acceptRequest = async (e) => {
+        let e_val = e
+        const data = await fetch(`http://localhost:4500/findHRUser/${e}`, {
+    
+          method: "post",
+          headers: {
+            "content-Type": "application/json"
+          }
+    
+        })
+    
+        const result = await data.json()
+    
+    
+    
+    
+        const Senddata = await fetch("http://localhost:4500/Add_Haryana_Member", {
+    
+          method: "post",
+          body: JSON.stringify(result),
+          headers: {
+            "content-Type": "application/json"
+          }
+    
+        })
+    
+    
+        const DeltData = async () => {
+    
+          const dltdata = await fetch(`http://localhost:4500/deleteHRRequest/${e_val}`, {
+            method: "delete"
+          })
+          const result = await dltdata.json();
+          if (result) {
+            console.log("data delete");
+          }
+    
+        }
+    
+        if (Senddata) {
+          console.log(Senddata);
+          alert("✅ Member Added");
+          navigate("/haryanaLogin/Haryana_Admin_login")
+          DeltData()
+        }
       }
-
-    })
-
-
-    const DeltData = async () => {
-
-      const dltdata = await fetch(`http://localhost:4500/deleteRequest/${e_val}`, {
-        method: "delete"
-      })
-      const result = await dltdata.json();
-      if (result) {
-        console.log(first);
+    
+      const DeleteRequest = async (e) => {
+    
+    
+    
+        if (confirm("Are You Sure Decline The Request!")) {
+          const data = await fetch(`http://localhost:4500/deleteHRRequest/${e}`, {
+            method: "delete"
+          })
+    
+          const result = await data.json();
+          console.log(result);
+          AllRequest()
+        } else {
+          console.log("not delete")
+        }
+    
       }
-
-    }
-
-    if (Senddata) {
-      console.log(Senddata);
-      alert("data sended");
-      navigate("/uttrakhandLogin/addmember")
-      DeltData()
-
-
-
-
-    }
-  }
-
-  const DeleteRequest = async (e) => {
-
-
-
-    if (confirm("Are You Sure Decline The Request!")) {
-      const data = await fetch(`http://localhost:4500/deleteRequest/${e}`, {
-        method: "delete"
-      })
-
-      const result = await data.json();
-      console.log(result);
-      AllRequest()
-    } else {
-      console.log("not delete")
-    }
-
-  }
-
-
-
-
   return (
     <>
       <div className="w-full min-h-screen bg-gray-100 p-4 md:p-8">
@@ -154,6 +145,7 @@ export default function RequestUK() {
 
       </div>
     </>
-
-  );
+  )
 }
+
+export default Request_HR

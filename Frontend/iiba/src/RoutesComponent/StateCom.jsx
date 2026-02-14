@@ -6,6 +6,9 @@ const StateCom = () => {
     const auth = localStorage.getItem("user");
     console.log(auth)
 
+    const hrAuth = localStorage.getItem("hariyana")
+    console.log(hrAuth)
+
     const stateDetail = [
         {
             stateName: "Uttar Pradesh Log-In",
@@ -17,7 +20,8 @@ const StateCom = () => {
         },
         {
             stateName: "Haryana Log-In",
-            pathname: "/haryanaLogin"
+           
+             pathname: `${hrAuth ? "/haryanaLogin/Haryana_Admin_login" : "/haryanaLogin"}`
         },
     ]
 

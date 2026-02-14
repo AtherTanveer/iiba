@@ -42,7 +42,7 @@ const UttrKhnd_CRUD_portal = () => {
     const navigate = useNavigate();
     const logoutfn=()=>{
         if(confirm("Are You Sure To Logout !")){
-             localStorage.clear();
+             localStorage.removeItem("user");
              navigate("/")
         }else{
             console.log("Loged")
@@ -108,6 +108,10 @@ const UttrKhnd_CRUD_portal = () => {
           <th className="p-2 text-left">Name</th>
           <th className="p-2 text-left">Email</th>
           <th className="p-2 text-left">Phone</th>
+          <th className="p-2 text-left">State</th>
+          <th className="p-2 text-left">District</th>
+          <th className="p-2 text-left">City</th>
+          <th className="p-2 text-left">Address</th>
           <th className="p-2 text-left">Company</th>
           <th className="p-2 text-center">Action</th>
         </tr>
@@ -120,9 +124,13 @@ const UttrKhnd_CRUD_portal = () => {
             <td className="p-2">{elem.name}</td>
             <td className="p-2">{elem.email}</td>
             <td className="p-2">{elem.phone}</td>
+            <td className="p-2">{elem.state}</td>
+            <td className="p-2">{elem.district}</td>
+            <td className="p-2">{elem.city}</td>
+            <td className="p-2">{elem.address}</td>
             <td className="p-2">{elem.company}</td>
 
-            <td className="p-2 flex flex-wrap gap-2 justify-center">
+            <td className="p-2 flex gap-2 justify-center">
               <Link to={`/uttrakhandUpdateMember/${elem._id}`}>
                 <button className="px-3 py-1 bg-yellow-400 rounded-md hover:bg-yellow-500">
                   Update

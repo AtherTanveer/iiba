@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom';
 const UttarPardeshLogin = () => {
+      const navigate=useNavigate()
+
+
       const[userID,setUserID] = useState("");
           const[password,setpassword] = useState("");
     
           const handleSubmit=(e)=>{
             e.preventDefault();
+            navigate("/UttarAdmin_Login")
             console.log(userID,password);
           }
     

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const memberSchema = mongoose.Schema({
-   name:String,
+const UserHrSchema = mongoose.Schema({
+    name:String,
     email:String,
     phone:Number,
     state:String,
@@ -11,4 +11,4 @@ const memberSchema = mongoose.Schema({
     company:String,
 })
 
-module.exports = mongoose.model("uttrakhandMember",memberSchema);
+module.exports = mongoose.model("HrRequests",UserHrSchema);

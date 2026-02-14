@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import HrUser from "./HrUser";
 
-const NewUser = () => {
-  const [value, setValue] = useState("");
-
+const HrUser = () => {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
@@ -31,7 +28,7 @@ const NewUser = () => {
   return;
 }
 
-    const data = await fetch("http://localhost:4500/userRequest", {
+    const data = await fetch("http://localhost:4500/userHRRequest", {
       method: "POST",
       body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
       headers: { "Content-Type": "application/json" },
@@ -44,33 +41,11 @@ const NewUser = () => {
       navigate("/");
     }
   };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-900 to-indigo-950 flex justify-center items-center p-5">
+    <div>
 
-      <div className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-4xl">
-
-        <h1 className="text-3xl font-bold text-center text-blue-900">
-          IIBA Membership Registration
-        </h1>
-
-        {/* STATE SELECT */}
-        <div className="mt-6">
-          <label className="font-semibold text-lg">Select State</label>
-          <select
-            className="w-full p-3 border rounded-lg mt-2 focus:outline-blue-500"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          >
-            <option value="">Select State</option>
-            <option value="UttarParadesh">Uttar Pradesh</option>
-            <option value="UttraKhand">Uttarakhand</option>
-            <option value="Haryana">Haryana</option>
-          </select>
-        </div>
 
         {/* FORM SHOW ONLY UP */}
-        {value === "UttraKhand" && (
           <form onSubmit={handlesubmit} className="grid md:grid-cols-2 gap-4 mt-6">
 
             <input className="inputStyle p-2 rounded-md" value={name} onChange={(e) => setname(e.target.value)} placeholder="Full Name" />
@@ -95,13 +70,9 @@ const NewUser = () => {
               Submit Membership Request
             </button>
           </form>
-        )}
 
-        {value === "UttarParadesh" && <p className="mt-6 text-xl font-semibold text-center">UttarParadesh Registration Coming Soon</p>}
-        {value === "Haryana" && <HrUser/>}
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default NewUser;
+export default HrUser
