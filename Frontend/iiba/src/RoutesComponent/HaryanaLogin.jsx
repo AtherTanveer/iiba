@@ -6,11 +6,13 @@ const HaryanaLogin = () => {
   const navigate = useNavigate()
   const [userID, setUserID] = useState("");
   const [password, setpassword] = useState("");
+   const[boolval,setboolval] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if(!userID,!password){
+      setboolval(true)
       alert("Please Enter Input Feilds")
       result(false)
     }
@@ -55,11 +57,11 @@ const HaryanaLogin = () => {
         Indian Industries Business Association
       </p>
       <h1 className='w-full text-center mt-8 text-3xl font-medium'>Login</h1>
-      <div className='w-full flex justify-center items-center'>
+      <div className='w-full flex justify-center items-center mb-4'>
 
 
         <div className='m-2 p-3 rounded-2xl bg-slate-500'>
-
+           {boolval?<h1 className='text-red-600 p-4'>Fill The input Feilds</h1>:<h1 className='text-white p-4'>Enter UserID & Passwornd</h1>}
           <form action="" onSubmit={handleSubmit} className='grid grid-cols-1 text-lg'>
             <input value={userID} onChange={userIDHandle} className='m-4 p-2 bg-white rounded-md' type="text" placeholder='Enter User ID' />
 

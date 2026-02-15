@@ -27,16 +27,21 @@ const UttrKhnd_CRUD_portal = () => {
     console.log(list)
 
     const deleteData =async(e)=>{
-        const data = await fetch(`http://localhost:4500/deleteMember/${e}`,{
+      if(confirm("Are You Sure Delete Member !")){
+           const data = await fetch(`http://localhost:4500/deleteMember/${e}`,{
             method:"delete"
         })
 
         const result = await data.json();
+         getData();
         if(result){
             alert("data deleted")
             console.log(result);
-            getData();
+           
         }
+
+      }
+     
     }
 
     const navigate = useNavigate();
@@ -57,8 +62,9 @@ const UttrKhnd_CRUD_portal = () => {
   {/* Header */}
   <div className="bg-white shadow-md p-4 flex flex-col md:flex-row justify-between items-center gap-3">
     <h1 className="text-2xl font-bold text-blue-900">
-      IIBA State President Dashboard
+      Uttarakhand State President Portal – IIBA
     </h1>
+    <p className='text-gray-600 pb-4 md:p-0'>Leadership | Coordination | Industrial Development</p>
 
 
     <div className="flex gap-3">
@@ -90,7 +96,7 @@ const UttrKhnd_CRUD_portal = () => {
         placeholder="Search Member..."
       />
 
-      <Link to={"/uttarpardeshAddMember"}>
+      <Link to={"/uttarakhandAddMember"}>
         <button className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
           Add Member
           <IoPersonAddSharp />

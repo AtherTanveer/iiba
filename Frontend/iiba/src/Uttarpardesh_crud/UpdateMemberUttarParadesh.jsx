@@ -3,63 +3,63 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 import { useNavigate , useParams } from 'react-router-dom';
 
-const Uttrakhand_Update_member = () => {
-
-    const [name, setname] = useState("");
-           const [email, setemail] = useState("")
-           const [phone, setphone] = useState("")
-           const [state, setstate] = useState("");
-           const [district, setdistrict] = useState("");
-           const [city, setcity] = useState("");
-           const [address, setaddress] = useState("");
-           const [company, setcompany] = useState("")
-           const [boolval, setboolval] = useState(false);
+const UpdateMemberUttarParadesh = () => {
     
+     const [name, setname] = useState("");
+          const [email, setemail] = useState("")
+          const [phone, setphone] = useState("")
+          const [state, setstate] = useState("");
+          const [district, setdistrict] = useState("");
+          const [city, setcity] = useState("");
+          const [address, setaddress] = useState("");
+          const [company, setcompany] = useState("")
+          const [boolval, setboolval] = useState(false);
+   
+   
+       const navigate = useNavigate();
+       const params = useParams();
+   
+   
+       const handlesubmit = async(e)=>{
+           e.preventDefault();
+           if (!name || !email || !phone || !company || !state || !district || !city || !address) {
+               setboolval(true);
+               return;
+           }
     
-        const navigate = useNavigate();
-        const params = useParams();
-    
-    
-        const handlesubmit = async(e)=>{
-            e.preventDefault();
-            if (!name || !email || !phone || !company || !state || !district || !city || !address) {
-                setboolval(true);
-                return;
-            }
-
-        const data = await fetch(`http://localhost:4500/updatemember/${params.id}`,{
-        
-        method: "put",
+            const data = await fetch(`http://localhost:4500/update_Uttarparadesh_Member/${params.id}`,{
+            
+            method: "put",
          body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
         headers: {
           "content-Type": "application/json"
         }
-
-        })
-
-        const result = await data.json();
-        alert("Data updated")
-        if(result){
-            console.log(result);
-            //  alert("Data Updated")
-            navigate("/uttrakhandLogin/addmember")
-           
-        }
-
-
     
-
-
-    // console.log(name, email, phone, company)
-}
-
-
-const getdata = async()=>{
-
-    const data = await fetch(`http://localhost:4500/goUpdate/${params.id}`)
-    const result = await data.json();
-    console.log(result);
-
+            })
+    
+            const result = await data.json();
+            alert("Data updated")
+            if(result){
+                console.log(result);
+                //  alert("Data Updated")
+                navigate("/UttarAdmin_Login")
+               
+            }
+    
+    
+        
+    
+    
+        // console.log(name, email, phone, company)
+    }
+    
+    
+    const getdata = async()=>{
+    
+        const data = await fetch(`http://localhost:4500/goUttarparadeshUpdate/${params.id}`)
+        const result = await data.json();
+        console.log(result);
+    
        
     setname(result.name);
     setemail(result.email)
@@ -70,13 +70,13 @@ const getdata = async()=>{
     setcompany(result.company);
     setdistrict(result.district);
     setstate(result.state)
-}
-
-useEffect(()=>{
-    getdata();
-},[])
-
- const nameHandler = (e) => {
+    }
+    
+    useEffect(()=>{
+        getdata();
+    },[])
+    
+    const nameHandler = (e) => {
         setname(e.target.value);
     }
 
@@ -84,9 +84,9 @@ useEffect(()=>{
         setemail(e.target.value);
     }
 
-
-return (
-    <>
+    
+  return (
+   <>
   <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
     
     <div className="w-full max-w-4xl bg-white shadow-xl rounded-2xl p-6 md:p-10">
@@ -219,7 +219,8 @@ return (
     </div>
   </div>
 </>
-)
+
+  )
 }
 
-export default Uttrakhand_Update_member
+export default UpdateMemberUttarParadesh

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserUPschema = mongoose.Schema({
+const UserUpSchema = mongoose.Schema({
     name:String,
     email:{type:String, unique:true},
     phone:{type:Number, unique:true},
@@ -11,4 +11,4 @@ const UserUPschema = mongoose.Schema({
     company:String,
 })
 
-module.exports = mongoose.model("uttarpardeshmembers",UserUPschema);
+module.exports = mongoose.model("up_requests",UserUpSchema);

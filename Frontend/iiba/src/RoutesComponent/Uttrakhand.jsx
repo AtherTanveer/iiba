@@ -10,10 +10,11 @@ const Uttrakhand = () => {
       
 
       const HandleSubmit=async(e)=>{
-        setboolval(true)
+      
         e.preventDefault();
 
         if(!userID,!password){
+            setboolval(true)
           return(false)
         }
 
@@ -58,7 +59,7 @@ const Uttrakhand = () => {
         Indian Industries Business Association
       </p>
       <h1 className='w-full text-center mt-8 text-3xl font-medium'>Login</h1>
-    <div className='w-full flex justify-center items-center'>
+    <div className='w-full flex justify-center items-center mb-4'>
        
         
         <div className='m-2 p-3 rounded-2xl bg-slate-500'>

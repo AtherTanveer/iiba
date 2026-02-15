@@ -9,10 +9,13 @@ const StateCom = () => {
     const hrAuth = localStorage.getItem("hariyana")
     console.log(hrAuth)
 
+    const upAuth = localStorage.getItem("uttarparadesh_87");
+    console.log(upAuth);
+
     const stateDetail = [
         {
             stateName: "Uttar Pradesh Log-In",
-            pathname: "/uttarpardeshLogin"
+            pathname: `${upAuth ? "/UttarAdmin_Login":"/uttarpardeshLogin"}` 
         },
         {
             stateName: "Uttarakhand Log-In",

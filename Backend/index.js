@@ -10,9 +10,11 @@ app.use(cors());
 
 const admin = require("./AdminPss");
 const memberData = require("./memberSchema");
-const userRequest = require("./UserSchema")
+const userRequest = require("./UserSchema");
 const haryanaData = require("./HaryanaSchema");
 const HrRequest = require("./UserHrSchema");
+const UttarparadeshData = require("./UttarparadeshSchema");
+const UPrequest = require("./UpUserSchema");
 
 app.post("/addMember", async (req, res) => {
     try {
@@ -143,6 +145,30 @@ app.post("/Hariyana_adminLogin", async (req, res) => {
     console.log(req.body)
     const validUserID = "hariyana098"
     const validPass = "hariyana"
+
+    if (req.body.userID == validUserID && req.body.password == validPass) {
+        const data = await admin.findOne(req.body);
+        if (req.body) {
+            res.send(data);
+            console.log(data)
+        }
+        else {
+            res.send("Something Went Wrong")
+        }
+
+    } else {
+        console.log("user id & password wrong");
+        res.send(false)
+    }
+
+})
+
+// -------->>UP<<---------
+
+app.post("/UttarParadesh_adminLogin", async (req, res) => {
+    console.log(req.body)
+    const validUserID = "uttarparadesh745"
+    const validPass = "uttarparadesh56"
 
     if (req.body.userID == validUserID && req.body.password == validPass) {
         const data = await admin.findOne(req.body);
@@ -352,6 +378,143 @@ app.post("/findHRUser/:id", async (req, res) => {
 
 })
 // -------->  User HR CODE END
+
+
+
+
+
+
+
+
+// --------------->>>Uttarparadesh Start<<<-------------
+app.post("/Add_Uttarparadesh_Member",async(req,res)=>{
+        const data = await UttarparadeshData.insertOne(req.body)
+        const result = await data.save();
+        if(result){
+            res.send(result);
+            console.log(result);
+        }
+    })
+
+    app.get("/get_Uttarparadesh_member",async(req,res)=>{
+        const data = await UttarparadeshData.find({});
+        if(data){
+            res.send(data);
+            console.log(data);
+        }
+    })
+
+    app.get("/goUttarparadeshUpdate/:id", async (req, res) => {
+    const update = { _id: req.params.id }
+
+    try {
+        const data = await UttarparadeshData.findOne(update);
+        if (data) {
+            console.log("data was match ");
+            console.log(data)
+            res.send(data);
+        }
+        else {
+            console.log("check and retry - ");
+            res.send("data invalid")
+        }
+
+    }
+
+    catch (err) {
+        console.log(err)
+        res.send("data invalid")
+    }
+
+
+})
+
+    app.put("/update_Uttarparadesh_Member/:id", async(req,res)=>{
+          const filter = {_id: req.params.id}
+        const update = { $set: req.body}
+        try{
+             const data = await UttarparadeshData.updateOne(filter,update);
+        if(data){
+            console.log(data);
+            res.send(data);
+        }else{
+            console.log("data not see")
+            res.send(false)
+        }
+
+        }catch(err){
+            console.log(err)
+            res.send(false)
+        }
+      
+       
+    })
+
+    app.delete("/Delete_Uttarparadesh_Member/:id",async (req,res) => {
+        const data = await UttarparadeshData.deleteOne({_id: req.params.id});
+        if(data){
+            console.log(data);
+            res.send(data);
+        }else{
+            console.log("data not match")
+            res.send(false);
+        }
+    })
+// --------------->>>UP END<<<----------<<
+// ----------------->UpRequest<-------<
+app.post("/userUpRequest", async (req, res) => {
+    const data = await UPrequest.insertOne(req.body);
+    const result = await data.save();
+    console.log(result)
+    res.send(result);
+})
+
+app.get("/getUpUser", async (req, res) => {
+    const data = await UPrequest.find({});
+    if (data) {
+        res.send(data);
+        console.log(data);
+    } else {
+        res.send(false);
+        console.log("invalid data")
+    }
+
+})
+
+app.delete("/deleteUpRequest/:id", async (req, res) => {
+    const deleteRQ = { _id: req.params.id }
+    try {
+        const data = await UPrequest.deleteOne(deleteRQ)
+        console.log(data)
+        res.send(data);
+    } catch (err) {
+        console.log("something went wrong")
+        res.send(false)
+    }
+})
+
+app.post("/findUpUser/:id", async (req, res) => {
+    const filter = { _id: req.params.id }
+    try {
+        const data = await UPrequest.findOne(filter);
+        if (data) {
+            console.log(data);
+            res.send(data);
+        }
+        else{
+            console.log("no data ")
+            res.send("no data exist")
+        }
+
+    } catch (err) {
+        console.log(err)
+        res.send(false)
+    }
+
+
+})
+// ----------------->UpRequest END<---------
+
 
     
 

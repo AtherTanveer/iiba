@@ -8,7 +8,7 @@ const UttarParadesh_Admin = () => {
     const params = useParams();
         const[list,setlist] = useState([]);
         const getData =  async()=>{
-            const data = await fetch("http://localhost:4500/get")
+            const data = await fetch("http://localhost:4500/get_Uttarparadesh_member")
             const result = await data.json();
     
             // console.log(result)
@@ -26,22 +26,31 @@ const UttarParadesh_Admin = () => {
         console.log(list)
     
         const deleteData =async(e)=>{
-            const data = await fetch(`http://localhost:4500/delete/${e}`,{
+           
+            if(confirm("Are Sure Delete Member !")){
+               const data = await fetch(`http://localhost:4500/Delete_Uttarparadesh_Member/${e}`,{
                 method:"delete"
             })
     
             const result = await data.json();
+             getData();
             if(result){
-                alert("data deleted")
+                lert("data deleted")
                 console.log(result);
-                getData();
+               
+            }else{
+              alert("something went wrong !!")
+            }
+                
+            }else{
+              console.log("not")
             }
         }
     
         const navigate = useNavigate();
         const logoutfn=()=>{
             if(confirm("Are You Sure To Logout !")){
-                //  localStorage.clear();
+                 localStorage.removeItem("uttarparadesh_87")
                  navigate("/")
             }else{
                 console.log("Loged")
@@ -62,7 +71,7 @@ const UttarParadesh_Admin = () => {
         <div className="flex gap-3">
           <button className="flex px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
             <MdOutlinePendingActions className='text-2xl'/>
-            <Link to={"/reques"}>Requests</Link>
+            <Link to={"/UpRequest"}>Requests</Link>
            
           </button>
           <button
@@ -88,7 +97,7 @@ const UttarParadesh_Admin = () => {
             placeholder="Search Member..."
           />
     
-          <Link to={"/uttarpardeshAdd"}>
+          <Link to={"/uttarParadeshAddMember"}>
             <button className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
               Add Member
               <IoPersonAddSharp />
@@ -129,7 +138,7 @@ const UttarParadesh_Admin = () => {
                 <td className="p-2">{elem.company}</td>
     
                 <td className="p-2 flex gap-2 justify-center">
-                  <Link to={`/uttrakhandUpdate/${elem._id}`}>
+                  <Link to={`/UpdateMemberUttarparadesh/${elem._id}`}>
                     <button className="px-3 py-1 bg-yellow-400 rounded-md hover:bg-yellow-500">
                       Update
                     </button>

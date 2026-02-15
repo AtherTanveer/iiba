@@ -1,6 +1,7 @@
 import React from 'react'
 import Nevbar from './Nevbar'
 import Page from './Component/Page'
+import Footer from './Footer'
 
 
 const App = () => {
@@ -8,6 +9,7 @@ const App = () => {
    <>
    <Nevbar/>
    <Page/>
+   <Footer/>
 
    
    </>

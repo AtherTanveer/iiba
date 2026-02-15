@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HrUser from "./HrUser";
+import UpUser from "./UpUser";
 
 const NewUser = () => {
   const [value, setValue] = useState("");
@@ -97,7 +98,7 @@ const NewUser = () => {
           </form>
         )}
 
-        {value === "UttarParadesh" && <p className="mt-6 text-xl font-semibold text-center">UttarParadesh Registration Coming Soon</p>}
+        {value === "UttarParadesh" && <UpUser/>}
         {value === "Haryana" && <HrUser/>}
       </div>
     </div>

@@ -2,71 +2,72 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const UttarPardesh_Add_Member = () => {
-    const [name, setname] = useState("");
-    const [email, setemail] = useState("")
-    const [phone, setphone] = useState("")
-    const [state, setstate] = useState("");
-      const [district, setdistrict] = useState("");
-      const [city, setcity] = useState("");
-      const [address, setaddress] = useState("");
-    const [company, setcompany] = useState("")
-    const [boolval, setboolval] = useState(false);
 
-
-    const navigate = useNavigate();
-    const handlesubmit = async(e)=>{
-        e.preventDefault();
-        if (!name || !email || !phone || !company || !state || !district || !city || !address) {
-      setboolval(true);
+const AddMemberUttarParadesh = () => {
+     const [name, setname] = useState("");
+        const [email, setemail] = useState("")
+        const [phone, setphone] = useState("")
+        const [state, setstate] = useState("");
+          const [district, setdistrict] = useState("");
+          const [city, setcity] = useState("");
+          const [address, setaddress] = useState("");
+        const [company, setcompany] = useState("")
+        const [boolval, setboolval] = useState(false);
+    
+    
+        const navigate = useNavigate();
+        const handlesubmit = async(e)=>{
+            e.preventDefault();
+            if (!name || !email || !phone || !company || !state || !district || !city || !address) {
+          setboolval(true);
+          return;
+        }
+    
+        if (phone.length !== 10) {
+      alert("Phone number must be 10 digits");
       return;
     }
-
-    if (phone.length !== 10) {
-  alert("Phone number must be 10 digits");
-  return;
-}
-
-        
-        const data = await fetch("http://localhost:4500/addMember",{
-              
-        method: "post",
-        body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
-        headers: {
-          "content-Type": "application/json"
-        }
-      
-        })
-
-        const result = await data.json();;
-        console.log(result);
-
-        if(result){
-            alert("Member Added")
-            navigate("/uttrakhandLogin/addmember")
+    
+            
+            const data = await fetch("http://localhost:4500/Add_Uttarparadesh_Member",{
+                  
+            method: "post",
+            body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
+            headers: {
+              "content-Type": "application/json"
+            }
+          
+            })
+    
+            const result = await data.json();;
+            console.log(result);
+    
+            if(result){
+                alert("Member Added")
+                navigate("/UttarAdmin_Login")
+               
+            }
            
+    
+            console.log(name,email, phone,company)
         }
-       
-
-        console.log(name,email, phone,company)
-    }
-
-    const nameHandler=(e)=>{
-        setname(e.target.value);
-    }
-
-     const emailHandler=(e)=>{
-        setemail(e.target.value);
-    }
-
-    return (
-       <>
-  <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8">
-
-    <div className="w-full max-w-4xl bg-white shadow-lg rounded-2xl p-6 md:p-10">
-
+    
+        const nameHandler=(e)=>{
+            setname(e.target.value);
+        }
+    
+         const emailHandler=(e)=>{
+            setemail(e.target.value);
+        }
+    
+  return (
+     <>
+  <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    
+    <div className="w-full max-w-4xl bg-white shadow-xl rounded-2xl p-6 md:p-10">
+      
       <h1 className="text-2xl md:text-3xl font-semibold text-center text-sky-950 mb-8">
-        Add Member
+         Add New Member – IIBA
       </h1>
 
       <form onSubmit={handlesubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -118,7 +119,7 @@ const UttarPardesh_Add_Member = () => {
 
         {/* Company */}
         <div className="flex flex-col">
-          <label className="text-sm font-medium mb-1">Company Name *</label>
+          <label className="text-sm font-medium mb-1">Company *</label>
           <input
             type="text"
             value={company}
@@ -167,7 +168,7 @@ const UttarPardesh_Add_Member = () => {
           />
         </div>
 
-        {/* Address */}
+        {/* Address - Full Width */}
         <div className="flex flex-col md:col-span-2">
           <label className="text-sm font-medium mb-1">Full Address</label>
           <textarea
@@ -179,7 +180,7 @@ const UttarPardesh_Add_Member = () => {
           ></textarea>
         </div>
 
-        {/* Submit Button */}
+        {/* Button */}
         <div className="md:col-span-2 flex justify-center mt-4">
           <button
             type="submit"
@@ -190,13 +191,12 @@ const UttarPardesh_Add_Member = () => {
         </div>
 
       </form>
-
     </div>
 
   </div>
 </>
 
-    )
+  )
 }
 
-export default UttarPardesh_Add_Member
+export default AddMemberUttarParadesh

@@ -18,6 +18,10 @@ import Haryana_Update_Member from '../Haryana_crud/Haryana_Update_Member'
 import Request_HR from '../Haryana_crud/Request_HR'
 import UttarParadesh_Admin from '../Uttarpardesh_crud/UttarParadesh_Admin'
 import HrPrivateCo from '../HrPrivateCo'
+import AddMemberUttarParadesh from '../Uttarpardesh_crud/AddMemberUttarParadesh'
+import UpdateMemberUttarParadesh from '../Uttarpardesh_crud/UpdateMemberUttarParadesh'
+import UpRequest from '../Uttarpardesh_crud/UpRequest'
+import UpPrivateCo from '../UpPrivateCo'
 
 const Page = () => {
   return (
@@ -38,7 +42,7 @@ const Page = () => {
         {/* ----Uttrakhand Routes Start  */}
         <Route element={<PrivateCo />}>
           <Route path='/uttrakhandLogin/addmember' element={<UttrKhnd_CRUD_portal />} />
-          <Route path='/uttarpardeshAddMember' element={<UttarPardesh_Add_Member />} />
+          <Route path='/uttarakhandAddMember' element={<UttarPardesh_Add_Member />} />
           <Route path='/uttrakhandUpdateMember/:id' element={<Uttrakhand_Update_member />} />
           <Route path='/requestuk' element={<RequestUK />} />
         </Route>
@@ -57,7 +61,12 @@ const Page = () => {
 
 
         {/* ---Uttarparadesh Routes Start */}
+        <Route element={<UpPrivateCo/>}>
         <Route path='/UttarAdmin_Login' element={<UttarParadesh_Admin/>}/>
+        <Route path='uttarParadeshAddMember' element={<AddMemberUttarParadesh/>}/>
+        <Route path='UpdateMemberUttarparadesh/:id' element={<UpdateMemberUttarParadesh/>}/>
+        <Route path='UpRequest' element={<UpRequest/>}/>
+        </Route>
         {/* ---Uttarparadesh Routes End */}
 
 
