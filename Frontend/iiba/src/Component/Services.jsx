@@ -1,97 +1,122 @@
 import React from 'react'
 import choose from "../assets/choose.png"
-const Services = () => {
-    const serviceList = [
-        {
-            heading: "MSME Support & Advisory",
-            contant: "Providing guidance and assistance to MSMEs on regulatory, technical, and operational matters."
-        },
-        {
-            heading: "Legal & Policy Awareness",
-            contant: "Disseminating information about government policies, procedures, industrial laws, and compliance requirements."
-        },
-        {
-            heading: "Industry Problem Resolution",
-            contant: "Helping industries resolve practical challenges and facilitating solutions through expert consultations."
-        },
-        {
-            heading: "Market & Industry Insights",
-            contant: "Sharing latest industry developments, market trends, and technological updates."
-        },
-        {
-            heading: "Business Networking",
-            contant: "Connecting entrepreneurs, manufacturers, and business leaders for collaboration and growth."
-        }
-    ]
 
-    const stats = [
+const Services = () => {
+
+  const serviceList = [
+    {
+      heading: "MSME Support & Advisory",
+      content: "Providing guidance and assistance to MSMEs on regulatory, technical, and operational matters."
+    },
+    {
+      heading: "Legal & Policy Awareness",
+      content: "Disseminating information about government policies, procedures, industrial laws, and compliance requirements."
+    },
+    {
+      heading: "Industry Problem Resolution",
+      content: "Helping industries resolve practical challenges through expert consultations."
+    },
+    {
+      heading: "Market & Industry Insights",
+      content: "Sharing latest industry developments, market trends, and technological updates."
+    },
+    {
+      heading: "Business Networking",
+      content: "Connecting entrepreneurs, manufacturers, and business leaders for collaboration and growth."
+    }
+  ]
+
+  const stats = [
     { number: "38+", label: "Years of Experience" },
     { number: "10,000+", label: "MSMEs Supported" },
     { number: "500+", label: "Industry Events" },
     { number: "100+", label: "Policy Workshops" },
-  ];
-    return (
-        <>
-            <div className='w-full text-center p-2  bg-slate-50'>
-                <h1 className='text-3xl font-medium'>WHAT WE DO</h1>
-                <h1 className='text-lg font-medium p-2'>Our Key Services</h1>
-            </div>
+  ]
 
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 justify-centern p-2 justify-center'>
-                {
-                    serviceList.map((elem,index)=>(
-                        <div key={index} className='m-1 p-3 bg-gray-200 rounded-lg'>
-                        <h1 className='text-lg p-2 font-medium h-18'>{elem.heading}</h1>
-                        <p>{elem.contant}</p>
-                    </div>
-                    ))
+  return (
+    <div className='bg-slate-50'>
 
-                }
+      {/* ================= HEADER ================= */}
+      <div className='text-center py-12 px-4'>
+        <h1 className='text-3xl md:text-5xl font-bold text-sky-950'>
+          What We Do
+        </h1>
+        <p className='text-gray-600 mt-3'>
+          Empowering Industries Through Expert Services
+        </p>
+      </div>
 
 
-            </div>
+      {/* ================= SERVICES CARDS ================= */}
+      <div className='max-w-7xl mx-auto px-4 pb-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+        {serviceList.map((elem, index) => (
+          <div
+            key={index}
+            className='bg-white p-8 rounded-2xl shadow-md hover:shadow-xl 
+            hover:-translate-y-2 transition-all duration-300'
+          >
+            <h2 className='text-xl font-semibold text-sky-950 mb-4'>
+              {elem.heading}
+            </h2>
+            <p className='text-gray-600 leading-relaxed'>
+              {elem.content}
+            </p>
+          </div>
+        ))}
+      </div>
 
 
-                
-            <div>
-                <div className='p-1 mt-8'><h1 className='w-full text-center text-2xl font-medium'>WHY CHOOSE IIBA</h1></div>
+      {/* ================= WHY CHOOSE SECTION ================= */}
+      <div className='max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center'>
 
-                <div className='md:flex justify-evenly'>
-                     <div className='p-3 text-2xl mt-12'>
-                    <p>38+ Years of Industry Experience</p>
-                    <p>Trusted by MSMEs Across India</p>
-                    <p>Expert Guidance on Government Policies</p>
-                    <p>Strong Industry Network & Advocacy</p>
-                    <p>Dedicated Support for Industrial Growth</p>
-                </div>
+        <div>
+          <h2 className='text-3xl md:text-4xl font-bold text-sky-950 mb-6'>
+            Why Choose IIBA
+          </h2>
 
-                <div className=''>
-                    <img src={choose} alt="" className='h-80' />
-                </div>
-                </div>
-               
-            </div>
+          <ul className='space-y-4 text-gray-700 text-lg'>
+            <li>✔ 38+ Years of Industry Experience</li>
+            <li>✔ Trusted by MSMEs Across India</li>
+            <li>✔ Expert Guidance on Government Policies</li>
+            <li>✔ Strong Industry Network & Advocacy</li>
+            <li>✔ Dedicated Support for Industrial Growth</li>
+          </ul>
+        </div>
+
+        <div className='flex justify-center'>
+          <img
+            src={choose}
+            alt="Why Choose IIBA"
+            className='w-full max-w-md md:max-w-lg drop-shadow-2xl'
+          />
+        </div>
+
+      </div>
 
 
-            <section className="bg-slate-600 py-20 px-6"> {/* Using the dark blue from your hero */}
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+      {/* ================= STATS SECTION ================= */}
+      <section className="bg-sky-950 py-20 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+
           {stats.map((item, index) => (
-            <div key={index} className="p-6 border-l border-blue-400/30">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">
+            <div
+              key={index}
+              className="p-6 border border-white/20 rounded-xl bg-white/5 backdrop-blur-sm"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">
                 {item.number}
               </h2>
-              <p className="text-blue-100 text-sm uppercase tracking-widest font-medium">
+              <p className="text-sky-200 uppercase tracking-widest text-sm">
                 {item.label}
               </p>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
 
-        </>
-    )
+        </div>
+      </section>
+
+    </div>
+  )
 }
 
 export default Services

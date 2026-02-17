@@ -12,7 +12,7 @@ const Haryana_Add_Member = () => {
     const [address, setaddress] = useState("");
     const [company, setcompany] = useState("")
     const [boolval, setboolval] = useState(false);
-
+    const [image, setimage] = useState(null);
 
     const navigate = useNavigate();
 
@@ -27,15 +27,31 @@ const Haryana_Add_Member = () => {
             alert("Phone number must be 10 digits");
             return;
         }
+        if (!image) {
+            alert("Please Upload Image !!");
+            seimagevalid(true)
+            return false
+        }
 
+        const formData = new FormData();
+
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("state", state);
+        formData.append("district", district);
+        formData.append("city", city);
+        formData.append("address", address);
+        formData.append("company", company);
+
+        if (image) {
+            formData.append("image", image);
+        }
 
         const data = await fetch("http://localhost:4500/Add_Haryana_Member", {
 
             method: "post",
-            body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
-            headers: {
-                "content-Type": "application/json"
-            }
+            body: formData,
 
         })
 
@@ -61,31 +77,150 @@ const Haryana_Add_Member = () => {
     }
     return (
         <>
-        <h1 className='w-full text-center text-3xl font-medium mt-3'>IIBA Haryana</h1>
-            <h1 className='w-full text-2xl font-medium p-2 text-center text-gray-700' >Add Member</h1>
-            <div className='flex justify-center '>
-                <div className='mt-7 p-4'>
-                    <form action="" onSubmit={handlesubmit} className='grid grid-cols-1 text-lg md:w-90'>
-                        <input className='p-2 m-1' value={name} onChange={nameHandler} type="text" placeholder='Enter Name' />
-                        {boolval && !name && <p className='text-red-600' >Enter Name !!</p>}
-                        <input className='p-2 m-1' value={email} onChange={emailHandler} type="text" placeholder='Enter Email' />
-                        {boolval && !email && <p className='text-red-600' >Enter Email !!</p>}
-                        <input className="inputStyle p-2 rounded-md" value={phone} onChange={(e) => setphone(e.target.value)} placeholder="Phone" />
-                        {boolval && !phone && <p className="error">Enter Phone</p>}
+            <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8">
 
-                        <input className="inputStyle p-2 rounded-md" value={company} onChange={(e) => setcompany(e.target.value)} placeholder="Company Name" />
-                        {boolval && !company && <p className="error">Enter Company</p>}
+                <div className="w-full max-w-4xl bg-white shadow-lg rounded-2xl p-6 md:p-10">
 
-                        <input className="inputStyle p-2 rounded-md" value={state} onChange={(e) => setstate(e.target.value)} placeholder="State" />
-                        <input className="inputStyle p-2 rounded-md" value={district} onChange={(e) => setdistrict(e.target.value)} placeholder="District" />
+                    <h1 className="text-2xl md:text-3xl font-semibold text-center text-sky-950 mb-8">
+                        Add Member
+                    </h1>
 
-                        <input className="inputStyle p-2 rounded-md" value={city} onChange={(e) => setcity(e.target.value)} placeholder="City" />
-                        <input className="inputStyle p-2 rounded-md" value={address} onChange={(e) => setaddress(e.target.value)} placeholder="Full Address" />
-                        <button className='p-3 px-4 bg-sky-950 text-white rounded-md text-center'>Add</button>
+                    <form onSubmit={handlesubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        {/* Name */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium mb-1">Full Name *</label>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={nameHandler}
+                                placeholder="Enter Name"
+                                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
+                            />
+                            {boolval && !name && (
+                                <p className="text-red-600 text-sm mt-1">Enter Name</p>
+                            )}
+                        </div>
+
+                        {/* Email */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium mb-1">Email *</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={emailHandler}
+                                placeholder="Enter Email"
+                                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
+                            />
+                            {boolval && !email && (
+                                <p className="text-red-600 text-sm mt-1">Enter Email</p>
+                            )}
+                        </div>
+
+                        {/* Phone */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium mb-1">Phone *</label>
+                            <input
+                                type="text"
+                                value={phone}
+                                onChange={(e) => setphone(e.target.value)}
+                                placeholder="Phone"
+                                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
+                            />
+                            {boolval && !phone && (
+                                <p className="text-red-600 text-sm mt-1">Enter Phone</p>
+                            )}
+                        </div>
+
+                        {/* Company */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium mb-1">Company Name *</label>
+                            <input
+                                type="text"
+                                value={company}
+                                onChange={(e) => setcompany(e.target.value)}
+                                placeholder="Company Name"
+                                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
+                            />
+                            {boolval && !company && (
+                                <p className="text-red-600 text-sm mt-1">Enter Company</p>
+                            )}
+                        </div>
+
+                        {/* State */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium mb-1">State</label>
+                            <input
+                                type="text"
+                                value={state}
+                                onChange={(e) => setstate(e.target.value)}
+                                placeholder="State"
+                                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
+                            />
+                        </div>
+
+                        {/* District */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium mb-1">District</label>
+                            <input
+                                type="text"
+                                value={district}
+                                onChange={(e) => setdistrict(e.target.value)}
+                                placeholder="District"
+                                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
+                            />
+                        </div>
+
+                        {/* City */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium mb-1">City</label>
+                            <input
+                                type="text"
+                                value={city}
+                                onChange={(e) => setcity(e.target.value)}
+                                placeholder="City"
+                                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
+                            />
+                        </div>
+
+                        {/* Address */}
+                        <div className="flex flex-col md:col-span-2">
+                            <label className="text-sm font-medium mb-1">Full Address</label>
+                            <textarea
+                                value={address}
+                                onChange={(e) => setaddress(e.target.value)}
+                                rows="3"
+                                placeholder="Full Address"
+                                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
+                            ></textarea>
+                        </div>
+
+                        {/* New Image Upload */}
+                        <div>
+                            <input
+                                type="file"
+                                onChange={(e) => setimage(e.target.files[0])}
+                                className="p-2 bg-gray-700 text-white font-medium rounded-md"
+                            />
+                        </div>
+
+
+
+                        {/* Submit Button */}
+                        <div className="md:col-span-2 flex justify-center mt-4">
+                            <button
+                                type="submit"
+                                className="bg-sky-950 hover:bg-sky-800 transition duration-300 text-white px-12 py-3 rounded-xl text-lg shadow-md"
+                            >
+                                Add Member
+                            </button>
+                        </div>
+
                     </form>
-                </div>
-            </div>
 
+                </div>
+
+            </div>
         </>
     )
 }

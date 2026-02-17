@@ -67,6 +67,7 @@ const NewUser = () => {
             <option value="UttarParadesh">Uttar Pradesh</option>
             <option value="UttraKhand">Uttarakhand</option>
             <option value="Haryana">Haryana</option>
+            <option value="HimachalParadesh">Himachal Paradesh</option>
           </select>
         </div>
 
@@ -100,6 +101,7 @@ const NewUser = () => {
 
         {value === "UttarParadesh" && <UpUser/>}
         {value === "Haryana" && <HrUser/>}
+        {value === "HimachalParadesh" && <p className="w-full text-lg font-medium text-center text-gray-700 pt-4">Himachal Paradesh MemberShip Coming Soon...</p>}
       </div>
     </div>
   );

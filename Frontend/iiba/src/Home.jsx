@@ -2,6 +2,7 @@ import React from 'react'
 import iiba from "./assets/IIBA.png"
 import bg from "./assets/bg.jpg"
 import rain from "./assets/RAIN.png"
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
@@ -17,9 +18,24 @@ const Home = () => {
 
 
         <div className='md:flex text-center md:text-left p-7 text-white md:mt-3 md:ms-1'>
-           <button className='bg-sky-950 p-2 md:px-[30px] m-1 rounded-md md:text-lg font-semibold w-[160px]'>To Member</button>
-           <button className='bg-sky-950 p-2 md:px-[30px] m-1 rounded-md md:text-lg font-semibold w-[150px]'>Contact Us</button>
-        </div>
+
+  <Link
+    to={"/Newuser"}
+    className='text-sky-950 border-2 border-sky-950 p-2 md:px-[30px] m-1 rounded-md md:text-lg font-semibold w-[160px] 
+    hover:bg-sky-950 hover:text-white transition-all duration-300 ease-in-out shadow-sm hover:shadow-lg'
+  >
+    To Member
+  </Link>
+
+  <Link
+    className='bg-sky-950 p-2 md:px-[30px] m-1 rounded-md md:text-lg font-semibold w-[150px]
+    hover:bg-sky-800 hover:scale-105 transition-all duration-300 ease-in-out shadow-md hover:shadow-xl'
+  >
+    Contact Us
+  </Link>
+
+</div>
+
 
         </div>
 

@@ -36,7 +36,7 @@ const MemberShipComp = () => {
         </Link>
 
         {/* Admin Login */}
-        <Link to="/admin-login">
+        <Link to="/AdminMain">
           <div className="card-ui">
             <FaUserShield className="icon-ui text-2xl" />
             <h2 className="text-2xl">Admin Login</h2>

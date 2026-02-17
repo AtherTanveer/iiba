@@ -14,6 +14,8 @@ const Uttrakhand_Update_member = () => {
            const [address, setaddress] = useState("");
            const [company, setcompany] = useState("")
            const [boolval, setboolval] = useState(false);
+           const [image, setimage] = useState(null);
+           const [imageValid,seimagevalid]= useState(false);
     
     
         const navigate = useNavigate();
@@ -27,13 +29,30 @@ const Uttrakhand_Update_member = () => {
                 return;
             }
 
+            // if(!image){
+            //   alert("Please Upload Image !!");
+            //   seimagevalid(true)
+            //   return false
+            // }
+
+                  const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("state", state);
+    formData.append("district", district);
+    formData.append("city", city);
+    formData.append("address", address);
+    formData.append("company", company);
+
+    if (image) {
+      formData.append("image", image);
+    }
         const data = await fetch(`http://localhost:4500/updatemember/${params.id}`,{
         
         method: "put",
-         body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
-        headers: {
-          "content-Type": "application/json"
-        }
+        body: formData,
 
         })
 
@@ -70,6 +89,7 @@ const getdata = async()=>{
     setcompany(result.company);
     setdistrict(result.district);
     setstate(result.state)
+    setimage(result.image)
 }
 
 useEffect(()=>{
@@ -203,6 +223,18 @@ return (
             rows="3"
             className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
           ></textarea>
+        </div>
+
+
+         {/* New Image Upload */}
+        <div>
+          {imageValid?<p className='text-red-500 pb-2 font-medium'>Upload Profile Image*</p>:<p className='text-gray-900 pb-2'>Upload Profile Image*</p>}
+          
+             <input
+            type="file"
+            onChange={(e) => setimage(e.target.files[0])}
+            className="p-2 bg-gray-700 text-white font-medium rounded-md"
+          />
         </div>
 
         {/* Submit Button - Full Width */}

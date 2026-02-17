@@ -107,7 +107,7 @@ const UttarParadesh_Admin = () => {
       </div>
     
       {/* Table */}
-      <div className="overflow-x-auto mt-5 p-4">
+      <div className="overflow-x-auto mt-5 p-4 mb-12">
         <table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-sm">
           <thead className="bg-blue-900 text-white">
             <tr>
@@ -120,7 +120,9 @@ const UttarParadesh_Admin = () => {
               <th className="p-2 text-left">City</th>
               <th className="p-2 text-left">Address</th>
               <th className="p-2 text-left">Company</th>
+              <th className="p-2 text-center">Image</th>
               <th className="p-2 text-center">Action</th>
+              
             </tr>
           </thead>
     
@@ -136,6 +138,7 @@ const UttarParadesh_Admin = () => {
                 <td className="p-2">{elem.city}</td>
                 <td className="p-2">{elem.address}</td>
                 <td className="p-2">{elem.company}</td>
+                 <td className="p-2"><img className='w-15' src={`http://localhost:4500/uploads/${elem.image}`} alt="" /></td>
     
                 <td className="p-2 flex gap-2 justify-center">
                   <Link to={`/UpdateMemberUttarparadesh/${elem._id}`}>

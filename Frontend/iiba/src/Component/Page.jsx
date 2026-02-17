@@ -22,6 +22,8 @@ import AddMemberUttarParadesh from '../Uttarpardesh_crud/AddMemberUttarParadesh'
 import UpdateMemberUttarParadesh from '../Uttarpardesh_crud/UpdateMemberUttarParadesh'
 import UpRequest from '../Uttarpardesh_crud/UpRequest'
 import UpPrivateCo from '../UpPrivateCo'
+import Admin from '../Admin/Admin'
+import Members from '../AllMembers/Members'
 
 const Page = () => {
   return (
@@ -36,6 +38,7 @@ const Page = () => {
         <Route path='/uttarpardeshLogin' element={<UttarPardeshLogin />} />
         <Route path='/haryanaLogin' element={<HaryanaLogin />} />
         <Route path='/Newuser' element={<NewUser />} />
+        <Route path='/Members' element={<Members/>}/>
 
 
 
@@ -70,6 +73,7 @@ const Page = () => {
         {/* ---Uttarparadesh Routes End */}
 
 
+        <Route path='/AdminMain' element={<Admin/>}/>
 
 
         {/* NevbarComponents END*/}

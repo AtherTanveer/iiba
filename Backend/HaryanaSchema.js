@@ -9,6 +9,7 @@ const Haryana_Schema = mongoose.Schema({
     city:String,
     address:String,
     company:String,
+    image:String,
 })
 
 module.exports = mongoose.model("haryanamember",Haryana_Schema);

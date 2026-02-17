@@ -62,7 +62,7 @@ const UttrKhnd_CRUD_portal = () => {
   {/* Header */}
   <div className="bg-white shadow-md p-4 flex flex-col md:flex-row justify-between items-center gap-3">
     <h1 className="text-2xl font-bold text-blue-900">
-      Uttarakhand State President Portal – IIBA
+      Uttarakhand State President Dashboard – IIBA
     </h1>
     <p className='text-gray-600 pb-4 md:p-0'>Leadership | Coordination | Industrial Development</p>
 
@@ -106,11 +106,12 @@ const UttrKhnd_CRUD_portal = () => {
   </div>
 
   {/* Table */}
-  <div className="overflow-x-auto mt-5 p-4">
+  <div className="overflow-x-auto mt-5 p-4 mb-12 ">
     <table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-sm">
       <thead className="bg-blue-900 text-white">
         <tr>
           <th className="p-2 text-left">SN</th>
+           <th className="p-2 text-left">ID</th>
           <th className="p-2 text-left">Name</th>
           <th className="p-2 text-left">Email</th>
           <th className="p-2 text-left">Phone</th>
@@ -119,6 +120,7 @@ const UttrKhnd_CRUD_portal = () => {
           <th className="p-2 text-left">City</th>
           <th className="p-2 text-left">Address</th>
           <th className="p-2 text-left">Company</th>
+          <th className="p-2 text-left">Image</th>
           <th className="p-2 text-center">Action</th>
         </tr>
       </thead>
@@ -127,6 +129,7 @@ const UttrKhnd_CRUD_portal = () => {
         {list.map((elem, index) => (
           <tr key={index} className="border-b hover:bg-gray-100">
             <td className="p-2">{index + 1}</td>
+            <td className="p-2 ">{elem._id}</td>
             <td className="p-2">{elem.name}</td>
             <td className="p-2">{elem.email}</td>
             <td className="p-2">{elem.phone}</td>
@@ -135,6 +138,7 @@ const UttrKhnd_CRUD_portal = () => {
             <td className="p-2">{elem.city}</td>
             <td className="p-2">{elem.address}</td>
             <td className="p-2">{elem.company}</td>
+            <td className="p-2"><img className='w-15' src={`http://localhost:4500/uploads/${elem.image}`} alt="" /></td>
 
             <td className="p-2 flex gap-2 justify-center">
               <Link to={`/uttrakhandUpdateMember/${elem._id}`}>

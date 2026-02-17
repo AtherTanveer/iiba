@@ -14,6 +14,8 @@ const Haryana_Update_Member = () => {
        const [address, setaddress] = useState("");
        const [company, setcompany] = useState("")
        const [boolval, setboolval] = useState(false);
+       const [image, setimage] = useState();
+
 
 
     const navigate = useNavigate();
@@ -27,13 +29,25 @@ const Haryana_Update_Member = () => {
             return;
         }
 
+         const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("state", state);
+    formData.append("district", district);
+    formData.append("city", city);
+    formData.append("address", address);
+    formData.append("company", company);
+
+    if (image) {
+      formData.append("image", image);
+    }
+
         const data = await fetch(`http://localhost:4500/update_Haryana_Member/${params.id}`,{
         
         method: "put",
-         body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
-        headers: {
-          "content-Type": "application/json"
-        }
+        body: formData,
 
         })
 
@@ -69,6 +83,7 @@ const getdata = async()=>{
     setcompany(result.company);
     setdistrict(result.district);
     setstate(result.state)
+    setimage(result.image)
 }
 
 useEffect(()=>{
@@ -85,31 +100,151 @@ useEffect(()=>{
 
 
   return (
-     <>
-        <h1 className='w-full text-2xl font-medium p-2 text-center mt-4' >Update Member</h1>
-        <div className='flex justify-center '>
-            <div className='mt-7 p-4'>
-                <form action="" onSubmit={handlesubmit} className='grid grid-cols-1 text-lg md:w-90'>
-                    <input className='p-2 m-1' value={name} onChange={nameHandler} type="text" placeholder='Enter Name' />
-                        {boolval && !name && <p className='text-red-600' >Enter Name !!</p>}
-                        <input className='p-2 m-1' value={email} onChange={emailHandler} type="text" placeholder='Enter Email' />
-                        {boolval && !email && <p className='text-red-600' >Enter Email !!</p>}
-                        <input className="inputStyle p-2 rounded-md" value={phone} onChange={(e) => setphone(e.target.value)} placeholder="Phone" />
-                        {boolval && !phone && <p className="error">Enter Phone</p>}
+       <>
+  <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    
+    <div className="w-full max-w-4xl bg-white shadow-xl rounded-2xl p-6 md:p-10">
+      
+      <h1 className="text-2xl md:text-3xl font-semibold text-center text-sky-900 mb-8">
+        Update Member – IIBA
+      </h1>
 
-                        <input className="inputStyle p-2 rounded-md" value={company} onChange={(e) => setcompany(e.target.value)} placeholder="Company Name" />
-                        {boolval && !company && <p className="error">Enter Company</p>}
+      <form onSubmit={handlesubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                        <input className="inputStyle p-2 rounded-md" value={state} onChange={(e) => setstate(e.target.value)} placeholder="State" />
-                        <input className="inputStyle p-2 rounded-md" value={district} onChange={(e) => setdistrict(e.target.value)} placeholder="District" />
-
-                        <input className="inputStyle p-2 rounded-md" value={city} onChange={(e) => setcity(e.target.value)} placeholder="City" />
-                        <input className="inputStyle p-2 rounded-md" value={address} onChange={(e) => setaddress(e.target.value)} placeholder="Full Address" />
-                    <button className='p-3 px-4 bg-sky-950 text-white rounded-md text-center'>Update</button>
-                </form>
-            </div>
+        {/* Name */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">Full Name *</label>
+          <input
+            type="text"
+            value={name}
+            onChange={nameHandler}
+            placeholder="Enter Full Name"
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
+          />
+          {boolval && !name && (
+            <p className="text-red-600 text-sm mt-1">Enter Name</p>
+          )}
         </div>
-    </>
+
+        {/* Email */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">Email *</label>
+          <input
+            type="email"
+            value={email}
+            onChange={emailHandler}
+            placeholder="Enter Email"
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
+          />
+          {boolval && !email && (
+            <p className="text-red-600 text-sm mt-1">Enter Email</p>
+          )}
+        </div>
+
+        {/* Phone */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">Phone *</label>
+          <input
+            type="text"
+            value={phone}
+            onChange={(e) => setphone(e.target.value)}
+            placeholder="Enter Phone"
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
+          />
+          {boolval && !phone && (
+            <p className="text-red-600 text-sm mt-1">Enter Phone</p>
+          )}
+        </div>
+
+        {/* Company */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">Company Name *</label>
+          <input
+            type="text"
+            value={company}
+            onChange={(e) => setcompany(e.target.value)}
+            placeholder="Enter Company Name"
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
+          />
+          {boolval && !company && (
+            <p className="text-red-600 text-sm mt-1">Enter Company</p>
+          )}
+        </div>
+
+        {/* State */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">State</label>
+          <input
+            type="text"
+            value={state}
+            onChange={(e) => setstate(e.target.value)}
+            placeholder="Enter State"
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
+          />
+        </div>
+
+        {/* District */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">District</label>
+          <input
+            type="text"
+            value={district}
+            onChange={(e) => setdistrict(e.target.value)}
+            placeholder="Enter District"
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
+          />
+        </div>
+
+        {/* City */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">City</label>
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setcity(e.target.value)}
+            placeholder="Enter City"
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
+          />
+        </div>
+
+        {/* Address - Full Width */}
+        <div className="flex flex-col md:col-span-2">
+          <label className="text-sm font-medium mb-1">Full Address</label>
+          <textarea
+            value={address}
+            onChange={(e) => setaddress(e.target.value)}
+            placeholder="Enter Full Address"
+            rows="3"
+            className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
+          ></textarea>
+        </div>
+
+
+         {/* New Image Upload */}
+        <div>
+        
+          
+             <input
+            type="file"
+            onChange={(e) => setimage(e.target.files[0])}
+            className="p-2 bg-gray-700 text-white font-medium rounded-md"
+          />
+        </div>
+
+        {/* Submit Button - Full Width */}
+        <div className="md:col-span-2 flex justify-center mt-4">
+          <button
+            type="submit"
+            className="bg-sky-900 hover:bg-sky-800 transition-all duration-300 text-white px-10 py-3 rounded-xl text-lg shadow-md"
+          >
+            Update Member
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</>
   )
 }
 

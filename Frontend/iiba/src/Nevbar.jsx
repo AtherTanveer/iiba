@@ -25,8 +25,9 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <ul className="hidden md:flex gap-8 font-medium text-lg">
             <li><Link to="/" className="hover:text-sky-300 transition">Home</Link></li>
+             <li><Link to="/Members" className="hover:text-sky-300 transition">Members</Link></li>
             <li><Link to="/membership" className="hover:text-sky-300 transition">Membership</Link></li>
-            <li><Link to="/mission" className="hover:text-sky-300 transition">Mission</Link></li>
+           
             <li><Link to="/about" className="hover:text-sky-300 transition">About</Link></li>
             <li><Link to="/goal" className="hover:text-sky-300 transition">Goal</Link></li>
             <li><Link to="/help" className="hover:text-sky-300 transition">Help</Link></li>
@@ -57,7 +58,7 @@ const Navbar = () => {
           <div className="md:hidden bg-sky-900 px-6 py-4 space-y-4 text-lg font-medium">
             <Link to="/" onClick={() => setMenuOpen(false)} className="block">Home</Link>
             <Link to="/membership" onClick={() => setMenuOpen(false)} className="block">Membership</Link>
-            <Link to="/mission" onClick={() => setMenuOpen(false)} className="block">Mission</Link>
+            <Link to="/Members" onClick={() => setMenuOpen(false)} className="block">Member</Link>
             <Link to="/about" onClick={() => setMenuOpen(false)} className="block">About</Link>
             <Link to="/goal" onClick={() => setMenuOpen(false)} className="block">Goal</Link>
             <Link to="/help" onClick={() => setMenuOpen(false)} className="block">Help</Link>

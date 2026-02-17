@@ -7,6 +7,7 @@ app.use(express.json());
 const cors = require("cors");
 
 app.use(cors());
+app.use("/uploads", express.static("uploads"));
 
 const admin = require("./AdminPss");
 const memberData = require("./memberSchema");
@@ -15,16 +16,27 @@ const haryanaData = require("./HaryanaSchema");
 const HrRequest = require("./UserHrSchema");
 const UttarparadeshData = require("./UttarparadeshSchema");
 const UPrequest = require("./UpUserSchema");
+const upload = require("./MulterConfiq");
 
-app.post("/addMember", async (req, res) => {
+app.post("/addMember", upload.single("image"), async (req, res) => {
     try {
-        const data = await memberData.insertOne(req.body);
-        const result = await data.save();
-        console.log(result);
-        res.send(result);
+        const newMember = new memberData({
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            state: req.body.state,
+            district: req.body.district,
+            city: req.body.city,
+            address: req.body.address,
+            company: req.body.company,
+            image: req.file ? req.file.filename : "",
+        });
 
+        const result = await newMember.save();
+
+        res.json(result);
     } catch (err) {
-        console.log(err, "try again")
+        res.status(500).json({ message: "Error Adding Member" });
     }
 
 })
@@ -35,10 +47,22 @@ app.get("/getMember", async (req, res) => {
     res.send(data);
 })
 
-app.put("/updatemember/:id", async (req, res) => {
+app.put("/updatemember/:id", upload.single("image"), async (req, res) => {
     try {
         const filter = { _id: req.params.id }
-        const update = { $set: req.body };
+        const update = {
+            $set: {
+                name: req.body.name,
+                email: req.body.email,
+                phone: req.body.phone,
+                state: req.body.state,
+                district: req.body.district,
+                city: req.body.city,
+                address: req.body.address,
+                company: req.body.company,
+                image: req.file ? req.file.filename : req.file,
+            }
+        };
 
         const data = await memberData.updateOne(filter, update);
         console.log(data);
@@ -231,7 +255,7 @@ app.post("/findUser/:id", async (req, res) => {
             console.log(data);
             res.send(data);
         }
-        else{
+        else {
             console.log("no data ")
             res.send("no data exist")
         }
@@ -251,24 +275,37 @@ app.post("/findUser/:id", async (req, res) => {
 
 
 // >------------------------------>Haryana Start<-------------------------------<
-    app.post("/Add_Haryana_Member",async(req,res)=>{
-        const data = await haryanaData.insertOne(req.body)
-        const result = await data.save();
-        if(result){
-            res.send(result);
-            console.log(result);
-        }
-    })
+app.post("/Add_Haryana_Member", upload.single("image"), async (req, res) => {
+    try {
+        const newMember = new haryanaData({
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            state: req.body.state,
+            district: req.body.district,
+            city: req.body.city,
+            address: req.body.address,
+            company: req.body.company,
+            image: req.file ? req.file.filename : "",
+        });
 
-    app.get("/get_Haryana_member",async(req,res)=>{
-        const data = await haryanaData.find({});
-        if(data){
-            res.send(data);
-            console.log(data);
-        }
-    })
+        const result = await newMember.save();
 
-    app.get("/goHaryanaUpdate/:id", async (req, res) => {
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ message: "Error Adding Member" });
+    }
+})
+
+app.get("/get_Haryana_member", async (req, res) => {
+    const data = await haryanaData.find({});
+    if (data) {
+        res.send(data);
+        console.log(data);
+    }
+})
+
+app.get("/goHaryanaUpdate/:id", async (req, res) => {
     const update = { _id: req.params.id }
 
     try {
@@ -293,37 +330,49 @@ app.post("/findUser/:id", async (req, res) => {
 
 })
 
-    app.put("/update_Haryana_Member/:id", async(req,res)=>{
-          const filter = {_id: req.params.id}
-        const update = { $set: req.body}
-        try{
-             const data = await haryanaData.updateOne(filter,update);
-        if(data){
+app.put("/update_Haryana_Member/:id", upload.single("image"), async (req, res) => {
+    const filter = { _id: req.params.id }
+    const update = {
+        $set: {
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            state: req.body.state,
+            district: req.body.district,
+            city: req.body.city,
+            address: req.body.address,
+            company: req.body.company,
+            image: req.file ? req.file.filename : req.file,
+        }
+    };
+    try {
+        const data = await haryanaData.updateOne(filter, update);
+        if (data) {
             console.log(data);
             res.send(data);
-        }else{
+        } else {
             console.log("data not see")
             res.send(false)
         }
 
-        }catch(err){
-            console.log(err)
-            res.send(false)
-        }
-      
-       
-    })
+    } catch (err) {
+        console.log(err)
+        res.send(false)
+    }
 
-    app.delete("/Delete_Haryana_Member/:id",async (req,res) => {
-        const data = await haryanaData.deleteOne({_id: req.params.id});
-        if(data){
-            console.log(data);
-            res.send(data);
-        }else{
-            console.log("data not match")
-            res.send(false);
-        }
-    })
+
+})
+
+app.delete("/Delete_Haryana_Member/:id", async (req, res) => {
+    const data = await haryanaData.deleteOne({ _id: req.params.id });
+    if (data) {
+        console.log(data);
+        res.send(data);
+    } else {
+        console.log("data not match")
+        res.send(false);
+    }
+})
 // >------------------------------>Haryana END<-------------------------------<
 // --------> User HR CODE START
 app.post("/userHRRequest", async (req, res) => {
@@ -365,7 +414,7 @@ app.post("/findHRUser/:id", async (req, res) => {
             console.log(data);
             res.send(data);
         }
-        else{
+        else {
             console.log("no data ")
             res.send("no data exist")
         }
@@ -387,24 +436,37 @@ app.post("/findHRUser/:id", async (req, res) => {
 
 
 // --------------->>>Uttarparadesh Start<<<-------------
-app.post("/Add_Uttarparadesh_Member",async(req,res)=>{
-        const data = await UttarparadeshData.insertOne(req.body)
-        const result = await data.save();
-        if(result){
-            res.send(result);
-            console.log(result);
-        }
-    })
+app.post("/Add_Uttarparadesh_Member", upload.single("image"),async (req, res) => {
+    try {
+        const newMember = new UttarparadeshData({
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            state: req.body.state,
+            district: req.body.district,
+            city: req.body.city,
+            address: req.body.address,
+            company: req.body.company,
+            image: req.file ? req.file.filename : "",
+        });
 
-    app.get("/get_Uttarparadesh_member",async(req,res)=>{
-        const data = await UttarparadeshData.find({});
-        if(data){
-            res.send(data);
-            console.log(data);
-        }
-    })
+        const result = await newMember.save();
 
-    app.get("/goUttarparadeshUpdate/:id", async (req, res) => {
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ message: "Error Adding Member" });
+    }
+})
+
+app.get("/get_Uttarparadesh_member", async (req, res) => {
+    const data = await UttarparadeshData.find({});
+    if (data) {
+        res.send(data);
+        console.log(data);
+    }
+})
+
+app.get("/goUttarparadeshUpdate/:id", async (req, res) => {
     const update = { _id: req.params.id }
 
     try {
@@ -429,37 +491,51 @@ app.post("/Add_Uttarparadesh_Member",async(req,res)=>{
 
 })
 
-    app.put("/update_Uttarparadesh_Member/:id", async(req,res)=>{
-          const filter = {_id: req.params.id}
-        const update = { $set: req.body}
-        try{
-             const data = await UttarparadeshData.updateOne(filter,update);
-        if(data){
+app.put("/update_Uttarparadesh_Member/:id", upload.single("image"),async (req, res) => {
+    const filter = { _id: req.params.id }
+    const update = {
+        $set: {
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            state: req.body.state,
+            district: req.body.district,
+            city: req.body.city,
+            address: req.body.address,
+            company: req.body.company,
+            image: req.file.filename,
+            image: req.file ? req.file.filename : req.file,
+        }
+    };
+
+    try {
+        const data = await UttarparadeshData.updateOne(filter, update);
+        if (data) {
             console.log(data);
             res.send(data);
-        }else{
+        } else {
             console.log("data not see")
             res.send(false)
         }
 
-        }catch(err){
-            console.log(err)
-            res.send(false)
-        }
-      
-       
-    })
+    } catch (err) {
+        console.log(err)
+        res.send(false)
+    }
 
-    app.delete("/Delete_Uttarparadesh_Member/:id",async (req,res) => {
-        const data = await UttarparadeshData.deleteOne({_id: req.params.id});
-        if(data){
-            console.log(data);
-            res.send(data);
-        }else{
-            console.log("data not match")
-            res.send(false);
-        }
-    })
+
+})
+
+app.delete("/Delete_Uttarparadesh_Member/:id", async (req, res) => {
+    const data = await UttarparadeshData.deleteOne({ _id: req.params.id });
+    if (data) {
+        console.log(data);
+        res.send(data);
+    } else {
+        console.log("data not match")
+        res.send(false);
+    }
+})
 // --------------->>>UP END<<<----------<<
 // ----------------->UpRequest<-------<
 app.post("/userUpRequest", async (req, res) => {
@@ -501,7 +577,7 @@ app.post("/findUpUser/:id", async (req, res) => {
             console.log(data);
             res.send(data);
         }
-        else{
+        else {
             console.log("no data ")
             res.send("no data exist")
         }
@@ -516,7 +592,7 @@ app.post("/findUpUser/:id", async (req, res) => {
 // ----------------->UpRequest END<---------
 
 
-    
+
 
 
 app.listen(4500)

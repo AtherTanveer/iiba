@@ -5,77 +5,134 @@ import aboutimg from "../assets/about.png"
 
 const Hero = () => {
     return (
-        <div className='p-2 bg-slate-50'>
-            <div className=''>
-                <h1 className=' text-black w-full text-center rounded-md text-4xl mt-8 font-medium'>About IIBA</h1>
-                <div className='p-2  '>
+        <div className='bg-slate-50 py-12 px-4 md:px-16'>
 
-                    <h1 className='text-black h-12 w-full text-center rounded-md text-2xl md:mt-3 font-medium mb-4'>About Indian Industries Business Association</h1>
+            {/* ================= ABOUT SECTION ================= */}
+            <div className='max-w-7xl mx-auto'>
 
-                    <div className='grid grid-cols-1 md:grid-cols-2 justify-center'>
-                        <div>
-                            <ul className='text-black rounded md:m-5'>
-                                <li> <p className='p-2 '>The Indian Industries Business Association (IIBA) is a premier business organization dedicated to strengthening and supporting the MSME sector in India</p></li>
-                                <li><p className='pt-0 p-2'>For over three decades, IIBA has consistently worked towards promoting industrial development by disseminating valuable information on legal, technical, and market-related matters, as well as the latest government policies, procedures, and industrial laws.</p></li>
-                                <li>  <p className='pt-0 p-2'> IIBA also assists industries in solving practical and operational challenges, ensuring sustainable growth and competitiveness</p></li>
+                <h1 className='text-center text-3xl md:text-5xl font-bold text-sky-950'>
+                    About IIBA
+                </h1>
 
-                                <button className='cursor-pointer ms-1 p-2 bg-sky-950 text-white rounded px-6'>Go About</button>
-                            </ul>
-                        </div>
+                <p className='text-center text-gray-600 mt-3 max-w-3xl mx-auto'>
+                    Indian Industries Business Association – Empowering MSMEs, 
+                    Strengthening Industries, Building the Nation.
+                </p>
 
-                        <div>
-                            <img src={aboutimg} alt="" className='w-[120vw]' />
+                <div className='grid md:grid-cols-2 gap-10 items-center mt-12'>
 
-                        </div>
+                    {/* Left Content */}
+                    <div className='space-y-5 text-gray-700 text-base leading-relaxed'>
+
+                        <p>
+                            The Indian Industries Business Association (IIBA) is a premier
+                            business organization dedicated to strengthening and supporting
+                            the MSME sector in India.
+                        </p>
+
+                        <p>
+                            For over three decades, IIBA has consistently worked towards
+                            promoting industrial development by disseminating valuable
+                            information on legal, technical, and market-related matters,
+                            along with the latest government policies and procedures.
+                        </p>
+
+                        <p>
+                            IIBA assists industries in solving practical and operational
+                            challenges, ensuring sustainable growth and competitiveness.
+                        </p>
+
+                        <button className='mt-4 px-6 py-3 bg-sky-950 text-white rounded-lg shadow-md 
+                        hover:bg-sky-800 hover:shadow-xl transition-all duration-300'>
+                            Learn More
+                        </button>
+
                     </div>
 
-
-
-
-
-
+                    {/* Right Image */}
+                    <div className='flex justify-center'>
+                        <img 
+                            src={aboutimg} 
+                            alt="About IIBA"
+                            className='w-full max-w-md md:max-w-lg drop-shadow-2xl'
+                        />
+                    </div>
 
                 </div>
             </div>
 
 
-            {/* MISSION  */}
-            <div>
-                <div className='grid grid-cols-1 md:grid-cols-2 justify-center mt-4 rounded-md md:m-1'>
-                    <div className='bg-gray-200 p-2 md:m-5 rounded-md'>
-                        <h1 className='p-2 text-5xl'>Our Mission</h1>
-                        <p className='mt-5'>To foster cooperation among industries and provide guidance, resources, and advocacy to empower MSMEs and promote sustainable industrial development in India.</p>
-                        <p className='mt-5'>Connecting entrepreneurs, manufacturers, and business leaders for collaboration and growth.</p>
+            {/* ================= MISSION SECTION ================= */}
+            <div className='max-w-7xl mx-auto mt-20'>
 
-                        <p className='mt-5'>
-                            Helping industries resolve practical challenges and facilitating solutions through expert consultations.
+                <div className='grid md:grid-cols-2 gap-10 items-center'>
+
+                    <div className='bg-white p-8 rounded-2xl shadow-lg'>
+                        <h2 className='text-3xl md:text-4xl font-bold text-sky-950'>
+                            Our Mission
+                        </h2>
+
+                        <p className='mt-6 text-gray-700 leading-relaxed'>
+                            To foster cooperation among industries and provide guidance,
+                            resources, and advocacy to empower MSMEs and promote sustainable
+                            industrial development in India.
+                        </p>
+
+                        <p className='mt-4 text-gray-700'>
+                            Connecting entrepreneurs, manufacturers, and business leaders
+                            for collaboration and growth.
+                        </p>
+
+                        <p className='mt-4 text-gray-700'>
+                            Helping industries resolve practical challenges through expert
+                            consultations and industry-driven solutions.
                         </p>
                     </div>
-                    <div>
-                        <img src={Mission} alt="" className='w-fullrounded md:h-82 md:mt-5' />
+
+                    <div className='flex justify-center'>
+                        <img 
+                            src={Mission} 
+                            alt="Mission"
+                            className='w-full max-w-md md:max-w-lg rounded-xl shadow-xl'
+                        />
+                    </div>
+
+                </div>
+            </div>
+
+
+            {/* ================= VISION SECTION ================= */}
+            <div className='max-w-7xl mx-auto mt-20'>
+
+                <div className='grid md:grid-cols-2 gap-10 items-center'>
+
+                    <div className='flex justify-center order-2 md:order-1'>
+                        <img 
+                            src={vision} 
+                            alt="Vision"
+                            className='w-full max-w-md md:max-w-lg rounded-xl shadow-xl'
+                        />
+                    </div>
+
+                    <div className='bg-white p-8 rounded-2xl shadow-lg order-1 md:order-2'>
+                        <h2 className='text-3xl md:text-4xl font-bold text-sky-950'>
+                            Our Vision
+                        </h2>
+
+                        <p className='mt-6 text-gray-700 leading-relaxed'>
+                            To create a powerful, connected, and forward-looking industrial
+                            ecosystem that accelerates MSME growth and strengthens India's
+                            economic foundation.
+                        </p>
+
+                        <p className='mt-4 text-gray-700'>
+                            Enabling collaboration, transparency, and long-term industrial
+                            sustainability across regions.
+                        </p>
                     </div>
 
                 </div>
 
-
-
-
-                <div className='grid md:grid-cols-2 justify-center md:p-7 rounded-md md:m-4'>
-                    <div className='pt-5'>
-                        <img src={vision} alt="" className='w-full rounded' />
-                    </div>
-                    <div className='p-5 bg-gray-200 md:m-5 rounded-md'>
-                        <h1 className='p-2 text-5xl'>OUR VISION</h1>
-                        <p className=' mt-5'>To foster cooperation among industries and provide guidance, resources, and advocacy to empower MSMEs and promote sustainable industrial development in India.</p>
-                        <p className=' mt-5'>Connecting entrepreneurs, manufacturers, and business leaders for collaboration and growth.</p>
-
-                        <p className=' mt-5'>
-                            Helping industries resolve practical challenges and facilitating solutions through expert consultations.
-                        </p>
-                    </div>
-
-
-                </div>
             </div>
 
         </div>
