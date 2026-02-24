@@ -14,8 +14,27 @@ const NewUser = () => {
   const [city, setcity] = useState("");
   const [address, setaddress] = useState("");
   const [company, setcompany] = useState("");
-
+  const [image, setimage] = useState(null);
   const [boolval, setboolval] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const locationData = {
+  Uttarakhand: {
+    Dehradun: ["Dehradun", "Rishikesh", "Vikasnagar"],
+    Haridwar: ["Haridwar", "Roorkee", "Laksar"],
+    Nainital: ["Haldwani", "Nainital", "Ramnagar"],
+    UdhamSinghNagar: ["Rudrapur", "Kashipur", "Sitarganj"],
+    PauriGarhwal: ["Kotdwar", "Pauri"],
+    TehriGarhwal: ["New Tehri"],
+    Chamoli: ["Gopeshwar"],
+    Almora: ["Almora"],
+    Bageshwar: ["Bageshwar"],
+    Champawat: ["Champawat"],
+    Pithoragarh: ["Pithoragarh"],
+    Rudraprayag: ["Rudraprayag"],
+    Uttarkashi: ["Uttarkashi"]
+  }
+};
 
   const navigate = useNavigate();
 
@@ -28,21 +47,44 @@ const NewUser = () => {
     }
 
     if (phone.length !== 10) {
-  alert("Phone number must be 10 digits");
-  return;
-}
+      alert("Phone number must be 10 digits");
+      return;
+    }
 
-    const data = await fetch("http://localhost:4500/userRequest", {
-      method: "POST",
-      body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
-      headers: { "Content-Type": "application/json" },
-    });
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("state", state);
+    formData.append("district", district);
+    formData.append("city", city);
+    formData.append("address", address);
+    formData.append("company", company);
 
-    const result = await data.json();
+    if (image) {
+      formData.append("image", image);
+    }
 
-    if (result) {
-      alert("✅ Thank you! Membership request submitted.");
-      navigate("/");
+    try {
+      setLoading(true); // ✅ Start Loader
+
+      const data = await fetch("http://localhost:4500/userRequest", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await data.json();
+
+      if (result) {
+        alert("✅ Thank you! Membership request submitted.");
+        navigate("/");
+      }
+
+    } catch (err) {
+      console.log(err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false); // ✅ Stop Loader
     }
   };
 
@@ -87,20 +129,90 @@ const NewUser = () => {
             <input className="inputStyle p-2 rounded-md" value={company} onChange={(e) => setcompany(e.target.value)} placeholder="Company Name" />
             {boolval && !company && <p className="error">Enter Company</p>}
 
-            <input className="inputStyle p-2 rounded-md" value={state} onChange={(e) => setstate(e.target.value)} placeholder="State" />
-            <input className="inputStyle p-2 rounded-md" value={district} onChange={(e) => setdistrict(e.target.value)} placeholder="District" />
+           {/* State Dropdown */}
+<select
+  className="inputStyle p-2 rounded-md"
+  value={state}
+  onChange={(e) => {
+    setstate(e.target.value);
+    setdistrict("");
+    setcity("");
+  }}
+>
+  <option value="">Select State</option>
+  {Object.keys(locationData).map((stateName) => (
+    <option key={stateName} value={stateName}>
+      {stateName}
+    </option>
+  ))}
+</select>
 
-            <input className="inputStyle p-2 rounded-md" value={city} onChange={(e) => setcity(e.target.value)} placeholder="City" />
+{/* District Dropdown */}
+<select
+  className="inputStyle p-2 rounded-md"
+  value={district}
+  onChange={(e) => {
+    setdistrict(e.target.value);
+    setcity("");
+  }}
+  disabled={!state}
+>
+  <option value="">Select District</option>
+  {state &&
+    Object.keys(locationData[state]).map((districtName) => (
+      <option key={districtName} value={districtName}>
+        {districtName}
+      </option>
+    ))}
+</select>
+
+{/* City Dropdown */}
+<select
+  className="inputStyle p-2 rounded-md"
+  value={city}
+  onChange={(e) => setcity(e.target.value)}
+  disabled={!district}
+>
+  <option value="">Select City</option>
+  {state &&
+    district &&
+    locationData[state][district].map((cityName) => (
+      <option key={cityName} value={cityName}>
+        {cityName}
+      </option>
+    ))}
+</select>
             <input className="inputStyle p-2 rounded-md" value={address} onChange={(e) => setaddress(e.target.value)} placeholder="Full Address" />
 
-            <button className="md:col-span-2 bg-blue-900 text-white py-3 rounded-lg text-lg font-bold hover:bg-blue-700 transition">
-              Submit Membership Request
+            {/* New Image Upload */}
+            <div className="w-full">
+              <p className='text-gray-900 pb-2 '>Upload Profile Image*</p>
+
+              <input
+                type="file"
+                onChange={(e) => setimage(e.target.files[0])}
+                className="p-2 bg-gray-700 w-50 text-white font-medium rounded-md"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={`md:col-span-2 py-3 rounded-lg text-lg font-bold transition flex items-center justify-center gap-2
+    ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-900 hover:bg-blue-700 text-white"}
+  `}
+            >
+              {loading && (
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              )}
+
+              {loading ? "Submitting..." : "Submit Membership Request"}
             </button>
           </form>
         )}
 
-        {value === "UttarParadesh" && <UpUser/>}
-        {value === "Haryana" && <HrUser/>}
+        {value === "UttarParadesh" && <UpUser />}
+        {value === "Haryana" && <HrUser />}
         {value === "HimachalParadesh" && <p className="w-full text-lg font-medium text-center text-gray-700 pt-4">Himachal Paradesh MemberShip Coming Soon...</p>}
       </div>
     </div>

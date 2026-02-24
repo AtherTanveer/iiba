@@ -13,11 +13,13 @@ const Haryana_Add_Member = () => {
     const [company, setcompany] = useState("")
     const [boolval, setboolval] = useState(false);
     const [image, setimage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const handlesubmit = async (e) => {
         e.preventDefault();
+
         if (!name || !email || !phone || !company || !state || !district || !city || !address) {
             setboolval(true);
             return;
@@ -27,14 +29,13 @@ const Haryana_Add_Member = () => {
             alert("Phone number must be 10 digits");
             return;
         }
+
         if (!image) {
             alert("Please Upload Image !!");
-            seimagevalid(true)
-            return false
+            return;
         }
 
         const formData = new FormData();
-
         formData.append("name", name);
         formData.append("email", email);
         formData.append("phone", phone);
@@ -43,30 +44,30 @@ const Haryana_Add_Member = () => {
         formData.append("city", city);
         formData.append("address", address);
         formData.append("company", company);
+        formData.append("image", image);
 
-        if (image) {
-            formData.append("image", image);
+        try {
+            setLoading(true); // ✅ Start loader
+
+            const data = await fetch("http://localhost:4500/Add_Haryana_Member", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await data.json();
+
+            if (result) {
+                alert("Member Added");
+                navigate("/haryanaLogin/Haryana_Admin_login");
+            }
+
+        } catch (error) {
+            console.log(error);
+            alert("Something went wrong");
+        } finally {
+            setLoading(false); // ✅ Stop loader
         }
-
-        const data = await fetch("http://localhost:4500/Add_Haryana_Member", {
-
-            method: "post",
-            body: formData,
-
-        })
-
-        const result = await data.json();;
-        console.log(result);
-
-        if (result) {
-            alert("Member Added")
-            navigate("/haryanaLogin/Haryana_Admin_login")
-
-        }
-
-
-        console.log(name, email, phone, company)
-    }
+    };
 
     const nameHandler = (e) => {
         setname(e.target.value);
@@ -210,9 +211,19 @@ const Haryana_Add_Member = () => {
                         <div className="md:col-span-2 flex justify-center mt-4">
                             <button
                                 type="submit"
-                                className="bg-sky-950 hover:bg-sky-800 transition duration-300 text-white px-12 py-3 rounded-xl text-lg shadow-md"
+                                disabled={loading}
+                                className={`px-12 py-3 rounded-xl text-lg shadow-md flex items-center gap-2 transition
+      ${loading
+                                        ? "bg-gray-400 cursor-not-allowed text-white"
+                                        : "bg-sky-950 hover:bg-sky-800 text-white"
+                                    }
+    `}
                             >
-                                Add Member
+                                {loading && (
+                                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                )}
+
+                                {loading ? "Uploading..." : "Add Member"}
                             </button>
                         </div>
 

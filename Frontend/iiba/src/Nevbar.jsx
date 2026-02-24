@@ -28,9 +28,9 @@ const Navbar = () => {
              <li><Link to="/Members" className="hover:text-sky-300 transition">Members</Link></li>
             <li><Link to="/membership" className="hover:text-sky-300 transition">Membership</Link></li>
            
-            <li><Link to="/about" className="hover:text-sky-300 transition">About</Link></li>
-            <li><Link to="/goal" className="hover:text-sky-300 transition">Goal</Link></li>
-            <li><Link to="/help" className="hover:text-sky-300 transition">Help</Link></li>
+            <li><Link to="/AboutIIBA" className="hover:text-sky-300 transition">About</Link></li>
+            <li><Link to="/goal" className="hover:text-sky-300 transition">News</Link></li>
+            <li><Link to="/HelpPage" className="hover:text-sky-300 transition">Help</Link></li>
           </ul>
 
           {/* Contact (Desktop Only) */}
@@ -59,9 +59,9 @@ const Navbar = () => {
             <Link to="/" onClick={() => setMenuOpen(false)} className="block">Home</Link>
             <Link to="/membership" onClick={() => setMenuOpen(false)} className="block">Membership</Link>
             <Link to="/Members" onClick={() => setMenuOpen(false)} className="block">Member</Link>
-            <Link to="/about" onClick={() => setMenuOpen(false)} className="block">About</Link>
-            <Link to="/goal" onClick={() => setMenuOpen(false)} className="block">Goal</Link>
-            <Link to="/help" onClick={() => setMenuOpen(false)} className="block">Help</Link>
+            <Link to="/AboutIIBA" onClick={() => setMenuOpen(false)} className="block">About</Link>
+            <Link to="/goal" onClick={() => setMenuOpen(false)} className="block">News</Link>
+            <Link to="/HelpPage" onClick={() => setMenuOpen(false)} className="block">Help</Link>
             <Link
               to="/contact"
               onClick={() => setMenuOpen(false)}

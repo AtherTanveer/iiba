@@ -4,7 +4,7 @@ import { FaUserPlus, FaUserTie, FaUserShield } from "react-icons/fa";
 
 const MemberShipComp = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100 flex flex-col items-center p-6">
+    <div className="pb-7 md:pb-0 min-h-screen bg-gradient-to-br from-white to-indigo-100 flex flex-col items-center p-6">
 
       {/* Heading */}
       <h1 className=" text-3xl md:text-4xl font-bold text-center mt-6">
@@ -21,8 +21,8 @@ const MemberShipComp = () => {
         <Link to="/Newuser">
           <div className="card-ui">
             <FaUserPlus className="icon-ui text-2xl" />
-            <h2 className="text-2xl">New User Apply for Membership</h2>
-            <p>Apply online for new IIBA membership</p>
+            <h2 className="text-lg md:text-2xl font-medium">New User Apply for Membership</h2>
+            <p className="text-sm md:text-lg" >Apply online for new IIBA membership</p>
           </div>
         </Link>
 
@@ -30,17 +30,17 @@ const MemberShipComp = () => {
         <Link to="/State">
           <div className="card-ui">
             <FaUserTie className="icon-ui text-2xl" />
-            <h2 className="text-2xl">State President / Secretary</h2>
-            <p>Add new verified members</p>
+            <h2 className="text-lg md:text-2xl font-medium">State President / Secretary</h2>
+            <p className="text-sm md:text-lg">Add new verified members</p>
           </div>
         </Link>
 
         {/* Admin Login */}
         <Link to="/AdminMain">
           <div className="card-ui">
-            <FaUserShield className="icon-ui text-2xl" />
-            <h2 className="text-2xl">Admin Login</h2>
-            <p>Manage member approvals</p>
+            <FaUserShield className="icon-ui text-2xl " />
+            <h2 className="text-lg md:text-2xl font-medium">Admin Login</h2>
+            <p className="text-sm md:text-lg">Manage member approvals</p>
           </div>
         </Link>
 

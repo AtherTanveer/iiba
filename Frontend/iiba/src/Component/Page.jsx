@@ -24,6 +24,8 @@ import UpRequest from '../Uttarpardesh_crud/UpRequest'
 import UpPrivateCo from '../UpPrivateCo'
 import Admin from '../Admin/Admin'
 import Members from '../AllMembers/Members'
+import AboutIIBA from '../AboutIIBA'
+import HelpPage from '../HelpPage'
 
 const Page = () => {
   return (
@@ -39,6 +41,8 @@ const Page = () => {
         <Route path='/haryanaLogin' element={<HaryanaLogin />} />
         <Route path='/Newuser' element={<NewUser />} />
         <Route path='/Members' element={<Members/>}/>
+        <Route path='/AboutIIBA' element={<AboutIIBA/>}/>
+        <Route path='/HelpPage' element={<HelpPage/>}/>
 
 
 

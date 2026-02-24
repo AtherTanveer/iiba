@@ -43,7 +43,7 @@ const StateCom = () => {
                     {
                         stateDetail.map((elem, index) => (
                             <Link to={`${elem.pathname}`} key={index}>
-                                <div className='flex m-2 p-5 font-medium card-ui bg-gray-300 rounded-md w-full md:w-[20vw]  text-center text-black'>
+                                <div className='flex mb-2 md:m-2 p-5 font-medium card-ui bg-gray-300 rounded-md w-full md:w-[20vw]  text-center text-black'>
                                     <FaMapLocationDot className='icon-ui text-2xl'/>
                                     <h1 className='ps-3'>{elem.stateName}</h1>
                                 </div>

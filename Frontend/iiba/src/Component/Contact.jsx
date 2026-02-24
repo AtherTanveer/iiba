@@ -1,0 +1,87 @@
+import React from "react";
+
+const Contact = () => {
+  return (
+    <section className="w-full bg-gradient-to-br from-sky-50 via-white to-sky-100 py-16 px-6 md:px-16">
+
+      {/* Heading */}
+      <div className="text-center mb-14">
+        <h2 className="text-3xl md:text-4xl font-bold text-sky-950">
+          Get In Touch With Us
+        </h2>
+        <p className="text-gray-600 mt-3 text-sm md:text-base">
+          Indian Industries & Business Association (IIBA)
+        </p>
+      </div>
+
+      {/* Main Layout */}
+      <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+        {/* LEFT SIDE - Contact Cards */}
+        <div className="grid sm:grid-cols-2 gap-6">
+
+          {/* Address */}
+          <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-md hover:shadow-lg transition duration-300 border border-sky-100">
+            <div className="text-3xl mb-4">📍</div>
+            <h3 className="font-semibold text-sky-950 mb-2">Address</h3>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              National Office: 110, Chandan Nagar,<br />
+              Dehradun-247001, Uttarakhand, India
+            </p>
+          </div>
+
+          {/* Phone */}
+          <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-md hover:shadow-lg transition duration-300 border border-sky-100">
+            <div className="text-3xl mb-4">📞</div>
+            <h3 className="font-semibold text-sky-950 mb-2">Phone</h3>
+            <p className="text-gray-600 text-sm">
+              +91 7906856465
+            </p>
+          </div>
+
+          {/* Email */}
+          <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-md hover:shadow-lg transition duration-300 border border-sky-100">
+            <div className="text-3xl mb-4">📧</div>
+            <h3 className="font-semibold text-sky-950 mb-2">Email</h3>
+            <p className="text-gray-600 text-sm">
+              IIBA.association1966@gmail.com
+            </p>
+          </div>
+
+          {/* Working Hours */}
+          <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-md hover:shadow-lg transition duration-300 border border-sky-100">
+            <div className="text-3xl mb-4">🕒</div>
+            <h3 className="font-semibold text-sky-950 mb-2">Working Hours</h3>
+            <p className="text-gray-600 text-sm">
+              Mon - Sat <br />
+              10:00 AM - 6:00 PM
+            </p>
+          </div>
+
+        </div>
+
+        {/* RIGHT SIDE - Map */}
+        <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-sky-200">
+
+          <iframe
+            title="IIBA Location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.631124244739!2d77.55468407462824!3d29.961287222507554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390eea9ed92a0ebf%3A0xe7782c82dad28cf1!2s110%2C%20Dehradun%20Rd%2C%20chokh%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001!5e0!3m2!1sen!2sin!4v1771319297428!5m2!1sen!2sin"
+            className="w-full h-[300px] md:h-[450px]"
+            loading="lazy"
+            allowFullScreen
+          ></iframe>
+
+          {/* Overlay Label */}
+          <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl shadow-md text-sm font-medium text-sky-950">
+            Our Office Location
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+  );
+};
+
+export default Contact;

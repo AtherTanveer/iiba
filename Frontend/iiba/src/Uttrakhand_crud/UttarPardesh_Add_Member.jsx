@@ -14,11 +14,14 @@ const UttarPardesh_Add_Member = () => {
   const [boolval, setboolval] = useState(false);
   const [image, setimage] = useState(null);
   const [imageValid, seimagevalid] = useState(false);
+  const [loading, setloading] = useState(false);
 
 
   const navigate = useNavigate();
+
   const handlesubmit = async (e) => {
     e.preventDefault();
+
     if (!name || !email || !phone || !company || !state || !district || !city || !address) {
       setboolval(true);
       return;
@@ -31,12 +34,11 @@ const UttarPardesh_Add_Member = () => {
 
     if (!image) {
       alert("Please Upload Image !!");
-      seimagevalid(true)
-      return false
+      seimagevalid(true);
+      return;
     }
 
     const formData = new FormData();
-
     formData.append("name", name);
     formData.append("email", email);
     formData.append("phone", phone);
@@ -45,32 +47,30 @@ const UttarPardesh_Add_Member = () => {
     formData.append("city", city);
     formData.append("address", address);
     formData.append("company", company);
+    formData.append("image", image);
 
-    if (image) {
-      formData.append("image", image);
+    try {
+      setloading(true); // ✅ START LOADER
+
+      const data = await fetch("http://localhost:4500/addMember", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await data.json();
+
+      if (result) {
+        alert("Member Added");
+        navigate("/uttrakhandLogin/addmember");
+      }
+
+    } catch (err) {
+      console.log(err);
+      alert("Upload Failed");
+    } finally {
+      setloading(false); // ✅ STOP LOADER
     }
-
-
-    const data = await fetch("http://localhost:4500/addMember", {
-
-      method: "post",
-      body: formData,
-
-    })
-
-    const result = await data.json();;
-    console.log(result);
-
-    if (result) {
-      alert("Member Added")
-      navigate("/uttrakhandLogin/addmember")
-
-    }
-
-
-    console.log(name, email, phone, company)
-  }
-
+  };
   const nameHandler = (e) => {
     setname(e.target.value);
   }
@@ -216,9 +216,15 @@ const UttarPardesh_Add_Member = () => {
             <div className="md:col-span-2 flex justify-center mt-4">
               <button
                 type="submit"
-                className="bg-sky-950 hover:bg-sky-800 transition duration-300 text-white px-12 py-3 rounded-xl text-lg shadow-md"
+                disabled={loading}
+                className={`${loading ? "bg-gray-400 cursor-not-allowed" : "bg-sky-950 hover:bg-sky-800"
+                  } transition duration-300 text-white px-12 py-3 rounded-xl text-lg shadow-md flex items-center justify-center gap-2`}
               >
-                Add Member
+                {loading && (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                )}
+
+                {loading ? "Uploading..." : "Add Member"}
               </button>
             </div>
 

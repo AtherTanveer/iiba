@@ -27,7 +27,7 @@ const Services = () => {
   ]
 
   const stats = [
-    { number: "38+", label: "Years of Experience" },
+    { number: "17+", label: "Years of Experience" },
     { number: "10,000+", label: "MSMEs Supported" },
     { number: "500+", label: "Industry Events" },
     { number: "100+", label: "Policy Workshops" },

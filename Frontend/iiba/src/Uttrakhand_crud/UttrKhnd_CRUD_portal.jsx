@@ -19,9 +19,7 @@ const UttrKhnd_CRUD_portal = () => {
 
     }
 
-    useEffect(()=>{
-        getData();
-    },[])
+   
 
 
     console.log(list)
@@ -57,6 +55,23 @@ const UttrKhnd_CRUD_portal = () => {
         
     }
 
+      const searchData = async (e) => {
+        // console.log(e.target.value)
+        if (e.target.value) {
+            const data = await fetch(`http://localhost:4500/search/${e.target.value}`)
+            const result = await data.json();
+            console.log(result)
+            setlist(result);
+
+        } else {
+            getData()
+        }
+    }
+
+     useEffect(()=>{
+        getData();
+    },[])
+
   return (
     <>
   {/* Header */}
@@ -91,6 +106,7 @@ const UttrKhnd_CRUD_portal = () => {
 
     <div className="flex flex-col md:flex-row gap-3 items-center">
       <input
+      onChange={searchData}
         className="border p-2 rounded-lg w-60 focus:outline-blue-500"
         type="text"
         placeholder="Search Member..."
