@@ -19,22 +19,22 @@ const NewUser = () => {
   const [loading, setLoading] = useState(false);
 
   const locationData = {
-  Uttarakhand: {
-    Dehradun: ["Dehradun", "Rishikesh", "Vikasnagar"],
-    Haridwar: ["Haridwar", "Roorkee", "Laksar"],
-    Nainital: ["Haldwani", "Nainital", "Ramnagar"],
-    UdhamSinghNagar: ["Rudrapur", "Kashipur", "Sitarganj"],
-    PauriGarhwal: ["Kotdwar", "Pauri"],
-    TehriGarhwal: ["New Tehri"],
-    Chamoli: ["Gopeshwar"],
-    Almora: ["Almora"],
-    Bageshwar: ["Bageshwar"],
-    Champawat: ["Champawat"],
-    Pithoragarh: ["Pithoragarh"],
-    Rudraprayag: ["Rudraprayag"],
-    Uttarkashi: ["Uttarkashi"]
-  }
-};
+    Uttarakhand: {
+      Dehradun: ["Dehradun", "Rishikesh", "Vikasnagar"],
+      Haridwar: ["Haridwar", "Roorkee", "Laksar"],
+      Nainital: ["Haldwani", "Nainital", "Ramnagar"],
+      UdhamSinghNagar: ["Rudrapur", "Kashipur", "Sitarganj"],
+      PauriGarhwal: ["Kotdwar", "Pauri"],
+      TehriGarhwal: ["New Tehri"],
+      Chamoli: ["Gopeshwar"],
+      Almora: ["Almora"],
+      Bageshwar: ["Bageshwar"],
+      Champawat: ["Champawat"],
+      Pithoragarh: ["Pithoragarh"],
+      Rudraprayag: ["Rudraprayag"],
+      Uttarkashi: ["Uttarkashi"]
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -129,59 +129,59 @@ const NewUser = () => {
             <input className="inputStyle p-2 rounded-md" value={company} onChange={(e) => setcompany(e.target.value)} placeholder="Company Name" />
             {boolval && !company && <p className="error">Enter Company</p>}
 
-           {/* State Dropdown */}
-<select
-  className="inputStyle p-2 rounded-md"
-  value={state}
-  onChange={(e) => {
-    setstate(e.target.value);
-    setdistrict("");
-    setcity("");
-  }}
->
-  <option value="">Select State</option>
-  {Object.keys(locationData).map((stateName) => (
-    <option key={stateName} value={stateName}>
-      {stateName}
-    </option>
-  ))}
-</select>
+            {/* State Dropdown */}
+            <select
+              className="inputStyle p-2 rounded-md"
+              value={state}
+              onChange={(e) => {
+                setstate(e.target.value);
+                setdistrict("");
+                setcity("");
+              }}
+            >
+              <option value="">Select State</option>
+              {Object.keys(locationData).map((stateName) => (
+                <option key={stateName} value={stateName}>
+                  {stateName}
+                </option>
+              ))}
+            </select>
 
-{/* District Dropdown */}
-<select
-  className="inputStyle p-2 rounded-md"
-  value={district}
-  onChange={(e) => {
-    setdistrict(e.target.value);
-    setcity("");
-  }}
-  disabled={!state}
->
-  <option value="">Select District</option>
-  {state &&
-    Object.keys(locationData[state]).map((districtName) => (
-      <option key={districtName} value={districtName}>
-        {districtName}
-      </option>
-    ))}
-</select>
+            {/* District Dropdown */}
+            <select
+              className="inputStyle p-2 rounded-md"
+              value={district}
+              onChange={(e) => {
+                setdistrict(e.target.value);
+                setcity("");
+              }}
+              disabled={!state}
+            >
+              <option value="">Select District</option>
+              {state &&
+                Object.keys(locationData[state]).map((districtName) => (
+                  <option key={districtName} value={districtName}>
+                    {districtName}
+                  </option>
+                ))}
+            </select>
 
-{/* City Dropdown */}
-<select
-  className="inputStyle p-2 rounded-md"
-  value={city}
-  onChange={(e) => setcity(e.target.value)}
-  disabled={!district}
->
-  <option value="">Select City</option>
-  {state &&
-    district &&
-    locationData[state][district].map((cityName) => (
-      <option key={cityName} value={cityName}>
-        {cityName}
-      </option>
-    ))}
-</select>
+            {/* City Dropdown */}
+            <select
+              className="inputStyle p-2 rounded-md"
+              value={city}
+              onChange={(e) => setcity(e.target.value)}
+              disabled={!district}
+            >
+              <option value="">Select City</option>
+              {state &&
+                district &&
+                locationData[state][district].map((cityName) => (
+                  <option key={cityName} value={cityName}>
+                    {cityName}
+                  </option>
+                ))}
+            </select>
             <input className="inputStyle p-2 rounded-md" value={address} onChange={(e) => setaddress(e.target.value)} placeholder="Full Address" />
 
             {/* New Image Upload */}

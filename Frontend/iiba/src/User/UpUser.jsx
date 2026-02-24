@@ -11,8 +11,9 @@ const UpUser = () => {
   const [city, setcity] = useState("");
   const [address, setaddress] = useState("");
   const [company, setcompany] = useState("");
-
+  const [image, setimage] = useState(null);
   const [boolval, setboolval] = useState(false);
+  const [loading, setloading] = useState(false);
 
   const locationData = {
     UttarPradesh: {
@@ -54,17 +55,43 @@ const UpUser = () => {
       return;
     }
 
-    const data = await fetch("http://localhost:4500/userUpRequest", {
-      method: "POST",
-      body: JSON.stringify({ name, email, phone, state, district, city, address, company }),
-      headers: { "Content-Type": "application/json" },
-    });
+    if (!image) {
+      alert("Please Upload Image !!");
+      return;
+    }
 
-    const result = await data.json();
+    try {
+      setloading(true); // 🔥 start loader
 
-    if (result) {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("state", state);
+      formData.append("district", district);
+      formData.append("city", city);
+      formData.append("address", address);
+      formData.append("company", company);
+      formData.append("image", image);
+
+      const response = await fetch("http://localhost:4500/userUpRequest", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to submit");
+      }
+
       alert("✅ Thank you! Membership request submitted.");
       navigate("/");
+
+    } catch (error) {
+      alert("Something went wrong!");
+    } finally {
+      setloading(false); // 🔥 stop loader
     }
   };
   return (
@@ -137,8 +164,28 @@ const UpUser = () => {
         </select>
         <input className="inputStyle p-2 rounded-md" value={address} onChange={(e) => setaddress(e.target.value)} placeholder="Full Address" />
 
-        <button className="md:col-span-2 bg-blue-900 text-white py-3 rounded-lg text-lg font-bold hover:bg-blue-700 transition">
-          Submit Membership Request
+
+        {/* New Image Upload */}
+        <div className="w-full">
+          <p className='text-gray-900 pb-2 '>Upload Profile Image*</p>
+
+          <input
+            type="file"
+            onChange={(e) => setimage(e.target.files[0])}
+            className="p-2 bg-gray-700 w-50 text-white font-medium rounded-md"
+          />
+        </div>
+
+        <button
+          disabled={loading}
+          className={`md:col-span-2 py-3 rounded-lg text-lg font-bold transition 
+    ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-900 hover:bg-blue-700"} 
+    text-white flex justify-center items-center gap-2`}
+        >
+          {loading && (
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          )}
+          {loading ? "Submitting..." : "Submit Membership Request"}
         </button>
       </form>
 

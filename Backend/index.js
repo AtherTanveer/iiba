@@ -671,6 +671,16 @@ app.post("/Add_Uttarparadesh_Member", upload.single("image"), async (req, res) =
     }
 })
 
+app.post("/ReAdd_Uttarparadesh_Member", async (req, res) => {
+    try {
+        const newMember = new UttarparadeshData(req.body);
+        const result = await newMember.save();
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ message: "Error Adding Member" });
+    }
+});
+
 app.get("/get_Uttarparadesh_member", async (req, res) => {
     const data = await UttarparadeshData.find({});
     if (data) {
@@ -705,9 +715,94 @@ app.get("/goUttarparadeshUpdate/:id", async (req, res) => {
 })
 
 app.put("/update_Uttarparadesh_Member/:id", upload.single("image"), async (req, res) => {
-    const filter = { _id: req.params.id }
-    const update = {
-        $set: {
+    try {
+    const member = await UttarparadeshData.findById(req.params.id);
+
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
+    }
+
+    let updatedImage = member.image; // default keep old image
+
+    // Only if new file uploaded
+    if (req.file) {
+
+      // Delete old image if exists
+      if (member.image) {
+        const imagePath = path.join(__dirname, "uploads", member.image);
+
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+      }
+
+      // Set new image filename
+      updatedImage = req.file.filename;
+    }
+
+    // Update data
+    const updatedMember = await UttarparadeshData.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        state: req.body.state,
+        district: req.body.district,
+        city: req.body.city,
+        address: req.body.address,
+        company: req.body.company,
+        image: updatedImage,
+      },
+      { new: true }
+    );
+
+    res.json(updatedMember);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+
+
+})
+
+app.delete("/Delete_Uttarparadesh_Member/:id", async (req, res) => {
+   try {
+        const member = await UttarparadeshData.findById(req.params.id);
+
+        if (!member) {
+            return res.status(404).json({ message: "Request not found" });
+        }
+
+        // Delete image file if exists
+        if (member.image) {
+            const imagePath = path.join(__dirname, "uploads", member.image);
+
+            fs.unlink(imagePath, (err) => {
+                if (err) {
+                    console.log("Image delete error:", err);
+                } else {
+                    console.log("Image deleted successfully");
+                }
+            });
+        }
+
+        // Delete member from DB
+        await UttarparadeshData.findByIdAndDelete(req.params.id);
+
+        res.json({ message: "Member and image deleted successfully" });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+})
+// --------------->>>UP END<<<----------<<
+// ----------------->UpRequest<-------<
+app.post("/userUpRequest", upload.single("image"),async (req, res) => {
+     try {
+        const request = new UPrequest({
             name: req.body.name,
             email: req.body.email,
             phone: req.body.phone,
@@ -716,46 +811,15 @@ app.put("/update_Uttarparadesh_Member/:id", upload.single("image"), async (req, 
             city: req.body.city,
             address: req.body.address,
             company: req.body.company,
-            image: req.file.filename,
-            image: req.file ? req.file.filename : req.file,
-        }
-    };
+            image: req.file ? req.file.filename : "",
+        });
 
-    try {
-        const data = await UttarparadeshData.updateOne(filter, update);
-        if (data) {
-            console.log(data);
-            res.send(data);
-        } else {
-            console.log("data not see")
-            res.send(false)
-        }
+        const result = await request.save();
 
+        res.json(result);
     } catch (err) {
-        console.log(err)
-        res.send(false)
+        res.status(500).json({ message: "Error Adding Member" });
     }
-
-
-})
-
-app.delete("/Delete_Uttarparadesh_Member/:id", async (req, res) => {
-    const data = await UttarparadeshData.deleteOne({ _id: req.params.id });
-    if (data) {
-        console.log(data);
-        res.send(data);
-    } else {
-        console.log("data not match")
-        res.send(false);
-    }
-})
-// --------------->>>UP END<<<----------<<
-// ----------------->UpRequest<-------<
-app.post("/userUpRequest", async (req, res) => {
-    const data = await UPrequest.insertOne(req.body);
-    const result = await data.save();
-    console.log(result)
-    res.send(result);
 })
 
 app.get("/getUpUser", async (req, res) => {
@@ -779,6 +843,38 @@ app.delete("/deleteUpRequest/:id", async (req, res) => {
     } catch (err) {
         console.log("something went wrong")
         res.send(false)
+    }
+})
+// ADMIN DELETE USER REQUEWT
+app.delete("/AdminDeleteUpRequest/:id", async (req, res) => {
+   try {
+        const request = await UPrequest.findById(req.params.id);
+
+        if (!request) {
+            return res.status(404).json({ message: "Request not found" });
+        }
+
+        // Delete image file if exists
+        if (request.image) {
+            const imagePath = path.join(__dirname, "uploads", request.image);
+
+            fs.unlink(imagePath, (err) => {
+                if (err) {
+                    console.log("Image delete error:", err);
+                } else {
+                    console.log("Image deleted successfully");
+                }
+            });
+        }
+
+        // Delete member from DB
+        await UPrequest.findByIdAndDelete(req.params.id);
+
+        res.json({ message: "Member and image deleted successfully" });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Something went wrong" });
     }
 })
 
