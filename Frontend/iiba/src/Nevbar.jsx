@@ -29,7 +29,7 @@ const Navbar = () => {
             <li><Link to="/membership" className="hover:text-sky-300 transition">Membership</Link></li>
            
             <li><Link to="/AboutIIBA" className="hover:text-sky-300 transition">About</Link></li>
-            <li><Link to="/goal" className="hover:text-sky-300 transition">News</Link></li>
+            <li><Link to="/News" className="hover:text-sky-300 transition">News</Link></li>
             <li><Link to="/HelpPage" className="hover:text-sky-300 transition">Help</Link></li>
           </ul>
 
@@ -60,7 +60,7 @@ const Navbar = () => {
             <Link to="/membership" onClick={() => setMenuOpen(false)} className="block">Membership</Link>
             <Link to="/Members" onClick={() => setMenuOpen(false)} className="block">Member</Link>
             <Link to="/AboutIIBA" onClick={() => setMenuOpen(false)} className="block">About</Link>
-            <Link to="/goal" onClick={() => setMenuOpen(false)} className="block">News</Link>
+            <Link to="/News" onClick={() => setMenuOpen(false)} className="block">News</Link>
             <Link to="/HelpPage" onClick={() => setMenuOpen(false)} className="block">Help</Link>
             <Link
               to="/contact"

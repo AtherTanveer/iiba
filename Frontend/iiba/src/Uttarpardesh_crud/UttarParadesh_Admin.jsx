@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { IoPersonAddSharp } from "react-icons/io5";
 import { MdOutlinePendingActions } from "react-icons/md";
+import { FaCloudUploadAlt } from "react-icons/fa";
 const UttarParadesh_Admin = () => {
     const params = useParams();
         const[list,setlist] = useState([]);
@@ -17,6 +18,18 @@ const UttarParadesh_Admin = () => {
             }
     
         }
+          const searchData = async (e) => {
+        // console.log(e.target.value)
+        if (e.target.value) {
+            const data = await fetch(`http://localhost:4500/UPsearch/${e.target.value}`)
+            const result = await data.json();
+            console.log(result)
+            setlist(result);
+
+        } else {
+            getData()
+        }
+    }
     
         useEffect(()=>{
             getData();
@@ -64,8 +77,9 @@ const UttarParadesh_Admin = () => {
       {/* Header */}
       <div className="bg-white shadow-md p-4 flex flex-col md:flex-row justify-between items-center gap-3">
         <h1 className="text-2xl font-bold text-blue-900">
-          IIBA State President Dashboard
-        </h1>
+      UttarParadesh State President Dashboard – IIBA
+    </h1>
+    <p className='text-gray-600 pb-4 md:p-0'>Leadership | Coordination | Industrial Development</p>
     
     
         <div className="flex gap-3">
@@ -74,6 +88,13 @@ const UttarParadesh_Admin = () => {
             <Link to={"/UpRequest"}>Requests</Link>
            
           </button>
+           <button className="flex px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                   <FaCloudUploadAlt className='text-2xl'/>
+            
+                    
+                    <Link to={"/UtNewsSecion"}> Upload+</Link>
+                   
+                  </button>
           <button
             className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
             onClick={logoutfn}
@@ -92,6 +113,7 @@ const UttarParadesh_Admin = () => {
     
         <div className="flex flex-col md:flex-row gap-3 items-center">
           <input
+          onChange={searchData}
             className="border p-2 rounded-lg w-60 focus:outline-blue-500"
             type="text"
             placeholder="Search Member..."
@@ -102,6 +124,7 @@ const UttarParadesh_Admin = () => {
               Add Member
               <IoPersonAddSharp />
             </button>
+            
           </Link>
         </div>
       </div>

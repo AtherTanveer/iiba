@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { IoPersonAddSharp } from "react-icons/io5";
 import { MdOutlinePendingActions } from "react-icons/md";
+import { FaCloudUploadAlt } from "react-icons/fa";
 const UttrKhnd_CRUD_portal = () => {
 
     const params = useParams();
@@ -86,6 +87,14 @@ const UttrKhnd_CRUD_portal = () => {
       <button className="flex px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
         <MdOutlinePendingActions className='text-2xl'/>
         <Link to={"/requestuk"}>Requests</Link>
+       
+       
+      </button>
+       <button className="flex px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+       <FaCloudUploadAlt className='text-2xl'/>
+
+        
+        <Link to={"/NewsSecion"}> Upload+</Link>
        
       </button>
       <button

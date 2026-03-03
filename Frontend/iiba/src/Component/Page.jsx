@@ -26,6 +26,8 @@ import Admin from '../Admin/Admin'
 import Members from '../AllMembers/Members'
 import AboutIIBA from '../AboutIIBA'
 import HelpPage from '../HelpPage'
+import NewsPage from './NewsPage'
+import NewsSection from './NewsSection'
 
 const Page = () => {
   return (
@@ -43,6 +45,8 @@ const Page = () => {
         <Route path='/Members' element={<Members/>}/>
         <Route path='/AboutIIBA' element={<AboutIIBA/>}/>
         <Route path='/HelpPage' element={<HelpPage/>}/>
+        <Route path='/HelpPage' element={<HelpPage/>}/>
+        <Route path='/News' element={<NewsPage/>}/>
 
 
 
@@ -52,6 +56,7 @@ const Page = () => {
           <Route path='/uttarakhandAddMember' element={<UttarPardesh_Add_Member />} />
           <Route path='/uttrakhandUpdateMember/:id' element={<Uttrakhand_Update_member />} />
           <Route path='/requestuk' element={<RequestUK />} />
+          <Route path="/NewsSecion" element={<NewsSection/>}/>
         </Route>
          {/* ----Uttrakhand Routes End  */}
 
@@ -63,6 +68,7 @@ const Page = () => {
           <Route path='/Haryana_Admin_login/Haryana_ADD-Member' element={<Haryana_Add_Member />} />
           <Route path='/HaryanaUpdateMember/:id' element={<Haryana_Update_Member />} />
           <Route path='/HrRequest' element={<Request_HR />} />
+           <Route path="/H$NewsSecion" element={<NewsSection/>}/>
         </Route>
         {/* Haryana Section End---> */}
 
@@ -73,6 +79,7 @@ const Page = () => {
         <Route path='uttarParadeshAddMember' element={<AddMemberUttarParadesh/>}/>
         <Route path='UpdateMemberUttarparadesh/:id' element={<UpdateMemberUttarParadesh/>}/>
         <Route path='UpRequest' element={<UpRequest/>}/>
+         <Route path="/UtNewsSecion" element={<NewsSection/>}/>
         </Route>
         {/* ---Uttarparadesh Routes End */}
 
