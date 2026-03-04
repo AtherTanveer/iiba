@@ -92,7 +92,7 @@ const UttarParadesh_Admin = () => {
                    <FaCloudUploadAlt className='text-2xl'/>
             
                     
-                    <Link to={"/UtNewsSecion"}> Upload+</Link>
+                    <Link to={"/UTNewsAdmin"}> Upload+</Link>
                    
                   </button>
           <button

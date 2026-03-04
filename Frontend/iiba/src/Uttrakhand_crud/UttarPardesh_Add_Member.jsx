@@ -1,8 +1,40 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
+const locationData = {
+  Uttarakhand: {
+
+    Dehradun: ["Dehradun", "Rishikesh", "Vikasnagar", "Mussoorie", "Doiwala"],
+
+    Haridwar: ["Haridwar", "Roorkee", "Laksar", "Bahadrabad", "Jwalapur"],
+
+    Nainital: ["Haldwani", "Nainital", "Ramnagar", "Kaladhungi", "Lalkuan"],
+
+    UdhamSinghNagar: ["Rudrapur", "Kashipur", "Sitarganj", "Khatima", "Jaspur", "Gadarpur"],
+
+    PauriGarhwal: ["Kotdwar", "Pauri", "Srinagar", "Thalisain"],
+
+    TehriGarhwal: ["New Tehri", "Tehri", "Chamba", "Dhanaulti"],
+
+    Chamoli: ["Gopeshwar", "Joshimath", "Chamoli", "Karnaprayag"],
+
+    Almora: ["Almora", "Ranikhet", "Bageshwar", "Dwarahat"],
+
+    Bageshwar: ["Bageshwar", "Garur", "Kapkote"],
+
+    Champawat: ["Champawat", "Lohaghat", "Pithoragarh"],
+
+    Pithoragarh: ["Pithoragarh", "Dharchula", "Didihat", "Berinag"],
+
+    Rudraprayag: ["Rudraprayag", "Kedarnath", "Ukhimath"],
+
+    Uttarkashi: ["Uttarkashi", "Bhatwari", "Purola"]
+
+  }
+};
+
 const UttarPardesh_Add_Member = () => {
+
   const [name, setname] = useState("");
   const [email, setemail] = useState("")
   const [phone, setphone] = useState("")
@@ -16,8 +48,12 @@ const UttarPardesh_Add_Member = () => {
   const [imageValid, seimagevalid] = useState(false);
   const [loading, setloading] = useState(false);
 
-
   const navigate = useNavigate();
+
+  // Derived dropdown data
+  const states = Object.keys(locationData);
+  const districts = state ? Object.keys(locationData[state] || {}) : [];
+  const cities = state && district ? locationData[state]?.[district] || [] : [];
 
   const handlesubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +75,7 @@ const UttarPardesh_Add_Member = () => {
     }
 
     const formData = new FormData();
+
     formData.append("name", name);
     formData.append("email", email);
     formData.append("phone", phone);
@@ -50,7 +87,7 @@ const UttarPardesh_Add_Member = () => {
     formData.append("image", image);
 
     try {
-      setloading(true); // ✅ START LOADER
+      setloading(true);
 
       const data = await fetch("http://localhost:4500/addMember", {
         method: "POST",
@@ -68,174 +105,163 @@ const UttarPardesh_Add_Member = () => {
       console.log(err);
       alert("Upload Failed");
     } finally {
-      setloading(false); // ✅ STOP LOADER
+      setloading(false);
     }
   };
-  const nameHandler = (e) => {
-    setname(e.target.value);
-  }
-
-  const emailHandler = (e) => {
-    setemail(e.target.value);
-  }
 
   return (
-    <>
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-2xl p-6 md:p-10">
 
-        <div className="w-full max-w-4xl bg-white shadow-lg rounded-2xl p-6 md:p-10">
+        <h1 className="text-2xl md:text-3xl font-semibold text-center text-sky-950 mb-8">
+          Add Member
+        </h1>
 
-          <h1 className="text-2xl md:text-3xl font-semibold text-center text-sky-950 mb-8">
-            Add Member
-          </h1>
+        <form onSubmit={handlesubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-          <form onSubmit={handlesubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Name */}
+          <div className="flex flex-col">
+            <label>Full Name *</label>
+            <input
+              value={name}
+              onChange={(e) => setname(e.target.value)}
+              placeholder="Enter Name"
+              className="p-3 border rounded-lg"
+            />
+            {boolval && !name && <p className="text-red-600 text-sm">Enter Name</p>}
+          </div>
 
-            {/* Name */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Full Name *</label>
-              <input
-                type="text"
-                value={name}
-                onChange={nameHandler}
-                placeholder="Enter Name"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-              {boolval && !name && (
-                <p className="text-red-600 text-sm mt-1">Enter Name</p>
-              )}
-            </div>
+          {/* Email */}
+          <div className="flex flex-col">
+            <label>Email *</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
+              placeholder="Enter Email"
+              className="p-3 border rounded-lg"
+            />
+          </div>
 
-            {/* Email */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Email *</label>
-              <input
-                type="email"
-                value={email}
-                onChange={emailHandler}
-                placeholder="Enter Email"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-              {boolval && !email && (
-                <p className="text-red-600 text-sm mt-1">Enter Email</p>
-              )}
-            </div>
+          {/* Phone */}
+          <div className="flex flex-col">
+            <label>Phone *</label>
+            <input
+              value={phone}
+              onChange={(e) => setphone(e.target.value)}
+              placeholder="Phone"
+              className="p-3 border rounded-lg"
+            />
+          </div>
 
-            {/* Phone */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Phone *</label>
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) => setphone(e.target.value)}
-                placeholder="Phone"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-              {boolval && !phone && (
-                <p className="text-red-600 text-sm mt-1">Enter Phone</p>
-              )}
-            </div>
+          {/* Company */}
+          <div className="flex flex-col">
+            <label>Company *</label>
+            <input
+              value={company}
+              onChange={(e) => setcompany(e.target.value)}
+              placeholder="Company Name"
+              className="p-3 border rounded-lg"
+            />
+          </div>
 
-            {/* Company */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Company Name *</label>
-              <input
-                type="text"
-                value={company}
-                onChange={(e) => setcompany(e.target.value)}
-                placeholder="Company Name"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-              {boolval && !company && (
-                <p className="text-red-600 text-sm mt-1">Enter Company</p>
-              )}
-            </div>
+          {/* State Dropdown */}
+          <div className="flex flex-col">
+            <label>State</label>
 
-            {/* State */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">State</label>
-              <input
-                type="text"
-                value={state}
-                onChange={(e) => setstate(e.target.value)}
-                placeholder="State"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-            </div>
+            <select
+              value={state}
+              onChange={(e) => {
+                setstate(e.target.value);
+                setdistrict("");
+                setcity("");
+              }}
+              className="p-3 border rounded-lg"
+            >
+              <option value="">Select State</option>
+              {states.map((st) => (
+                <option key={st} value={st}>{st}</option>
+              ))}
+            </select>
+          </div>
 
-            {/* District */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">District</label>
-              <input
-                type="text"
-                value={district}
-                onChange={(e) => setdistrict(e.target.value)}
-                placeholder="District"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-            </div>
+          {/* District Dropdown */}
+          <div className="flex flex-col">
+            <label>District</label>
 
-            {/* City */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">City</label>
-              <input
-                type="text"
-                value={city}
-                onChange={(e) => setcity(e.target.value)}
-                placeholder="City"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-            </div>
+            <select
+              value={district}
+              onChange={(e) => {
+                setdistrict(e.target.value);
+                setcity("");
+              }}
+              className="p-3 border rounded-lg"
+              disabled={!state}
+            >
+              <option value="">Select District</option>
+              {districts.map((dist) => (
+                <option key={dist} value={dist}>{dist}</option>
+              ))}
+            </select>
+          </div>
 
-            {/* Address */}
-            <div className="flex flex-col md:col-span-2">
-              <label className="text-sm font-medium mb-1">Full Address</label>
-              <textarea
-                value={address}
-                onChange={(e) => setaddress(e.target.value)}
-                rows="3"
-                placeholder="Full Address"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              ></textarea>
-            </div>
+          {/* City Dropdown */}
+          <div className="flex flex-col">
+            <label>City</label>
 
-            {/* New Image Upload */}
-            <div>
-              {imageValid ? <p className='text-red-500 pb-2 font-medium'>Upload Profile Image*</p> : <p className='text-gray-900 pb-2'>Upload Profile Image*</p>}
+            <select
+              value={city}
+              onChange={(e) => setcity(e.target.value)}
+              className="p-3 border rounded-lg"
+              disabled={!district}
+            >
+              <option value="">Select City</option>
+              {cities.map((ct) => (
+                <option key={ct} value={ct}>{ct}</option>
+              ))}
+            </select>
+          </div>
 
-              <input
-                type="file"
-                onChange={(e) => setimage(e.target.files[0])}
-                className="p-2 bg-gray-700 text-white font-medium rounded-md"
-              />
-            </div>
+          {/* Address */}
+          <div className="flex flex-col md:col-span-2">
+            <label>Full Address</label>
+            <textarea
+              value={address}
+              onChange={(e) => setaddress(e.target.value)}
+              rows="3"
+              className="p-3 border rounded-lg"
+            ></textarea>
+          </div>
 
+          {/* Image Upload */}
+          <div>
+            <p className="pb-2">Upload Profile Image*</p>
 
+            <input
+              type="file"
+              onChange={(e) => setimage(e.target.files[0])}
+              className="p-2 bg-gray-700 text-white rounded-md"
+            />
+          </div>
 
-            {/* Submit Button */}
-            <div className="md:col-span-2 flex justify-center mt-4">
-              <button
-                type="submit"
-                disabled={loading}
-                className={`${loading ? "bg-gray-400 cursor-not-allowed" : "bg-sky-950 hover:bg-sky-800"
-                  } transition duration-300 text-white px-12 py-3 rounded-xl text-lg shadow-md flex items-center justify-center gap-2`}
-              >
-                {loading && (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                )}
+          {/* Submit Button */}
+          <div className="md:col-span-2 flex justify-center mt-4">
+            <button
+              type="submit"
+              disabled={loading}
+              className={`${
+                loading ? "bg-gray-400 cursor-not-allowed" : "bg-sky-950 hover:bg-sky-800"
+              } text-white px-12 py-3 rounded-xl flex items-center gap-2`}
+            >
+              {loading && <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>}
+              {loading ? "Uploading..." : "Add Member"}
+            </button>
+          </div>
 
-                {loading ? "Uploading..." : "Add Member"}
-              </button>
-            </div>
-
-          </form>
-
-        </div>
-
+        </form>
       </div>
-    </>
-
+    </div>
   )
 }
 
-export default UttarPardesh_Add_Member
+export default UttarPardesh_Add_Member;

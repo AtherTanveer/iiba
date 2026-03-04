@@ -1,9 +1,54 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
+const locationData = {
+  UttarPradesh: {
+
+    Lucknow: ["Lucknow", "Alambagh", "Gomti Nagar", "Hazratganj", "Aminabad"],
+
+    KanpurNagar: ["Kanpur", "Kalyanpur", "Rawatpur", "Kidwai Nagar", "Shastri Nagar"],
+
+    Ghaziabad: ["Ghaziabad", "Modinagar", "Loni", "Sahibabad", "Muradnagar"],
+
+    GautamBuddhaNagar: ["Noida", "Greater Noida", "Dadri", "Jewar"],
+
+    Agra: ["Agra", "Fatehabad", "Sikandra", "Kheragarh", "Etmadpur"],
+
+    Varanasi: ["Varanasi", "Ramnagar", "Babatpur", "Sarnath"],
+
+    Prayagraj: ["Prayagraj", "Naini", "Phulpur", "Soraon"],
+
+    Meerut: ["Meerut", "Sardhana", "Mawana", "Modipuram"],
+
+    Bareilly: ["Bareilly", "Faridpur", "Aonla", "Nawabganj"],
+
+    Aligarh: ["Aligarh", "Iglas", "Khair", "Atrauli"],
+
+    Moradabad: ["Moradabad", "Thakurdwara", "Bilari"],
+
+    Gorakhpur: ["Gorakhpur", "Campierganj", "Sahjanwa"],
+
+    Jhansi: ["Jhansi", "Moth", "Mauranipur"],
+
+    Mathura: ["Mathura", "Vrindavan", "Govardhan"],
+
+    Saharanpur: ["Saharanpur", "Deoband", "Behat"],
+
+    Ayodhya: ["Ayodhya", "Faizabad", "Bikapur"],
+
+    Bijnor: ["Bijnor", "Chandpur", "Najibabad"],
+
+    Shahjahanpur: ["Shahjahanpur", "Powayan", "Tilhar"],
+
+    Rampur: ["Rampur", "Bilaspur", "Suar"],
+
+    Sitapur: ["Sitapur", "Misrikh", "Laharpur"]
+
+  }
+};
 
 const AddMemberUttarParadesh = () => {
+
   const [name, setname] = useState("");
   const [email, setemail] = useState("")
   const [phone, setphone] = useState("")
@@ -16,10 +61,16 @@ const AddMemberUttarParadesh = () => {
   const [image, setimage] = useState(null);
   const [imageValid, seimagevalid] = useState(false);
 
-
   const navigate = useNavigate();
+
+  // Dropdown derived data
+  const states = Object.keys(locationData);
+  const districts = state ? Object.keys(locationData[state] || {}) : [];
+  const cities = state && district ? locationData[state]?.[district] || [] : [];
+
   const handlesubmit = async (e) => {
     e.preventDefault();
+
     if (!name || !email || !phone || !company || !state || !district || !city || !address) {
       setboolval(true);
       return;
@@ -32,8 +83,8 @@ const AddMemberUttarParadesh = () => {
 
     if (!image) {
       alert("Please Upload Image !!");
-      seimagevalid(true)
-      return false
+      seimagevalid(true);
+      return;
     }
 
     const formData = new FormData();
@@ -46,188 +97,170 @@ const AddMemberUttarParadesh = () => {
     formData.append("city", city);
     formData.append("address", address);
     formData.append("company", company);
-
-    if (image) {
-      formData.append("image", image);
-    }
-
+    formData.append("image", image);
 
     const data = await fetch("http://localhost:4500/Add_Uttarparadesh_Member", {
-
-      method: "post",
+      method: "POST",
       body: formData,
+    });
 
-    })
-
-    const result = await data.json();;
-    console.log(result);
+    const result = await data.json();
 
     if (result) {
-      alert("Member Added")
-      navigate("/UttarAdmin_Login")
-
+      alert("Member Added");
+      navigate("/UttarAdmin_Login");
     }
-
-
-    console.log(name, email, phone, company)
-  }
-
-  const nameHandler = (e) => {
-    setname(e.target.value);
-  }
-
-  const emailHandler = (e) => {
-    setemail(e.target.value);
-  }
+  };
 
   return (
-    <>
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
 
-        <div className="w-full max-w-4xl bg-white shadow-xl rounded-2xl p-6 md:p-10">
+      <div className="w-full max-w-4xl bg-white shadow-xl rounded-2xl p-6 md:p-10">
 
-          <h1 className="text-2xl md:text-3xl font-semibold text-center text-sky-950 mb-8">
-            Add New Member – IIBA
-          </h1>
+        <h1 className="text-2xl md:text-3xl font-semibold text-center text-sky-950 mb-8">
+          Add New Member – IIBA
+        </h1>
 
-          <form onSubmit={handlesubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handlesubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            {/* Name */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Full Name *</label>
-              <input
-                type="text"
-                value={name}
-                onChange={nameHandler}
-                placeholder="Enter Name"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-              {boolval && !name && (
-                <p className="text-red-600 text-sm mt-1">Enter Name</p>
-              )}
-            </div>
+          {/* Name */}
+          <div className="flex flex-col">
+            <label>Full Name *</label>
+            <input
+              value={name}
+              onChange={(e) => setname(e.target.value)}
+              placeholder="Enter Name"
+              className="p-3 border rounded-lg"
+            />
+            {boolval && !name && <p className="text-red-600 text-sm">Enter Name</p>}
+          </div>
 
-            {/* Email */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Email *</label>
-              <input
-                type="email"
-                value={email}
-                onChange={emailHandler}
-                placeholder="Enter Email"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-              {boolval && !email && (
-                <p className="text-red-600 text-sm mt-1">Enter Email</p>
-              )}
-            </div>
+          {/* Email */}
+          <div className="flex flex-col">
+            <label>Email *</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
+              placeholder="Enter Email"
+              className="p-3 border rounded-lg"
+            />
+          </div>
 
-            {/* Phone */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Phone *</label>
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) => setphone(e.target.value)}
-                placeholder="Phone"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-              {boolval && !phone && (
-                <p className="text-red-600 text-sm mt-1">Enter Phone</p>
-              )}
-            </div>
+          {/* Phone */}
+          <div className="flex flex-col">
+            <label>Phone *</label>
+            <input
+              value={phone}
+              onChange={(e) => setphone(e.target.value)}
+              placeholder="Phone"
+              className="p-3 border rounded-lg"
+            />
+          </div>
 
-            {/* Company */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Company *</label>
-              <input
-                type="text"
-                value={company}
-                onChange={(e) => setcompany(e.target.value)}
-                placeholder="Company Name"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-              {boolval && !company && (
-                <p className="text-red-600 text-sm mt-1">Enter Company</p>
-              )}
-            </div>
+          {/* Company */}
+          <div className="flex flex-col">
+            <label>Company *</label>
+            <input
+              value={company}
+              onChange={(e) => setcompany(e.target.value)}
+              placeholder="Company Name"
+              className="p-3 border rounded-lg"
+            />
+          </div>
 
-            {/* State */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">State</label>
-              <input
-                type="text"
-                value={state}
-                onChange={(e) => setstate(e.target.value)}
-                placeholder="State"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-            </div>
+          {/* State Dropdown */}
+          <div className="flex flex-col">
+            <label>State</label>
 
-            {/* District */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">District</label>
-              <input
-                type="text"
-                value={district}
-                onChange={(e) => setdistrict(e.target.value)}
-                placeholder="District"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-            </div>
+            <select
+              value={state}
+              onChange={(e) => {
+                setstate(e.target.value);
+                setdistrict("");
+                setcity("");
+              }}
+              className="p-3 border rounded-lg"
+            >
+              <option value="">Select State</option>
+              {states.map((st) => (
+                <option key={st} value={st}>{st}</option>
+              ))}
+            </select>
+          </div>
 
-            {/* City */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">City</label>
-              <input
-                type="text"
-                value={city}
-                onChange={(e) => setcity(e.target.value)}
-                placeholder="City"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              />
-            </div>
+          {/* District Dropdown */}
+          <div className="flex flex-col">
+            <label>District</label>
 
-            {/* Address - Full Width */}
-            <div className="flex flex-col md:col-span-2">
-              <label className="text-sm font-medium mb-1">Full Address</label>
-              <textarea
-                value={address}
-                onChange={(e) => setaddress(e.target.value)}
-                rows="3"
-                placeholder="Full Address"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-900"
-              ></textarea>
-            </div>
+            <select
+              value={district}
+              onChange={(e) => {
+                setdistrict(e.target.value);
+                setcity("");
+              }}
+              className="p-3 border rounded-lg"
+              disabled={!state}
+            >
+              <option value="">Select District</option>
+              {districts.map((dist) => (
+                <option key={dist} value={dist}>{dist}</option>
+              ))}
+            </select>
+          </div>
 
-            {/* New Image Upload */}
-            <div>
-              {imageValid ? <p className='text-red-500 pb-2 font-medium'>Upload Profile Image*</p> : <p className='text-gray-900 pb-2'>Upload Profile Image*</p>}
+          {/* City Dropdown */}
+          <div className="flex flex-col">
+            <label>City</label>
 
-              <input
-                type="file"
-                onChange={(e) => setimage(e.target.files[0])}
-                className="p-2 bg-gray-700 text-white font-medium rounded-md"
-              />
-            </div>
+            <select
+              value={city}
+              onChange={(e) => setcity(e.target.value)}
+              className="p-3 border rounded-lg"
+              disabled={!district}
+            >
+              <option value="">Select City</option>
+              {cities.map((ct) => (
+                <option key={ct} value={ct}>{ct}</option>
+              ))}
+            </select>
+          </div>
 
-            {/* Button */}
-            <div className="md:col-span-2 flex justify-center mt-4">
-              <button
-                type="submit"
-                className="bg-sky-950 hover:bg-sky-800 transition duration-300 text-white px-12 py-3 rounded-xl text-lg shadow-md"
-              >
-                Add Member
-              </button>
-            </div>
+          {/* Address */}
+          <div className="flex flex-col md:col-span-2">
+            <label>Full Address</label>
+            <textarea
+              value={address}
+              onChange={(e) => setaddress(e.target.value)}
+              rows="3"
+              className="p-3 border rounded-lg"
+            />
+          </div>
 
-          </form>
-        </div>
+          {/* Image Upload */}
+          <div>
+            <p className={imageValid ? "text-red-500 pb-2" : "pb-2"}>
+              Upload Profile Image*
+            </p>
 
+            <input
+              type="file"
+              onChange={(e) => setimage(e.target.files[0])}
+              className="p-2 bg-gray-700 text-white rounded-md"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div className="md:col-span-2 flex justify-center mt-4">
+            <button className="bg-sky-950 hover:bg-sky-800 text-white px-12 py-3 rounded-xl">
+              Add Member
+            </button>
+          </div>
+
+        </form>
       </div>
-    </>
-
+    </div>
   )
 }
 
-export default AddMemberUttarParadesh
+export default AddMemberUttarParadesh;

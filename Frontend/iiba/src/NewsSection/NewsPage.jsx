@@ -29,6 +29,9 @@ export default function NewsPage() {
         <h1 className="text-4xl font-bold text-gray-800">
           News & Events
         </h1>
+         <p className="text-gray-500 mt-2">
+    Latest updates, seminars, and announcements
+  </p>
       </div>
 
       {/* Search + Filter */}

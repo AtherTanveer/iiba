@@ -26,8 +26,10 @@ import Admin from '../Admin/Admin'
 import Members from '../AllMembers/Members'
 import AboutIIBA from '../AboutIIBA'
 import HelpPage from '../HelpPage'
-import NewsPage from './NewsPage'
-import NewsSection from './NewsSection'
+import NewsPage from '../NewsSection/NewsPage'
+import NewsSection from '../NewsSection/NewsSection'
+import UpdateNews from '../NewsSection/UpdateNews'
+import NewsAdmin from '../NewsSection/NewsAdmin'
 
 const Page = () => {
   return (
@@ -47,6 +49,7 @@ const Page = () => {
         <Route path='/HelpPage' element={<HelpPage/>}/>
         <Route path='/HelpPage' element={<HelpPage/>}/>
         <Route path='/News' element={<NewsPage/>}/>
+        
 
 
 
@@ -57,6 +60,8 @@ const Page = () => {
           <Route path='/uttrakhandUpdateMember/:id' element={<Uttrakhand_Update_member />} />
           <Route path='/requestuk' element={<RequestUK />} />
           <Route path="/NewsSecion" element={<NewsSection/>}/>
+          <Route path='/updateNews/:id' element={<UpdateNews/>}/>
+        <Route path='/NewsAdmin' element={<NewsAdmin/>}/>
         </Route>
          {/* ----Uttrakhand Routes End  */}
 
@@ -69,6 +74,8 @@ const Page = () => {
           <Route path='/HaryanaUpdateMember/:id' element={<Haryana_Update_Member />} />
           <Route path='/HrRequest' element={<Request_HR />} />
            <Route path="/H$NewsSecion" element={<NewsSection/>}/>
+            <Route path='/H$updateNews/:id' element={<UpdateNews/>}/>
+        <Route path='/H$NewsAdmin' element={<NewsAdmin/>}/>
         </Route>
         {/* Haryana Section End---> */}
 
@@ -80,6 +87,8 @@ const Page = () => {
         <Route path='UpdateMemberUttarparadesh/:id' element={<UpdateMemberUttarParadesh/>}/>
         <Route path='UpRequest' element={<UpRequest/>}/>
          <Route path="/UtNewsSecion" element={<NewsSection/>}/>
+          <Route path='/UTupdateNews/:id' element={<UpdateNews/>}/>
+        <Route path='/UTNewsAdmin' element={<NewsAdmin/>}/>
         </Route>
         {/* ---Uttarparadesh Routes End */}
 

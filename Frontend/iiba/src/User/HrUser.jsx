@@ -13,32 +13,55 @@ const HrUser = () => {
   const [image, setimage] = useState(null);
   const [boolval, setboolval] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [agree, setAgree] = useState(false);
 
   const locationData = {
     Haryana: {
-      Ambala: ["Ambala", "Ambala Cantt"],
-      Bhiwani: ["Bhiwani", "Charkhi Dadri"],
-      CharkhiDadri: ["Charkhi Dadri"],
-      Faridabad: ["Faridabad", "Ballabgarh"],
-      Fatehabad: ["Fatehabad", "Tohana"],
-      Gurugram: ["Gurugram", "Manesar"],
-      Hisar: ["Hisar", "Hansi"],
-      Jhajjar: ["Jhajjar", "Bahadurgarh"],
-      Jind: ["Jind", "Narwana"],
-      Kaithal: ["Kaithal", "Pehowa"],
-      Karnal: ["Karnal", "Assandh"],
-      Kurukshetra: ["Kurukshetra", "Shahbad"],
-      Mahendragarh: ["Narnaul", "Mahendragarh"],
-      Nuh: ["Nuh", "Ferozepur Jhirka"],
-      Palwal: ["Palwal", "Hodal"],
-      Panchkula: ["Panchkula", "Kalka"],
-      Panipat: ["Panipat", "Samalkha"],
-      Rewari: ["Rewari", "Dharuhera"],
-      Rohtak: ["Rohtak", "Meham"],
-      Sirsa: ["Sirsa"],
-      Sonipat: ["Sonipat", "Gohana"],
-      Yamunanagar: ["Yamunanagar", "Jagadhri"]
-    }
+
+    Ambala: ["Ambala", "Ambala Cantt", "Naraingarh", "Barara"],
+
+    Bhiwani: ["Bhiwani", "Tosham", "Loharu", "Siwani"],
+
+    CharkhiDadri: ["Charkhi Dadri", "Badhra", "Jhojhu Kalan"],
+
+    Faridabad: ["Faridabad", "Ballabhgarh", "NIT Faridabad"],
+
+    Fatehabad: ["Fatehabad", "Ratia", "Tohana"],
+
+    Gurugram: ["Gurugram", "Sohna", "Pataudi", "Manesar"],
+
+    Hisar: ["Hisar", "Hansi", "Barwala", "Uklana"],
+
+    Jhajjar: ["Jhajjar", "Bahadurgarh", "Beri"],
+
+    Jind: ["Jind", "Narwana", "Safidon", "Julana"],
+
+    Kaithal: ["Kaithal", "Pundri", "Rajound"],
+
+    Karnal: ["Karnal", "Indri", "Gharaunda", "Assandh"],
+
+    Kurukshetra: ["Kurukshetra", "Thanesar", "Pehowa", "Shahbad"],
+
+    Mahendragarh: ["Narnaul", "Mahendragarh", "Kanina"],
+
+    Nuh: ["Nuh", "Ferozepur Jhirka", "Punhana"],
+
+    Palwal: ["Palwal", "Hodal", "Hassanpur"],
+
+    Panchkula: ["Panchkula", "Kalka", "Raipur Rani"],
+
+    Panipat: ["Panipat", "Samalkha", "Israna", "Madlauda"],
+
+    Rewari: ["Rewari", "Bawal", "Kosli"],
+
+    Rohtak: ["Rohtak", "Meham", "Kalanaur"],
+
+    Sirsa: ["Sirsa", "Ellenabad", "Dabwali"],
+
+    Sonipat: ["Sonipat", "Gohana", "Kharkhoda", "Ganaur"],
+
+    Yamunanagar: ["Yamunanagar", "Jagadhri", "Bilaspur", "Chhachhrauli"]
+  }
   };
 
   const navigate = useNavigate();
@@ -56,6 +79,8 @@ const HrUser = () => {
       return;
     }
 
+    
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -68,6 +93,10 @@ const HrUser = () => {
 
     if (image) {
       formData.append("image", image);
+    }
+    if (!agree) {
+      alert("Please accept terms and conditions before submitting");
+      return;
     }
 
     try {
@@ -100,16 +129,16 @@ const HrUser = () => {
       <form onSubmit={handlesubmit} className="grid md:grid-cols-2 gap-4 mt-6">
 
         <input className="inputStyle p-2 rounded-md" value={name} onChange={(e) => setname(e.target.value)} placeholder="Full Name" />
-        {boolval && !name && <p className="error">Enter Name</p>}
+        {boolval && !name && <p className="text-red-500">Enter Name</p>}
 
         <input className="inputStyle p-2 rounded-md" value={email} onChange={(e) => setemail(e.target.value)} placeholder="Email" />
-        {boolval && !email && <p className="error">Enter Email</p>}
+        {boolval && !email && <p className="text-red-500">Enter Email</p>}
 
         <input className="inputStyle p-2 rounded-md" value={phone} onChange={(e) => setphone(e.target.value)} placeholder="Phone" />
-        {boolval && !phone && <p className="error">Enter Phone</p>}
+        {boolval && !phone && <p className="text-red-500">Enter Phone</p>}
 
         <input className="inputStyle p-2 rounded-md" value={company} onChange={(e) => setcompany(e.target.value)} placeholder="Company Name" />
-        {boolval && !company && <p className="error">Enter Company</p>}
+        {boolval && !company && <p className="text-red-500">Enter Company</p>}
 
         {/* State Dropdown */}
         <select
@@ -172,6 +201,21 @@ const HrUser = () => {
             className="p-2 bg-gray-700 w-50 text-white font-medium rounded-md"
           />
         </div>
+
+        {/* //check box */}
+                 <div className="mt-6 flex items-center gap-3 justify-center">
+
+                <input
+                  type="checkbox"
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
+                  className="w-5 h-5 accent-blue-900 cursor-pointer"
+                />
+
+                <p className="text-sm text-gray-800 font-medium">
+                  I agree to all membership terms & conditions
+                </p>
+              </div>
 
         <button
           type="submit"

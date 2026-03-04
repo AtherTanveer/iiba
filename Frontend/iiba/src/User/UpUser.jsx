@@ -14,30 +14,52 @@ const UpUser = () => {
   const [image, setimage] = useState(null);
   const [boolval, setboolval] = useState(false);
   const [loading, setloading] = useState(false);
+  const [agree, setAgree] = useState(false);
 
   const locationData = {
     UttarPradesh: {
-      Lucknow: ["Lucknow", "Alambagh", "Gomti Nagar"],
-      KanpurNagar: ["Kanpur", "Kalyanpur"],
-      Ghaziabad: ["Ghaziabad", "Modinagar", "Loni"],
-      Noida: ["Noida", "Greater Noida"],
-      Agra: ["Agra", "Fatehabad"],
-      Varanasi: ["Varanasi", "Ramnagar"],
-      Prayagraj: ["Prayagraj", "Naini"],
-      Meerut: ["Meerut", "Sardhana"],
-      Bareilly: ["Bareilly"],
-      Aligarh: ["Aligarh"],
-      Moradabad: ["Moradabad"],
-      Gorakhpur: ["Gorakhpur"],
-      Jhansi: ["Jhansi"],
-      Mathura: ["Mathura", "Vrindavan"],
-      Saharanpur: ["Saharanpur"],
-      Ayodhya: ["Ayodhya"],
-      Bijnor: ["Bijnor"],
-      Shahjahanpur: ["Shahjahanpur"],
-      Rampur: ["Rampur"],
-      Sitapur: ["Sitapur"]
-    }
+
+    Lucknow: ["Lucknow", "Alambagh", "Gomti Nagar", "Hazratganj", "Aminabad"],
+
+    KanpurNagar: ["Kanpur", "Kalyanpur", "Rawatpur", "Kidwai Nagar", "Shastri Nagar"],
+
+    Ghaziabad: ["Ghaziabad", "Modinagar", "Loni", "Sahibabad", "Muradnagar"],
+
+    GautamBuddhaNagar: ["Noida", "Greater Noida", "Dadri", "Jewar"],
+
+    Agra: ["Agra", "Fatehabad", "Sikandra", "Kheragarh", "Etmadpur"],
+
+    Varanasi: ["Varanasi", "Ramnagar", "Babatpur", "Sarnath"],
+
+    Prayagraj: ["Prayagraj", "Naini", "Phulpur", "Soraon"],
+
+    Meerut: ["Meerut", "Sardhana", "Mawana", "Modipuram"],
+
+    Bareilly: ["Bareilly", "Faridpur", "Aonla", "Nawabganj"],
+
+    Aligarh: ["Aligarh", "Iglas", "Khair", "Atrauli"],
+
+    Moradabad: ["Moradabad", "Thakurdwara", "Bilari"],
+
+    Gorakhpur: ["Gorakhpur", "Campierganj", "Sahjanwa"],
+
+    Jhansi: ["Jhansi", "Moth", "Mauranipur"],
+
+    Mathura: ["Mathura", "Vrindavan", "Govardhan"],
+
+    Saharanpur: ["Saharanpur", "Deoband", "Behat"],
+
+    Ayodhya: ["Ayodhya", "Faizabad", "Bikapur"],
+
+    Bijnor: ["Bijnor", "Chandpur", "Najibabad"],
+
+    Shahjahanpur: ["Shahjahanpur", "Powayan", "Tilhar"],
+
+    Rampur: ["Rampur", "Bilaspur", "Suar"],
+
+    Sitapur: ["Sitapur", "Misrikh", "Laharpur"]
+
+  }
   };
 
   const navigate = useNavigate();
@@ -54,6 +76,10 @@ const UpUser = () => {
       alert("Phone number must be 10 digits");
       return;
     }
+    if (!agree) {
+      alert("Please accept terms and conditions before submitting");
+      return;
+    }
 
     if (!image) {
       alert("Please Upload Image !!");
@@ -61,7 +87,7 @@ const UpUser = () => {
     }
 
     try {
-      setloading(true); // 🔥 start loader
+      setloading(true); // start loader
 
       const formData = new FormData();
       formData.append("name", name);
@@ -91,10 +117,11 @@ const UpUser = () => {
     } catch (error) {
       alert("Something went wrong!");
     } finally {
-      setloading(false); // 🔥 stop loader
+      setloading(false); // stop loader
     }
   };
   return (
+    <>
     <div>
 
 
@@ -102,16 +129,16 @@ const UpUser = () => {
       <form onSubmit={handlesubmit} className="grid md:grid-cols-2 gap-4 mt-6">
 
         <input className="inputStyle p-2 rounded-md" value={name} onChange={(e) => setname(e.target.value)} placeholder="Full Name" />
-        {boolval && !name && <p className="error">Enter Name</p>}
+        {boolval && !name && <p className="text-red-500">Enter Name</p>}
 
         <input className="inputStyle p-2 rounded-md" value={email} onChange={(e) => setemail(e.target.value)} placeholder="Email" />
-        {boolval && !email && <p className="error">Enter Email</p>}
+        {boolval && !email && <p className="text-red-500">Enter Email</p>}
 
         <input className="inputStyle p-2 rounded-md" value={phone} onChange={(e) => setphone(e.target.value)} placeholder="Phone" />
-        {boolval && !phone && <p className="error">Enter Phone</p>}
+        {boolval && !phone && <p className="text-red-500">Enter Phone</p>}
 
         <input className="inputStyle p-2 rounded-md" value={company} onChange={(e) => setcompany(e.target.value)} placeholder="Company Name" />
-        {boolval && !company && <p className="error">Enter Company</p>}
+        {boolval && !company && <p className="text-red-500">Enter Company</p>}
 
         {/* State Dropdown */}
         <select
@@ -176,6 +203,21 @@ const UpUser = () => {
           />
         </div>
 
+          {/* //check box */}
+                 <div className="mt-6 flex items-center gap-3 justify-center">
+
+                <input
+                  type="checkbox"
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
+                  className="w-5 h-5 accent-blue-900 cursor-pointer"
+                />
+
+                <p className="text-sm text-gray-800 font-medium">
+                  I agree to all membership terms & conditions
+                </p>
+              </div>
+
         <button
           disabled={loading}
           className={`md:col-span-2 py-3 rounded-lg text-lg font-bold transition 
@@ -190,6 +232,12 @@ const UpUser = () => {
       </form>
 
     </div>
+
+      
+
+
+    </>
+    
   )
 }
 

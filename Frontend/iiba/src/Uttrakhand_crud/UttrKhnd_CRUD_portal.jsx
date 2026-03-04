@@ -94,7 +94,7 @@ const UttrKhnd_CRUD_portal = () => {
        <FaCloudUploadAlt className='text-2xl'/>
 
         
-        <Link to={"/NewsSecion"}> Upload+</Link>
+        <Link to={"/NewsAdmin"}> Upload+</Link>
        
       </button>
       <button

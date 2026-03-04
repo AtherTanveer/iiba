@@ -84,7 +84,7 @@ const Haryana_Admin = () => {
             <FaCloudUploadAlt className='text-2xl' />
 
 
-            <Link to={"/H$NewsSecion"}> Upload+</Link>
+            <Link to={"/H$NewsAdmin"}> Upload+</Link>
 
           </button>
           <button

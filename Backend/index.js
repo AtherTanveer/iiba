@@ -84,54 +84,65 @@ app.get("/getMember", async (req, res) => {
 })
 
 app.put("/updatemember/:id", upload.single("image"), async (req, res) => {
-    try {
-        const member = await memberData.findById(req.params.id);
+  try {
+    const member = await memberData.findById(req.params.id);
 
-        if (!member) {
-            return res.status(404).json({ message: "Member not found" });
-        }
-
-        let updatedImage = member.image; // default keep old image
-
-        // Only if new file uploaded
-        if (req.file) {
-
-            // Delete old image if exists
-            if (member.image) {
-                const imagePath = path.join(__dirname, "uploads", member.image);
-
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);
-                }
-            }
-
-            // Set new image filename
-            updatedImage = req.file.filename;
-        }
-
-        // Update data
-        const updatedMember = await memberData.findByIdAndUpdate(
-            req.params.id,
-            {
-                name: req.body.name,
-                email: req.body.email,
-                phone: req.body.phone,
-                state: req.body.state,
-                district: req.body.district,
-                city: req.body.city,
-                address: req.body.address,
-                company: req.body.company,
-                image: updatedImage,
-            },
-            { new: true }
-        );
-
-        res.json(updatedMember);
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "Something went wrong" });
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
     }
+
+    let updatedImage = member.image;
+
+    if (req.file) {
+
+      const uploadPath = path.join(process.cwd(), "uploads");
+
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath);
+      }
+
+      // 🔥 Delete old image
+      if (member.image) {
+        const oldImagePath = path.join(uploadPath, member.image);
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+
+      // 🔥 Create new compressed image
+      const newFileName = Date.now() + ".webp";
+      const outputPath = path.join(uploadPath, newFileName);
+
+      await sharp(req.file.buffer)
+        .resize(600)
+        .webp({ quality: 70 })
+        .toFile(outputPath);
+
+      updatedImage = newFileName;
+    }
+
+    const updatedMember = await memberData.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        state: req.body.state,
+        district: req.body.district,
+        city: req.body.city,
+        address: req.body.address,
+        company: req.body.company,
+        image: updatedImage,
+      },
+      { new: true }
+    );
+
+    res.json(updatedMember);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
 });
 
 app.get("/goUpdate/:id", async (req, res) => {
@@ -514,57 +525,68 @@ app.get("/goHaryanaUpdate/:id", async (req, res) => {
 
 })
 
+
 app.put("/update_Haryana_Member/:id", upload.single("image"), async (req, res) => {
-    try {
-        const member = await haryanaData.findById(req.params.id);
+  try {
+    const member = await haryanaData.findById(req.params.id);
 
-        if (!member) {
-            return res.status(404).json({ message: "Member not found" });
-        }
-
-        let updatedImage = member.image; // default keep old image
-
-        // Only if new file uploaded
-        if (req.file) {
-
-            // Delete old image if exists
-            if (member.image) {
-                const imagePath = path.join(__dirname, "uploads", member.image);
-
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);
-                }
-            }
-
-            // Set new image filename
-            updatedImage = req.file.filename;
-        }
-
-        // Update data
-        const updatedMember = await haryanaData.findByIdAndUpdate(
-            req.params.id,
-            {
-                name: req.body.name,
-                email: req.body.email,
-                phone: req.body.phone,
-                state: req.body.state,
-                district: req.body.district,
-                city: req.body.city,
-                address: req.body.address,
-                company: req.body.company,
-                image: updatedImage,
-            },
-            { new: true }
-        );
-
-        res.json(updatedMember);
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "Something went wrong" });
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
     }
 
-})
+    let updatedImage = member.image;
+
+    if (req.file) {
+
+      const uploadPath = path.join(process.cwd(), "uploads");
+
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath);
+      }
+
+      // 🔥 delete old image
+      if (member.image) {
+        const oldImagePath = path.join(uploadPath, member.image);
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+
+      // 🔥 create new compressed image
+      const newFileName = Date.now() + ".webp";
+      const outputPath = path.join(uploadPath, newFileName);
+
+      await sharp(req.file.buffer)
+        .resize(600)
+        .webp({ quality: 70 })
+        .toFile(outputPath);
+
+      updatedImage = newFileName;
+    }
+
+    const updatedMember = await haryanaData.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        state: req.body.state,
+        district: req.body.district,
+        city: req.body.city,
+        address: req.body.address,
+        company: req.body.company,
+        image: updatedImage,
+      },
+      { new: true }
+    );
+
+    res.json(updatedMember);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+});
 
 app.delete("/Delete_Haryana_Member/:id", async (req, res) => {
     try {
@@ -824,57 +846,66 @@ app.get("/goUttarparadeshUpdate/:id", async (req, res) => {
 })
 
 app.put("/update_Uttarparadesh_Member/:id", upload.single("image"), async (req, res) => {
-    try {
-        const member = await UttarparadeshData.findById(req.params.id);
+  try {
+    const member = await UttarparadeshData.findById(req.params.id);
 
-        if (!member) {
-            return res.status(404).json({ message: "Member not found" });
-        }
-
-        let updatedImage = member.image; // default keep old image
-
-        // Only if new file uploaded
-        if (req.file) {
-
-            // Delete old image if exists
-            if (member.image) {
-                const imagePath = path.join(__dirname, "uploads", member.image);
-
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);
-                }
-            }
-
-            // Set new image filename
-            updatedImage = req.file.filename;
-        }
-
-        // Update data
-        const updatedMember = await UttarparadeshData.findByIdAndUpdate(
-            req.params.id,
-            {
-                name: req.body.name,
-                email: req.body.email,
-                phone: req.body.phone,
-                state: req.body.state,
-                district: req.body.district,
-                city: req.body.city,
-                address: req.body.address,
-                company: req.body.company,
-                image: updatedImage,
-            },
-            { new: true }
-        );
-
-        res.json(updatedMember);
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "Something went wrong" });
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
     }
 
+    let updatedImage = member.image;
 
-})
+    if (req.file) {
+
+      const uploadPath = path.join(process.cwd(), "uploads");
+
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath);
+      }
+
+      // 🔥 Delete old image
+      if (member.image) {
+        const oldImagePath = path.join(uploadPath, member.image);
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+
+      // 🔥 Save compressed image
+      const newFileName = Date.now() + ".webp";
+      const outputPath = path.join(uploadPath, newFileName);
+
+      await sharp(req.file.buffer)
+        .resize(600)
+        .webp({ quality: 70 })
+        .toFile(outputPath);
+
+      updatedImage = newFileName;
+    }
+
+    const updatedMember = await UttarparadeshData.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        state: req.body.state,
+        district: req.body.district,
+        city: req.body.city,
+        address: req.body.address,
+        company: req.body.company,
+        image: updatedImage,
+      },
+      { new: true }
+    );
+
+    res.json(updatedMember);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+});
 
 app.delete("/Delete_Uttarparadesh_Member/:id", async (req, res) => {
     try {
@@ -1045,44 +1076,44 @@ app.post("/findUpUser/:id", async (req, res) => {
 
 
 // --------------News START--------------
-app.post("/postNews", upload.single("image"),async(req,res)=>{
-    try {
+app.post("/postNews", upload.single("image"), async (req, res) => {
+  try {
 
-        let imageName = "";
+    let imageName = "";
 
-        if (req.file) {
-            imageName = Date.now() + ".webp";
+    if (req.file) {
+      imageName = Date.now() + ".webp";
 
-            const uploadPath = path.join(__dirname, "uploads");
+      const uploadPath = path.join(__dirname, "uploads");
 
-            // Make sure uploads folder exists
-            if (!fs.existsSync(uploadPath)) {
-                fs.mkdirSync(uploadPath);
-            }
+      // Make sure uploads folder exists
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath);
+      }
 
-            await sharp(req.file.buffer)
-                .resize(300, 300) // resize (you can change)
-                .webp({ quality: 90 }) // compression quality
-                .toFile(path.join(uploadPath, imageName));
-        }
-
-        const request = new newsData({
-            title: req.body.title,
-            category: req.body.category,
-            date: req.body.date,
-            description: req.body.description,
-            image: imageName,
-        });
-
-        const result = await request.save();
-
-        res.json(result);
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Error Adding Member" });
+      await sharp(req.file.buffer)
+        .resize(800, 600)        // resize news image
+        .webp({ quality: 70 })   // compression quality
+        .toFile(path.join(uploadPath, imageName));
     }
-})
+
+    const news = new newsData({
+      title: req.body.title,
+      category: req.body.category,
+      date: req.body.date,
+      description: req.body.description,
+      image: imageName,
+    });
+
+    const result = await news.save();
+
+    res.json(result);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error Adding News" });
+  }
+});
 
 app.get("/getNews",async(req,res)=>{
     const data = await newsData.find({});
@@ -1092,6 +1123,120 @@ app.get("/getNews",async(req,res)=>{
         res.send("data not found");
     }
 })
+
+app.delete("/DeleteNews/:id", async (req, res) => {
+    try {
+        const news = await newsData.findById(req.params.id);
+
+        if (!news) {
+            return res.status(404).json({ message: "Request not found" });
+        }
+
+        // Delete image file if exists
+        if (news.image) {
+            const imagePath = path.join(__dirname, "uploads", news.image);
+
+            fs.unlink(imagePath, (err) => {
+                if (err) {
+                    console.log("Image delete error:", err);
+                } else {
+                    console.log("Image deleted successfully");
+                }
+            });
+        }
+
+        // Delete member from DB
+        await newsData.findByIdAndDelete(req.params.id);
+
+        res.json({ message: "Member and image deleted successfully" });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+})
+
+app.get("/goNewsUpdate/:id", async (req, res) => {
+    const update = { _id: req.params.id }
+
+    try {
+        const data = await newsData.findOne(update);
+        if (data) {
+            console.log("data was match ");
+            console.log(data)
+            res.send(data);
+        }
+        else {
+            console.log("check and retry - ");
+            res.send("data invalid")
+        }
+
+    }
+
+    catch (err) {
+        console.log(err)
+        res.send("data invalid")
+    }
+
+
+
+})
+
+app.put("/updateNews/:id", upload.single("image"), async (req, res) => {
+  try {
+    const news = await newsData.findById(req.params.id);
+
+    if (!news) {
+      return res.status(404).json({ message: "News not found" });
+    }
+
+    let updatedImage = news.image;
+
+    if (req.file) {
+
+  const uploadPath = path.join(process.cwd(), "uploads");
+
+  // 🔥 Ensure folder exists
+  fs.mkdirSync(uploadPath, { recursive: true });
+
+  // Delete old image
+  if (news.image) {
+    const oldImagePath = path.join(uploadPath, news.image);
+    if (fs.existsSync(oldImagePath)) {
+      fs.unlinkSync(oldImagePath);
+    }
+  }
+
+  const newFileName = Date.now() + ".webp";
+  const outputPath = path.join(uploadPath, newFileName);
+
+  await sharp(req.file.buffer)
+    .resize(800)
+    .webp({ quality: 70 })
+    .toFile(outputPath);
+
+  updatedImage = newFileName;
+}
+
+    const updatedNews = await newsData.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title,
+        category: req.body.category,
+        date: req.body.date,
+        description: req.body.description,
+        image: updatedImage,
+      },
+      { new: true }
+    );
+
+    res.json(updatedNews);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+});
 
 // --------------News END--------------
 
