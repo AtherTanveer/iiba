@@ -86,27 +86,40 @@ const UttarPardesh_Add_Member = () => {
     formData.append("company", company);
     formData.append("image", image);
 
-    try {
-      setloading(true);
+   try {
+  setloading(true);
 
-      const data = await fetch("http://localhost:4500/addMember", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await data.json();
-
-      if (result) {
-        alert("Member Added");
-        navigate("/uttrakhandLogin/addmember");
-      }
-
-    } catch (err) {
-      console.log(err);
-      alert("Upload Failed");
-    } finally {
-      setloading(false);
+  const response = await fetch("http://localhost:4500/addMember", {
+    method: "POST",
+    body: formData,
+    headers: {
+      authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`
     }
+  });
+
+  const result = await response.json();
+
+  if (response.ok) {
+
+    alert("✅ Member Added Successfully");
+    navigate("/uttrakhandLogin/addmember");
+
+  } else {
+
+    alert("❌ " + result.message);
+
+  }
+
+} catch (err) {
+
+  console.log(err);
+  alert("❌ Upload Failed");
+
+} finally {
+
+  setloading(false);
+
+}
   };
 
   return (

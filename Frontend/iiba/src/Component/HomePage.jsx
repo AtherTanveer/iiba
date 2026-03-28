@@ -4,6 +4,7 @@ import Hero from './Hero'
 import Service from "./Services"
 import MemberLayout from './MemberLayout'
 import Contact from './Contact'
+import GoNews from '../NewsSection/GoNews'
 
 const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = () => {
    <Service/>
    <MemberLayout/>
    <Contact/>
+   <GoNews/>
    </>
   )
 }

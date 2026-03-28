@@ -15,7 +15,7 @@ const UpdateMemberUttarParadesh = () => {
   const [company, setcompany] = useState("")
   const [boolval, setboolval] = useState(false);
   const [image, setimage] = useState();
-
+  const [loading,setloading] = useState(false)
 
   const navigate = useNavigate();
   const params = useParams();
@@ -23,10 +23,15 @@ const UpdateMemberUttarParadesh = () => {
 
   const handlesubmit = async (e) => {
     e.preventDefault();
+
     if (!name || !email || !phone || !company || !state || !district || !city || !address) {
       setboolval(true);
       return;
     }
+
+    try{
+
+    setloading(true)
 
     const formData = new FormData();
 
@@ -47,23 +52,27 @@ const UpdateMemberUttarParadesh = () => {
 
       method: "put",
       body: formData,
+      headers: {
+        authorization: `bearer ${JSON.parse(localStorage.getItem("UpToken"))}`
+      }
 
     })
 
     const result = await data.json();
-    alert("Data updated")
-    if (result) {
-      console.log(result);
-      //  alert("Data Updated")
-      navigate("/UttarAdmin_Login")
 
+    if (result) {
+      alert("✔ Data Updated")
+      navigate("/UttarAdmin_Login")
     }
 
+    }catch(err){
+      console.log(err)
+      alert("Something went wrong")
+    }
 
-
-
-
-    // console.log(name, email, phone, company)
+    finally{
+      setloading(false)
+    }
   }
 
 
@@ -71,8 +80,6 @@ const UpdateMemberUttarParadesh = () => {
 
     const data = await fetch(`http://localhost:4500/goUttarparadeshUpdate/${params.id}`)
     const result = await data.json();
-    console.log(result);
-
 
     setname(result.name);
     setemail(result.email)
@@ -80,7 +87,6 @@ const UpdateMemberUttarParadesh = () => {
     setcompany(result.company)
     setaddress(result.address)
     setcity(result.city);
-    setcompany(result.company);
     setdistrict(result.district);
     setstate(result.state)
     setimage(result.image)
@@ -89,14 +95,6 @@ const UpdateMemberUttarParadesh = () => {
   useEffect(() => {
     getdata();
   }, [])
-
-  const nameHandler = (e) => {
-    setname(e.target.value);
-  }
-
-  const emailHandler = (e) => {
-    setemail(e.target.value);
-  }
 
 
   return (
@@ -111,141 +109,98 @@ const UpdateMemberUttarParadesh = () => {
 
           <form onSubmit={handlesubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            {/* Name */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Full Name *</label>
-              <input
-                type="text"
-                value={name}
-                onChange={nameHandler}
-                placeholder="Enter Full Name"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
-              />
-              {boolval && !name && (
-                <p className="text-red-600 text-sm mt-1">Enter Name</p>
-              )}
-            </div>
+            <input
+              type="text"
+              value={name}
+              onChange={(e)=>setname(e.target.value)}
+              placeholder="Enter Full Name"
+              className="p-3 border rounded-lg"
+            />
 
-            {/* Email */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Email *</label>
-              <input
-                type="email"
-                value={email}
-                onChange={emailHandler}
-                placeholder="Enter Email"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
-              />
-              {boolval && !email && (
-                <p className="text-red-600 text-sm mt-1">Enter Email</p>
-              )}
-            </div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e)=>setemail(e.target.value)}
+              placeholder="Enter Email"
+              className="p-3 border rounded-lg"
+            />
 
-            {/* Phone */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Phone *</label>
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) => setphone(e.target.value)}
-                placeholder="Enter Phone"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
-              />
-              {boolval && !phone && (
-                <p className="text-red-600 text-sm mt-1">Enter Phone</p>
-              )}
-            </div>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e)=>setphone(e.target.value)}
+              placeholder="Enter Phone"
+              className="p-3 border rounded-lg"
+            />
 
-            {/* Company */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Company Name *</label>
-              <input
-                type="text"
-                value={company}
-                onChange={(e) => setcompany(e.target.value)}
-                placeholder="Enter Company Name"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
-              />
-              {boolval && !company && (
-                <p className="text-red-600 text-sm mt-1">Enter Company</p>
-              )}
-            </div>
+            <input
+              type="text"
+              value={company}
+              onChange={(e)=>setcompany(e.target.value)}
+              placeholder="Enter Company Name"
+              className="p-3 border rounded-lg"
+            />
 
-            {/* State */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">State</label>
-              <input
-                type="text"
-                value={state}
-                onChange={(e) => setstate(e.target.value)}
-                placeholder="Enter State"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
-              />
-            </div>
+            <input
+              type="text"
+              value={state}
+              onChange={(e)=>setstate(e.target.value)}
+              placeholder="Enter State"
+              className="p-3 border rounded-lg"
+            />
 
-            {/* District */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">District</label>
-              <input
-                type="text"
-                value={district}
-                onChange={(e) => setdistrict(e.target.value)}
-                placeholder="Enter District"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
-              />
-            </div>
+            <input
+              type="text"
+              value={district}
+              onChange={(e)=>setdistrict(e.target.value)}
+              placeholder="Enter District"
+              className="p-3 border rounded-lg"
+            />
 
-            {/* City */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">City</label>
-              <input
-                type="text"
-                value={city}
-                onChange={(e) => setcity(e.target.value)}
-                placeholder="Enter City"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
-              />
-            </div>
+            <input
+              type="text"
+              value={city}
+              onChange={(e)=>setcity(e.target.value)}
+              placeholder="Enter City"
+              className="p-3 border rounded-lg"
+            />
 
-            {/* Address - Full Width */}
-            <div className="flex flex-col md:col-span-2">
-              <label className="text-sm font-medium mb-1">Full Address</label>
-              <textarea
-                value={address}
-                onChange={(e) => setaddress(e.target.value)}
-                placeholder="Enter Full Address"
-                rows="3"
-                className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-800"
-              ></textarea>
-            </div>
+            <textarea
+              value={address}
+              onChange={(e)=>setaddress(e.target.value)}
+              placeholder="Enter Address"
+              rows="3"
+              className="p-3 border rounded-lg md:col-span-2"
+            ></textarea>
 
+            <input
+              type="file"
+              onChange={(e)=>setimage(e.target.files[0])}
+              className="p-2 bg-gray-700 text-white rounded-md"
+            />
 
-            {/* New Image Upload */}
-            <div>
-
-
-              <input
-                type="file"
-                onChange={(e) => setimage(e.target.files[0])}
-                className="p-2 bg-gray-700 text-white font-medium rounded-md"
-              />
-            </div>
-
-            {/* Submit Button - Full Width */}
             <div className="md:col-span-2 flex justify-center mt-4">
+
               <button
                 type="submit"
-                className="bg-sky-900 hover:bg-sky-800 transition-all duration-300 text-white px-10 py-3 rounded-xl text-lg shadow-md"
+                disabled={loading}
+                className="bg-sky-900 hover:bg-sky-800 text-white px-10 py-3 rounded-xl text-lg flex items-center gap-3"
               >
-                Update Member
+
+                {loading && (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                )}
+
+                {loading ? "Updating..." : "Update Member"}
+
               </button>
+
             </div>
 
           </form>
         </div>
       </div>
     </>
-
   )
 }
 

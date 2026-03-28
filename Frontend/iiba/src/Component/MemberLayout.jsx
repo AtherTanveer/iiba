@@ -1,5 +1,6 @@
 import React from 'react'
 import member from "../assets/member.png"
+import { Link } from 'react-router-dom'
 
 const MemberLayout = () => {
   return (
@@ -16,7 +17,17 @@ const MemberLayout = () => {
                 <li>Training & workshops</li>
             </ul> */}
 
-            <button className='p-2 px-5 ms-2 mt-4 rounded bg-sky-950 text-white'>Apply for Membership</button>
+<div className='mt-4 h-20'>
+     <Link
+             className='p-3 px-5 ms-2 mt-4 rounded bg-sky-950 text-white '
+             to={"/membership"}>
+            Apply for Membership
+            </Link>
+
+</div>
+           
+            
+            
         </div>
         <div>
             <img src={member} alt="" className='w-full'/>

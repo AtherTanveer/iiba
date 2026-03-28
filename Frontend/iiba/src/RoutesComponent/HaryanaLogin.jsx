@@ -27,9 +27,10 @@ const HaryanaLogin = () => {
     })
 
     const result = await data.json();
-    if (result) {
+    if (result.auth) {
       console.log(result);
-      localStorage.setItem("hariyana", JSON.stringify(result))
+      localStorage.setItem("hariyana", JSON.stringify(result.data))
+      localStorage.setItem("hariyanaToken", JSON.stringify(result.auth))
       alert("Admin you are login")
       navigate("/haryanaLogin/Haryana_Admin_login")
 

@@ -1,15 +1,36 @@
 const mongoose = require("mongoose");
 
 const Haryana_Schema = mongoose.Schema({
-    name:String,
-    email:{type:String, unique:true},
-    phone:{type:Number, unique:true},
-    state:String,
-    district:String,
-    city:String,
-    address:String,
-    company:String,
-    image:String,
-})
+   name:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+        trim:true,
+        match:[/^\S+@\S+\.\S+$/,'Please use a valid email']
+    },
+    phone:{
+        type:String,
+        required:true,
+        unique:true,
+        trim:true
+    },
+    state:{type:String, trim:true},
+    district:{type:String, trim:true},
+    city:{type:String, trim:true},
+    address:{type:String, trim:true},
+    company:{type:String, trim:true},
+    image:{
+        type:String,
+        default:"default.png"
+    }
+},{
+    timestamps:true
+}
+)
 
 module.exports = mongoose.model("haryanamember",Haryana_Schema);

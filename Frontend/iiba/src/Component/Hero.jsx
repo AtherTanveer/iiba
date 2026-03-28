@@ -2,27 +2,41 @@ import React from 'react'
 import Mission from "../assets/mission.jpg"
 import vision from "../assets/vision.png"
 import aboutimg from "../assets/about.png"
+import { Link } from 'react-router-dom'
 
 const Hero = () => {
     return (
         <div className='bg-slate-50 py-12 px-4 md:px-16'>
 
             {/* ================= ABOUT SECTION ================= */}
-            <div className='max-w-7xl mx-auto'>
+            <div className="max-w-7xl mx-auto px-4">
 
-                <h1 className='text-center text-3xl md:text-5xl font-bold text-sky-950'>
+                <h1 className="text-center text-3xl md:text-5xl font-bold text-sky-950">
                     About IIBA
                 </h1>
+                <div className='flex justify-around'>
+                    <div className="w-19 h-1 bg-sky-600 mt-2 mb-5"></div>
+                </div>
 
-                <p className='text-center text-gray-600 mt-3 max-w-3xl mx-auto'>
-                    Indian Industries Business Association – Empowering MSMEs, 
+
+                <p className="text-center text-gray-600 mt-3 max-w-3xl mx-auto">
+                    Indian Industries Business Association – Empowering MSMEs,
                     Strengthening Industries, Building the Nation.
                 </p>
 
-                <div className='grid md:grid-cols-2 gap-10 items-center mt-12'>
+                <div className="grid md:grid-cols-2 gap-10 items-center mt-10">
 
-                    {/* Left Content */}
-                    <div className='space-y-5 text-gray-700 text-base leading-relaxed'>
+                    {/* Image First on Mobile */}
+                    <div className="flex justify-center order-1 md:order-2">
+                        <img
+                            src={aboutimg}
+                            alt="About IIBA"
+                            className="w-full max-w-sm md:max-w-lg rounded-xl shadow-lg"
+                        />
+                    </div>
+
+                    {/* Text */}
+                    <div className="space-y-5 text-gray-700 text-base leading-relaxed order-2 md:order-1">
 
                         <p>
                             The Indian Industries Business Association (IIBA) is a premier
@@ -42,59 +56,53 @@ const Hero = () => {
                             challenges, ensuring sustainable growth and competitiveness.
                         </p>
 
-                        <button className='mt-4 px-6 py-3 bg-sky-950 text-white rounded-lg shadow-md 
-                        hover:bg-sky-800 hover:shadow-xl transition-all duration-300'>
-                            Learn More
-                        </button>
+                        <Link
+                        to={"/AboutIIBA"} className="mt-3 px-6 py-3 bg-sky-950 text-white rounded-lg shadow-md
+      hover:bg-sky-800 hover:shadow-xl transition">
+         Learn More
+                        </Link>
+                      
 
-                    </div>
-
-                    {/* Right Image */}
-                    <div className='flex justify-center'>
-                        <img 
-                            src={aboutimg} 
-                            alt="About IIBA"
-                            className='w-full max-w-md md:max-w-lg drop-shadow-2xl'
-                        />
                     </div>
 
                 </div>
+
             </div>
 
 
             {/* ================= MISSION SECTION ================= */}
-            <div className='max-w-7xl mx-auto mt-20'>
+            <div className="max-w-7xl mx-auto mt-16 px-5">
 
-                <div className='grid md:grid-cols-2 gap-10 items-center'>
+                <div className="grid md:grid-cols-2 gap-10 items-center">
 
-                    <div className='bg-white p-8 rounded-2xl shadow-lg'>
-                        <h2 className='text-3xl md:text-4xl font-bold text-sky-950'>
+                    {/* Image */}
+                    <div className="flex justify-center">
+                        <img
+                            src={Mission}
+                            alt="Mission"
+                            className="w-full max-w-sm md:max-w-lg rounded-xl shadow-lg"
+                        />
+                    </div>
+
+                    {/* Content */}
+                    <div>
+                        <h2 className="text-3xl md:text-4xl font-bold text-sky-950">
                             Our Mission
                         </h2>
 
-                        <p className='mt-6 text-gray-700 leading-relaxed'>
+                        <div className="w-16 h-1 bg-sky-600 mt-2 mb-5"></div>
+
+                        <p className="text-gray-700 leading-relaxed">
                             To foster cooperation among industries and provide guidance,
                             resources, and advocacy to empower MSMEs and promote sustainable
                             industrial development in India.
                         </p>
 
-                        <p className='mt-4 text-gray-700'>
-                            Connecting entrepreneurs, manufacturers, and business leaders
-                            for collaboration and growth.
-                        </p>
-
-                        <p className='mt-4 text-gray-700'>
-                            Helping industries resolve practical challenges through expert
-                            consultations and industry-driven solutions.
-                        </p>
-                    </div>
-
-                    <div className='flex justify-center'>
-                        <img 
-                            src={Mission} 
-                            alt="Mission"
-                            className='w-full max-w-md md:max-w-lg rounded-xl shadow-xl'
-                        />
+                        <ul className="mt-4 space-y-3 text-gray-700">
+                            <li>• Connecting entrepreneurs, manufacturers, and business leaders.</li>
+                            <li>• Encouraging collaboration and innovation.</li>
+                            <li>• Helping industries solve real business challenges.</li>
+                        </ul>
                     </div>
 
                 </div>
@@ -102,33 +110,38 @@ const Hero = () => {
 
 
             {/* ================= VISION SECTION ================= */}
-            <div className='max-w-7xl mx-auto mt-20'>
+            <div className="max-w-7xl mx-auto mt-20 px-5">
 
-                <div className='grid md:grid-cols-2 gap-10 items-center'>
+                <div className="grid md:grid-cols-2 gap-10 items-center">
 
-                    <div className='flex justify-center order-2 md:order-1'>
-                        <img 
-                            src={vision} 
+                    {/* Image */}
+                    <div className="flex justify-center md:order-2">
+                        <img
+                            src={vision}
                             alt="Vision"
-                            className='w-full max-w-md md:max-w-lg rounded-xl shadow-xl'
+                            className="w-full max-w-sm md:max-w-lg rounded-xl shadow-lg"
                         />
                     </div>
 
-                    <div className='bg-white p-8 rounded-2xl shadow-lg order-1 md:order-2'>
-                        <h2 className='text-3xl md:text-4xl font-bold text-sky-950'>
+                    {/* Content */}
+                    <div className="md:order-1">
+                        <h2 className="text-3xl md:text-4xl font-bold text-sky-950">
                             Our Vision
                         </h2>
 
-                        <p className='mt-6 text-gray-700 leading-relaxed'>
+                        <div className="w-16 h-1 bg-sky-600 mt-2 mb-5"></div>
+
+                        <p className="text-gray-700 leading-relaxed">
                             To create a powerful, connected, and forward-looking industrial
                             ecosystem that accelerates MSME growth and strengthens India's
                             economic foundation.
                         </p>
 
-                        <p className='mt-4 text-gray-700'>
-                            Enabling collaboration, transparency, and long-term industrial
-                            sustainability across regions.
-                        </p>
+                        <ul className="mt-4 space-y-3 text-gray-700">
+                            <li>• Building a strong network of industries.</li>
+                            <li>• Promoting sustainable development.</li>
+                            <li>• Supporting MSMEs for national growth.</li>
+                        </ul>
                     </div>
 
                 </div>

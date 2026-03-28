@@ -2,87 +2,87 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Request_HR = () => {
-     const navigate = useNavigate();
-    
-      const [userData, setUserData] = useState([])
-    
-      const AllRequest = async () => {
-        const data = await fetch("http://localhost:4500/getHRuser");
-        const result = await data.json();
-        // console.log(result)
-        setUserData(result);
+  const navigate = useNavigate();
+
+  const [userData, setUserData] = useState([])
+
+  const AllRequest = async () => {
+    const data = await fetch("http://localhost:4500/getHRuser");
+    const result = await data.json();
+    // console.log(result)
+    setUserData(result);
+  }
+
+  useEffect(() => {
+    AllRequest()
+  }, [])
+
+
+
+  const acceptRequest = async (e) => {
+
+    const data = await fetch(`http://localhost:4500/findHRUser/${e}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
       }
-    
-      useEffect(() => {
-        AllRequest()
-      }, [])
-    
-    
-    
-      const acceptRequest = async (e) => {
-        let e_val = e
-        const data = await fetch(`http://localhost:4500/findHRUser/${e}`, {
-    
-          method: "post",
-          headers: {
-            "content-Type": "application/json"
-          }
-    
-        })
-    
-        const result = await data.json()
-    
-    
-    
-    
-        const Senddata = await fetch("http://localhost:4500/ReAdd_Haryana_Member", {
-    
-          method: "post",
-          body: JSON.stringify(result),
-          headers: {
-            "content-Type": "application/json"
-          }
-    
-        })
-    
-    
-        const DeltData = async () => {
-    
-          const dltdata = await fetch(`http://localhost:4500/deleteHRRequest/${e_val}`, {
-            method: "delete"
-          })
-          const result = await dltdata.json();
-          if (result) {
-            console.log("data delete");
-          }
-    
-        }
-    
-        if (Senddata) {
-          console.log(Senddata);
-          alert("✅ Member Added");
-          navigate("/haryanaLogin/Haryana_Admin_login")
-          DeltData()
-        }
+    });
+
+    const result = await data.json();
+
+    // Add Haryana Member
+    const res = await fetch("http://localhost:4500/ReAdd_Haryana_Member", {
+      method: "POST",
+      body: JSON.stringify(result),
+      headers: {
+        "Content-Type": "application/json"
       }
-    
-      const DeleteRequest = async (e) => {
-    
-    
-    
-        if (confirm("Are You Sure Decline The Request!")) {
-          const data = await fetch(`http://localhost:4500/AdminDeleteHRRequest/${e}`, {
-            method: "delete"
-          })
-    
-          const result = await data.json();
-          console.log(result);
-          AllRequest()
-        } else {
-          console.log("not delete")
-        }
-    
-      }
+    });
+
+    const dataRes = await res.json();
+
+    // Duplicate email/phone check
+    if (!dataRes.success) {
+      alert("⚠️ Member Already Exists!\n\nThe Email or Phone Number is already registered in the system. Please contact the Sender to verify details before adding the member.");
+      return;
+    }
+
+    // Member added
+    alert("✅ Haryana Member Added Successfully");
+
+    // Delete request
+    const dltdata = await fetch(`http://localhost:4500/deleteHRRequest/${e}`, {
+      method: "DELETE"
+    });
+
+    const deleteResult = await dltdata.json();
+
+    if (deleteResult) {
+      console.log("Request Deleted");
+    }
+
+    // Navigate
+    navigate("/haryanaLogin/Haryana_Admin_login");
+
+  };
+
+  const DeleteRequest = async (e) => {
+
+
+
+    if (confirm("Are You Sure Decline The Request!")) {
+      const data = await fetch(`http://localhost:4500/AdminDeleteHRRequest/${e}`, {
+        method: "delete"
+      })
+
+      const result = await data.json();
+      console.log(result);
+      AllRequest()
+    } else {
+      console.log("not delete")
+    }
+
+  }
   return (
     <>
       <div className="w-full min-h-screen bg-gradient-to-br from-gray-100 via-sky-50 to-gray-200 p-4 md:p-10">
@@ -140,7 +140,7 @@ const Request_HR = () => {
                   <div className="relative">
                     <img
                       className="w-40 h-40 object-cover rounded-full shadow-lg"
-                      src={`http://localhost:4500/uploads/${elem.image}`}
+                      src={elem.image}
                       alt="img not found"
                     />
                     <div className="absolute inset-0 rounded-full ring-4 ring-sky-300 animate-pulse"></div>

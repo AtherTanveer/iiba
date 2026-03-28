@@ -95,36 +95,45 @@ const HelpPage = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <div className="bg-gray-50 p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              Email Support
-            </h3>
-            <p className="text-gray-600">IIBA.association1966@gmail.com</p>
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl mx-auto px-4">
 
-          <div className="bg-gray-50 p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              Call Us
-            </h3>
-            <p className="text-gray-600">+91 7906856465</p>
-          </div>
+  <div className="bg-gray-50 p-6 md:p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
+    <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-3">
+      Email Support
+    </h3>
+    <p className="text-gray-600 break-all">
+      IIBA.association1966@gmail.com
+    </p>
+  </div>
 
-          <div className="bg-gray-50 p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              Office Hours
-            </h3>
-            <p className="text-gray-600">Mon – Sat : 10:00 AM – 6:00 PM</p>
-          </div>
+  <div className="bg-gray-50 p-6 md:p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
+    <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-3">
+      Call Us
+    </h3>
+    <p className="text-gray-600">
+      +91 7906856465
+    </p>
+  </div>
 
-           <div className="bg-gray-50 p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              Office Address
-            </h3>
-            <p className="text-gray-600">National Office: 110, Chandan Nagar,
-Dehradun-247001, Uttarakhand, India</p>
-          </div>
-        </div>
+  <div className="bg-gray-50 p-6 md:p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
+    <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-3">
+      Office Hours
+    </h3>
+    <p className="text-gray-600">
+      Mon – Sat : 10:00 AM – 6:00 PM
+    </p>
+  </div>
+
+  <div className="bg-gray-50 p-6 md:p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition sm:col-span-2 md:col-span-3">
+    <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-3">
+      Office Address
+    </h3>
+    <p className="text-gray-600">
+      National Office: 110, Chandan Nagar, Dehradun-247001, Uttarakhand, India
+    </p>
+  </div>
+
+</div>
       </section>
     </div>
   );

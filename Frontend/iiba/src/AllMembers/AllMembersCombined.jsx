@@ -1,175 +1,215 @@
 import React, { useEffect, useState } from "react";
 
+// 🔹 Debounce Hook (inline for simplicity)
+const useDebounce = (value, delay = 500) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
 const AllMembersWithFilter = () => {
+
   const [allMembers, setAllMembers] = useState([]);
-  const [filteredMembers, setFilteredMembers] = useState([]);
   const [search, setSearch] = useState("");
   const [stateFilter, setStateFilter] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  // 🔥 Debounced Search
+  const debouncedSearch = useDebounce(search, 500);
 
   const fetchAllMembers = async () => {
-  try {
-    const [haryana, uttarakhand, up] = await Promise.all([
-      fetch("http://localhost:4500/get_Haryana_member").then(res => res.json()),
-      fetch("http://localhost:4500/getMember").then(res => res.json()), 
-      fetch("http://localhost:4500/get_Uttarparadesh_member").then(res => res.json()),
-    ]);
+    try {
 
-    const combinedData = [
-      ...haryana.map(item => ({ ...item, stateType: "Haryana" })),
-      ...uttarakhand.map(item => ({ ...item, stateType: "Uttarakhand" })), 
-      ...up.map(item => ({ ...item, stateType: "Uttar Pradesh" })),
-    ];
+      const [haryana, uttarakhand, up] = await Promise.all([
+        fetch(`http://localhost:4500/get_Haryana_member?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
+        fetch(`http://localhost:4500/getMember?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
+        fetch(`http://localhost:4500/get_Uttarparadesh_member?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
+      ]);
 
-    setAllMembers(combinedData);
-    setFilteredMembers(combinedData);
+      let combinedData = [
+        ...haryana.data.map(item => ({ ...item, stateType: "Haryana" })),
+        ...uttarakhand.data.map(item => ({ ...item, stateType: "Uttarakhand" })),
+        ...up.data.map(item => ({ ...item, stateType: "Uttar Pradesh" })),
+      ];
 
-  } catch (error) {
-    console.error("Error fetching members:", error);
-  }
-};
+      // 🔹 State Filter
+      if (stateFilter) {
+        combinedData = combinedData.filter(
+          item => item.stateType === stateFilter
+        );
+      }
+
+      setAllMembers(combinedData);
+
+      // 🔹 Total Pages (max of all)
+      const maxTotal = Math.max(
+        haryana.total,
+        uttarakhand.total,
+        up.total
+      );
+
+      setTotalPages(Math.ceil(maxTotal / 8));
+
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
   useEffect(() => {
     fetchAllMembers();
-  }, []);
-
-  // 🔎 Search + Filter Logic
-  useEffect(() => {
-    let result = allMembers;
-
-    if (search) {
-      result = result.filter(member =>
-        member.name?.toLowerCase().includes(search.toLowerCase()) ||
-        member.company?.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    if (stateFilter) {
-      result = result.filter(member => member.stateType === stateFilter);
-    }
-
-    setFilteredMembers(result);
-  }, [search, stateFilter, allMembers]);
+  }, [page, debouncedSearch, stateFilter]);
 
   return (
     <>
-  {/* Hero Section */}
-  <div className="bg-gradient-to-r from-sky-950 to-sky-800 text-white py-16 px-4 rounded-b-3xl">
+      {/* 🔥 HERO */}
+      <div className="bg-gradient-to-r from-sky-950 to-sky-800 text-white py-16 px-4 rounded-b-3xl">
+        <div className="max-w-5xl mx-auto text-center">
 
-    <div className="max-w-5xl mx-auto text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+            IIBA Member Directory
+          </h1>
 
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
-        IIBA Member Directory
-      </h1>
+          <div className="w-24 h-1 bg-amber-400 mx-auto mt-4 rounded-full"></div>
 
-      <div className="w-24 h-1 bg-amber-400 mx-auto mt-4 rounded-full"></div>
+          <p className="mt-6 text-gray-200 text-base sm:text-lg md:text-xl max-w-3xl mx-auto">
+            Explore the official directory of approved members of IIBA.
+          </p>
 
-      <p className="mt-6 text-gray-200 text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-        Explore the official directory of approved members of IIBA. 
-        Connecting industries, entrepreneurs, and MSMEs across regions 
-        to foster collaboration and industrial growth.
-      </p>
+          <div className="mt-6 inline-block bg-white/20 px-6 py-2 rounded-full text-sm">
+            Members: {allMembers.length}
+          </div>
 
-      {/* Member Count Badge */}
-      <div className="mt-6 inline-block bg-white/20 backdrop-blur-md px-6 py-2 rounded-full text-sm font-medium">
-        Total Members: {filteredMembers.length}
+        </div>
       </div>
 
-    </div>
-  </div>
+      {/* 🔍 SEARCH + FILTER */}
+      <div className="max-w-7xl mx-auto px-4 -mt-8">
+        <div className="bg-white shadow-xl rounded-2xl p-6 flex flex-col md:flex-row gap-4 justify-between items-center">
 
-  {/* Search + Filter Section */}
-  <div className="max-w-7xl mx-auto px-4 -mt-8">
+          <input
+            type="text"
+            placeholder="🔍 Search by Name or Company..."
+            value={search}
+            onChange={(e) => {
+              setPage(1);
+              setSearch(e.target.value);
+            }}
+            className="w-full md:w-1/2 px-5 py-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-950"
+          />
 
-    <div className="bg-white shadow-xl rounded-2xl p-6 flex flex-col md:flex-row gap-4 justify-between items-center">
-
-      <input
-        type="text"
-        placeholder="🔍 Search by Name or Company..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="w-full md:w-1/2 px-5 py-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-950 transition"
-      />
-
-      <select
-        value={stateFilter}
-        onChange={(e) => setStateFilter(e.target.value)}
-        className="w-full md:w-1/4 px-4 py-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-950 transition"
-      >
-        <option value="">All States</option>
-        <option value="Haryana">Haryana</option>
-        <option value="Uttarakhand">Uttarakhand</option>
-        <option value="Uttar Pradesh">Uttar Pradesh</option>
-      </select>
-
-    </div>
-  </div>
-
-  {/* Members Grid */}
-  <div className="max-w-7xl mx-auto px-4 py-16">
-
-    {filteredMembers.length > 0 ? (
-
-      <div className="grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
-        {filteredMembers.map((elem, index) => (
-
-          <div
-            key={index}
-            className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden transform hover:-translate-y-1"
+          <select
+            value={stateFilter}
+            onChange={(e) => {
+              setPage(1);
+              setStateFilter(e.target.value);
+            }}
+            className="w-full md:w-1/4 px-4 py-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-950"
           >
+            <option value="">All States</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+          </select>
 
-            {/* Image Section */}
-            <div className="bg-sky-950 flex justify-center items-center p-8 relative">
+        </div>
+      </div>
 
-              <img
-                src={`http://localhost:4500/uploads/${elem.image}`}
-                alt={elem.name}
-                className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-xl group-hover:scale-105 transition duration-300"
-              />
+      {/* 🧾 MEMBERS GRID */}
+      <div className="max-w-7xl mx-auto px-4 py-16">
 
-              {/* State Badge */}
-              <span className="absolute top-4 right-4 bg-amber-400 text-sky-950 text-xs font-semibold px-3 py-1 rounded-full shadow">
-                {elem.state}
-              </span>
+        {allMembers.length > 0 ? (
 
-            </div>
+          <div className="grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
-            {/* Content Section */}
-            <div className="p-6 space-y-3">
+            {allMembers.map((elem, index) => (
 
-              <h2 className="text-xl font-bold text-sky-950 text-center group-hover:text-amber-500 transition">
-                {elem.name}
-              </h2>
+              <div
+                key={index}
+                className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden"
+              >
 
-              <div className="text-sm text-gray-600 space-y-2 mt-4">
+                <div className="bg-sky-950 flex justify-center items-center p-8 relative">
 
-                <p><span className="font-medium text-gray-800">Company:</span> {elem.company}</p>
-                <p><span className="font-medium text-gray-800">Email:</span> {elem.email}</p>
-                <p><span className="font-medium text-gray-800">Phone:</span> {elem.phone}</p>
-                <p><span className="font-medium text-gray-800">District:</span> {elem.district}</p>
-                <p><span className="font-medium text-gray-800">City:</span> {elem.city}</p>
+                  <img
+                    src={elem.image}
+                    alt={elem.name}
+                    className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-xl"
+                  />
+
+                  <span className="absolute top-4 right-4 bg-amber-400 text-sky-950 text-xs px-3 py-1 rounded-full">
+                    {elem.state}
+                  </span>
+
+                </div>
+
+                <div className="p-6 space-y-2">
+
+                  <h2 className="text-xl font-bold text-center text-sky-950">
+                    {elem.name}
+                  </h2>
+
+                  <p><b>Company:</b> {elem.company}</p>
+                  <p><b>Email:</b> {elem.email}</p>
+                  <p><b>Phone:</b> {elem.phone}</p>
+                  <p><b>District:</b> {elem.district}</p>
+                  <p><b>City:</b> {elem.city}</p>
+
+                </div>
 
               </div>
 
-            </div>
+            ))}
 
           </div>
 
-        ))}
+        ) : (
+          <div className="text-center mt-20">
+            <h1 className="text-2xl text-gray-600">Loading...</h1>
+          </div>
+        )}
 
       </div>
 
-    ) : (
+      {/* 🔢 PAGINATION */}
+      <div className="flex justify-center items-center gap-4 pb-10">
 
-      <div className="text-center mt-20">
-        <h1 className="text-2xl font-medium text-gray-600">
-          No Member Found
-        </h1>
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(prev => prev - 1)}
+          className={`px-5 py-2 rounded-lg ${
+            page === 1 ? "bg-gray-300" : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          Prev
+        </button>
+
+        <span className="font-semibold text-lg">
+          Page {page} of {totalPages}
+        </span>
+
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage(prev => prev + 1)}
+          className={`px-5 py-2 rounded-lg ${
+            page === totalPages
+              ? "bg-gray-300"
+              : "bg-sky-950 text-white hover:bg-sky-800"
+          }`}
+        >
+          Next
+        </button>
+
       </div>
-
-    )}
-
-  </div>
-</>
+    </>
   );
 };
 

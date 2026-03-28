@@ -20,55 +20,51 @@ const UpRequest = () => {
 
 
   const acceptRequest = async (e) => {
-    let e_val = e
+
     const data = await fetch(`http://localhost:4500/findUpUser/${e}`, {
-
-      method: "post",
+      method: "POST",
       headers: {
-        "content-Type": "application/json"
+        "Content-Type": "application/json"
       }
+    });
 
-    })
+    const result = await data.json();
 
-    const result = await data.json()
-
-
-
-
-    const Senddata = await fetch("http://localhost:4500/ReAdd_Uttarparadesh_Member", {
-
-      method: "post",
+    // Add Uttar Pradesh Member
+    const res = await fetch("http://localhost:4500/ReAdd_Uttarparadesh_Member", {
+      method: "POST",
       body: JSON.stringify(result),
       headers: {
-        "content-Type": "application/json"
+        "Content-Type": "application/json"
       }
+    });
 
-    })
+    const dataRes = await res.json();
 
-
-    const DeltData = async () => {
-
-      const dltdata = await fetch(`http://localhost:4500/deleteUpRequest/${e_val}`, {
-        method: "delete"
-      })
-      const result = await dltdata.json();
-      if (result) {
-        // console.log(first);
-      }
-
+    // Duplicate email/phone check
+    if (!dataRes.success) {
+      alert("⚠️ Member Already Exists!\n\nThe Email or Phone Number is already registered in the system. Please contact the Sender to verify details before adding the member.");
+      return;
     }
 
-    if (Senddata) {
-      console.log(Senddata);
-      alert("data sended");
-      navigate("/UttarAdmin_Login")
-      DeltData()
+    // Member added
+    alert("✅ Uttar Pradesh Member Added Successfully");
 
+    // Delete request
+    const dltdata = await fetch(`http://localhost:4500/deleteUpRequest/${e}`, {
+      method: "DELETE"
+    });
 
+    const deleteResult = await dltdata.json();
 
-
+    if (deleteResult) {
+      console.log("Request Deleted");
     }
-  }
+
+    // Navigate
+    navigate("/UttarAdmin_Login");
+
+  };
 
   const DeleteRequest = async (e) => {
 
@@ -144,8 +140,8 @@ const UpRequest = () => {
                   <div className="relative">
                     <img
                       className="w-40 h-40 object-cover rounded-full shadow-lg"
-                      src={`http://localhost:4500/uploads/${elem.image}`}
-                      alt=""
+                      src={elem.image}
+                      alt="member"
                     />
                     <div className="absolute inset-0 rounded-full ring-4 ring-sky-300 animate-pulse"></div>
                   </div>

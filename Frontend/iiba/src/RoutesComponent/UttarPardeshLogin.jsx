@@ -26,9 +26,10 @@ const UttarPardeshLogin = () => {
     })
 
     const result = await data.json();
-    if (result) {
+    if (result.auth) {
       console.log(result);
-      localStorage.setItem("uttarparadesh_87", JSON.stringify(result))
+      localStorage.setItem("uttarparadesh_87", JSON.stringify(result.data))
+       localStorage.setItem("UpToken", JSON.stringify(result.auth))
       alert("Admin you are login")
       navigate("/UttarAdmin_Login")
 

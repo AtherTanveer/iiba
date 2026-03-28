@@ -30,6 +30,8 @@ import NewsPage from '../NewsSection/NewsPage'
 import NewsSection from '../NewsSection/NewsSection'
 import UpdateNews from '../NewsSection/UpdateNews'
 import NewsAdmin from '../NewsSection/NewsAdmin'
+import ContactPage from './ContactPage'
+import WorkSection from './WorkSection'
 
 const Page = () => {
   return (
@@ -49,6 +51,8 @@ const Page = () => {
         <Route path='/HelpPage' element={<HelpPage/>}/>
         <Route path='/HelpPage' element={<HelpPage/>}/>
         <Route path='/News' element={<NewsPage/>}/>
+        <Route path="/contactpage" element={<ContactPage/>}/>
+        <Route path="/WorkSection" element={<WorkSection/>}/>
         
 
 

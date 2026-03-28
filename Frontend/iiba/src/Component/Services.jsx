@@ -27,7 +27,7 @@ const Services = () => {
   ]
 
   const stats = [
-    { number: "17+", label: "Years of Experience" },
+    { number: "20+", label: "Years of Experience" },
     { number: "10,000+", label: "MSMEs Supported" },
     { number: "500+", label: "Industry Events" },
     { number: "100+", label: "Policy Workshops" },
@@ -41,7 +41,11 @@ const Services = () => {
         <h1 className='text-3xl md:text-5xl font-bold text-sky-950'>
           What We Do
         </h1>
-        <p className='text-gray-600 mt-3'>
+        <div className='flex justify-around'>
+ <div className="w-19 h-1 bg-sky-600 mt-2 mb-5"></div>
+                </div>
+
+        <p className='text-gray-600'>
           Empowering Industries Through Expert Services
         </p>
       </div>
@@ -75,7 +79,7 @@ const Services = () => {
           </h2>
 
           <ul className='space-y-4 text-gray-700 text-lg'>
-            <li>✔ 38+ Years of Industry Experience</li>
+            <li>✔ 20+ Years of Industry Experience</li>
             <li>✔ Trusted by MSMEs Across India</li>
             <li>✔ Expert Guidance on Government Policies</li>
             <li>✔ Strong Industry Network & Advocacy</li>

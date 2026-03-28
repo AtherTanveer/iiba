@@ -4,14 +4,26 @@ import { useNavigate } from "react-router-dom";
 const NewsAdmin = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  // ✅ Fetch All News (Async/Await)
-  const fetchNews = async () => {
+  const navigate = useNavigate();
+  const limit = 6;
+
+  // ✅ Fetch Paginated News
+  const fetchNews = async (page = 1) => {
     try {
-      const response = await fetch("http://localhost:4500/getNews");
+      setLoading(true);
+
+      const response = await fetch(
+        `http://localhost:4500/getNews?page=${page}&limit=${limit}`
+      );
+
       const data = await response.json();
-      setNews(data);
+
+      setNews(data.data);           // 👈 important
+      setTotalPages(data.totalPages);
+
     } catch (error) {
       console.log("Error fetching news:", error);
     } finally {
@@ -20,10 +32,10 @@ const NewsAdmin = () => {
   };
 
   useEffect(() => {
-    fetchNews();
-  }, []);
+    fetchNews(currentPage);
+  }, [currentPage]);
 
-  // ✅ Delete Function (Async/Await)
+  // ✅ Delete
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this news?"
@@ -35,8 +47,7 @@ const NewsAdmin = () => {
         method: "DELETE",
       });
 
-      // Refresh list after delete
-      setNews((prev) => prev.filter((item) => item._id !== id));
+      fetchNews(currentPage); // refresh after delete
     } catch (error) {
       console.log("Delete error:", error);
     }
@@ -44,7 +55,7 @@ const NewsAdmin = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-gray-100 p-6 md:p-10">
-      
+
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
         <h1 className="text-3xl md:text-4xl font-bold text-sky-950">
@@ -59,7 +70,7 @@ const NewsAdmin = () => {
         </button>
       </div>
 
-      {/* Loading State */}
+      {/* Loading */}
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
       ) : news.length === 0 ? (
@@ -67,55 +78,93 @@ const NewsAdmin = () => {
           <p className="text-gray-500 text-lg">No News Available</p>
         </div>
       ) : (
-        <div className="grid md:grid-cols-3 gap-8">
-          {news.map((item) => (
-            <div
-              key={item._id}
-              className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition overflow-hidden group"
-            >
-              <div className="relative overflow-hidden">
-                <img
-                  src={`http://localhost:4500/uploads/${item.image}`}
-                  alt=""
-                  className="h-52 w-full object-cover group-hover:scale-105 transition"
-                />
-                <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow">
-                  {item.category}
-                </span>
-              </div>
+        <>
+          {/* Cards */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {news.map((item) => (
+              <div
+                key={item._id}
+                className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition overflow-hidden group"
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt=""
+                    className="h-52 w-full object-cover group-hover:scale-105 transition"
+                  />
+                  <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow">
+                    {item.category}
+                  </span>
+                </div>
 
-              <div className="p-6">
-                <h2 className="text-lg font-bold text-gray-800">
-                  {item.title}
-                </h2>
+                <div className="p-6">
+                  <h2 className="text-lg font-bold text-gray-800">
+                    {item.title}
+                  </h2>
 
-                <p className="text-gray-400 text-sm mt-1">
-                  {item.date}
-                </p>
+                  <p className="text-gray-400 text-sm mt-1">
+                    {item.date}
+                  </p>
 
-                <p className="text-gray-600 mt-3 line-clamp-2 text-sm">
-                  {item.description}
-                </p>
+                  <p className="text-gray-600 mt-3 line-clamp-2 text-sm">
+                    {item.description}
+                  </p>
 
-                <div className="flex justify-between mt-6">
-                  <button
-                    onClick={() => navigate(`/updateNews/${item._id}`)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
-                  >
-                    Edit
-                  </button>
+                  <div className="flex justify-between mt-6">
+                    <button
+                      onClick={() => navigate(`/updateNews/${item._id}`)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
+                    >
+                      Edit
+                    </button>
 
-                  <button
-                    onClick={() => handleDelete(item._id)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm"
-                  >
-                    Delete
-                  </button>
+                    <button
+                      onClick={() => handleDelete(item._id)}
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-10 gap-2 flex-wrap">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(currentPage - 1)}
+                className="px-4 py-2 border rounded-xl disabled:opacity-50"
+              >
+                Prev
+              </button>
+
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={`px-4 py-2 rounded-xl ${
+                    currentPage === index + 1
+                      ? "bg-sky-900 text-white"
+                      : "bg-white border"
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(currentPage + 1)}
+                className="px-4 py-2 border rounded-xl disabled:opacity-50"
+              >
+                Next
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );

@@ -1,65 +1,80 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 import { FaMapLocationDot } from "react-icons/fa6";
+
 const StateCom = () => {
 
-    const auth = localStorage.getItem("user");
-    console.log(auth)
+  const auth = localStorage.getItem("user");
+  const hrAuth = localStorage.getItem("hariyana");
+  const upAuth = localStorage.getItem("uttarparadesh_87");
 
-    const hrAuth = localStorage.getItem("hariyana")
-    console.log(hrAuth)
+  const stateDetail = [
+    {
+      stateName: "Uttar Pradesh",
+      pathname: upAuth ? "/UttarAdmin_Login" : "/uttarpardeshLogin",
+    },
+    {
+      stateName: "Uttarakhand",
+      pathname: auth ? "/uttrakhandLogin/addmember" : "/uttrakhandLogin",
+    },
+    {
+      stateName: "Haryana",
+      pathname: hrAuth ? "/haryanaLogin/Haryana_Admin_login" : "/haryanaLogin",
+    },
+  ];
 
-    const upAuth = localStorage.getItem("uttarparadesh_87");
-    console.log(upAuth);
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-indigo-200 flex flex-col items-center justify-center px-4">
 
-    const stateDetail = [
-        {
-            stateName: "Uttar Pradesh Log-In",
-            pathname: `${upAuth ? "/UttarAdmin_Login":"/uttarpardeshLogin"}` 
-        },
-        {
-            stateName: "Uttarakhand Log-In",
-            pathname: `${auth ? "/uttrakhandLogin/addmember" : "/uttrakhandLogin"}`
-        },
-        {
-            stateName: "Haryana Log-In",
-           
-             pathname: `${hrAuth ? "/haryanaLogin/Haryana_Admin_login" : "/haryanaLogin"}`
-        },
-    ]
+      {/* Heading */}
+      <div className="mt-4 md:mt-0 text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold text-blue-900">
+          IIBA Membership Portal
+        </h1>
+        <div className="w-24 h-1 bg-amber-400 mx-auto mt-4 rounded-full"></div>
 
-    return (
-        <>
-            <div className='min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'>
+        <p className="text-gray-600 mt-3 text-lg">
+          Indian Industries Business Association
+        </p>
 
-                <h1 className=" text-3xl md:text-4xl font-bold text-center pt-6">
-                    IIBA Membership Portal
-                </h1>
-                <p className="text-gray-800 text-center mt-2">
-                    Indian Industries Business Association
-                </p>
-                <h1 className='w-full text-center text-2xl font-medium mt-7'>Select Your State</h1>
-                <div className='md:flex justify-center text-white mt-5 text-lg gap-6'>
-                    {
-                        stateDetail.map((elem, index) => (
-                            <Link to={`${elem.pathname}`} key={index}>
-                                <div className='flex mb-2 md:m-2 p-5 font-medium card-ui bg-gray-300 rounded-md w-full md:w-[20vw]  text-center text-black'>
-                                    <FaMapLocationDot className='icon-ui text-2xl'/>
-                                    <h1 className='ps-3'>{elem.stateName}</h1>
-                                </div>
-                            </Link>
+        <p className="mt-6 text-xl font-semibold text-gray-800">
+          Select Your State
+        </p>
+      </div>
 
-                        ))
-                    }
+      {/* Cards */}
+      <div className="grid md:grid-cols-3 gap-8 w-full max-w-5xl">
 
+        {stateDetail.map((elem, index) => (
+          <Link to={elem.pathname} key={index}>
 
+            <div className="bg-white/70 backdrop-blur-lg border border-gray-200 shadow-lg rounded-2xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:bg-white">
 
+              <div className="bg-blue-600 text-white p-4 rounded-full mb-4">
+                <FaMapLocationDot className="text-2xl" />
+              </div>
 
-                </div>
+              <h2 className="text-xl font-semibold text-gray-800">
+                {elem.stateName}
+              </h2>
+
+              <p className="text-gray-500 mt-2 text-sm">
+                Login to manage members
+              </p>
+
+              <button className="mt-5 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Open Portal
+              </button>
+
             </div>
 
-        </>
-    )
-}
+          </Link>
+        ))}
 
-export default StateCom
+      </div>
+
+    </div>
+  );
+};
+
+export default StateCom;

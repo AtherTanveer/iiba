@@ -25,18 +25,19 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <ul className="hidden md:flex gap-8 font-medium text-lg">
             <li><Link to="/" className="hover:text-sky-300 transition">Home</Link></li>
+             <li><Link to="/WorkSection" className="hover:text-sky-300 transition">Our Work</Link></li>
              <li><Link to="/Members" className="hover:text-sky-300 transition">Members</Link></li>
             <li><Link to="/membership" className="hover:text-sky-300 transition">Membership</Link></li>
            
             <li><Link to="/AboutIIBA" className="hover:text-sky-300 transition">About</Link></li>
-            <li><Link to="/News" className="hover:text-sky-300 transition">News</Link></li>
+            <li><Link to="/News" className="hover:text-sky-300 transition">News & Events</Link></li>
             <li><Link to="/HelpPage" className="hover:text-sky-300 transition">Help</Link></li>
           </ul>
 
           {/* Contact (Desktop Only) */}
           <div className="hidden md:block">
             <Link
-              to="/contact"
+              to="/contactpage"
               className="bg-white text-sky-950 px-4 py-2 rounded-lg font-medium hover:bg-sky-200 transition"
             >
               Contact Us
@@ -57,13 +58,14 @@ const Navbar = () => {
         {menuOpen && (
           <div className="md:hidden bg-sky-900 px-6 py-4 space-y-4 text-lg font-medium">
             <Link to="/" onClick={() => setMenuOpen(false)} className="block">Home</Link>
+              <Link to="/WorkSection" onClick={() => setMenuOpen(false)} className="block">Our Work</Link>
             <Link to="/membership" onClick={() => setMenuOpen(false)} className="block">Membership</Link>
             <Link to="/Members" onClick={() => setMenuOpen(false)} className="block">Member</Link>
             <Link to="/AboutIIBA" onClick={() => setMenuOpen(false)} className="block">About</Link>
             <Link to="/News" onClick={() => setMenuOpen(false)} className="block">News</Link>
             <Link to="/HelpPage" onClick={() => setMenuOpen(false)} className="block">Help</Link>
             <Link
-              to="/contact"
+              to="/contactpage"
               onClick={() => setMenuOpen(false)}
               className="block text-white rounded-lg flex"
             >

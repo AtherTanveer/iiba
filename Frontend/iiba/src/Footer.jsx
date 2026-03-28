@@ -9,9 +9,11 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-sky-950 text-white pt-12 pb-6">
+         
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
 
           {/* Logo & About */}
+         
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img src={IIBA_LOGO} alt="IIBA Logo" className="w-12" />
@@ -31,9 +33,9 @@ const Footer = () => {
             <ul className="space-y-2 text-gray-300">
               <li><Link to="/" className="hover:text-white transition">Home</Link></li>
               <li><Link to="/membership" className="hover:text-white transition">Membership</Link></li>
-              <li><Link to="/mission" className="hover:text-white transition">Mission</Link></li>
-              <li><Link to="/about" className="hover:text-white transition">About Us</Link></li>
-              <li><Link to="/contact" className="hover:text-white transition">Contact</Link></li>
+              <li><Link to="/Members" className="hover:text-white transition">Members</Link></li>
+              <li><Link to="/AboutIIBA" className="hover:text-white transition">About Us</Link></li>
+              <li><Link to="/contactpage" className="hover:text-white transition">Contact</Link></li>
             </ul>
           </div>
 
@@ -76,9 +78,24 @@ const Footer = () => {
         </div>
 
         {/* Bottom Line */}
-        <div className="border-t border-sky-800 mt-10 pt-4 text-center text-sm text-gray-400">
-          © {new Date().getFullYear()} IIBA. All Rights Reserved.
-        </div>
+       <div className="border-t border-sky-800 mt-10 pt-4 text-center text-sm text-gray-400">
+  <p>© {new Date().getFullYear()} IIBA. All Rights Reserved.</p>
+
+  <p className="mt-1">
+    Designed & Developed by 
+    <span className="text-sky-400 font-medium"> Ather Tanveer</span>
+  </p>
+
+  <p className="mt-1">
+    📞 <a href="tel:+919027567822" className="hover:text-white">
+      +91 9027567822
+    </a>
+    {" | "}
+    ✉️ <a href="mailto:athertanveer6@gmail.com" className="hover:text-white">
+      athertanveer6@gmail.com
+    </a>
+  </p>
+</div>
       </footer>
     </>
   );

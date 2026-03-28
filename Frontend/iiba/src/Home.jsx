@@ -1,85 +1,93 @@
-import React from 'react'
-import iiba from "./assets/IIBA.png"
-import bg from "./assets/bg.jpg"
-import rain from "./assets/RAIN.png"
-import { Link } from 'react-router-dom'
+import React from "react";
+import rain from "./assets/RAIN.png";
+
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <>
-      <div
-        className="md:flex md:h-[100vh] text-black bg-cover bg-center relative"
-        style={{ backgroundImage: `url(${bg})` }}
-      >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-sky-100/90 via-white/90 to-white"></div>
+    <div className="md:flex items-center min-h-screen bg-gradient-to-br from-sky-100 via-white to-sky-50">
 
-        {/* LEFT SECTION */}
-        <div className="relative z-10 px-2 pt-7 pb-6 md:w-[50%] md:pt-[6vw] md:ps-9">
+      {/* LEFT SECTION */}
+      <div className="px-6 py-12 md:w-[50%] md:px-14">
 
-          {/* 🔥 Mobile Logo Top */}
-          {/* <div className="flex justify-center md:hidden mb-6">
-            <img src={iiba} alt="IIBA Logo" className="w-20 drop-shadow-lg" />
-          </div> */}
+        <div className="text-center md:text-left">
 
-          {/* Heading */}
-          <h1 className="text-2xl leading-snug text-center font-bold uppercase 
-                         md:text-5xl md:text-left md:font-medium md:pt-6">
-            <span className="text-sky-950 block">INDIAN</span>
-            INDUSTRIES & BUSINESS ASSOCIATION <br className="hidden md:block" />
-            <span className="text-sm md:text-xl font-medium block mt-2">
-              (REGD.) INDIA
-            </span>
-          </h1>
+          {/* Logo + IIBA */}
+          <div className="flex items-center justify-center md:justify-start gap-3">
 
-          {/* Description */}
-          <p className="text-center text-sm mt-5 bg-white/70 backdrop-blur-sm p-4 rounded-xl
-                        md:text-left md:text-[17px] md:pt-4 md:w-[60%] md:p-3 md:bg-transparent md:shadow-none">
-            The Indian Industries Business Association (IIBA) works on a broad-based objective of fostering cooperation and providing support for the promotion and development of Micro, Small & Medium Enterprises (MSMEs).
-          </p>
-
-          {/* Buttons */}
-          <div className="flex flex-col items-center gap-4 mt-6
-                          md:flex md:flex-row md:text-left md:pt-4 md:p-7 md:mt-3 md:ms-1">
-
-            <Link
-              to={"/Newuser"}
-              className="w-full max-w-[250px] text-center 
-                         text-sky-950 border-2 border-sky-950 py-3 rounded-full font-semibold 
-                         hover:bg-sky-950 hover:text-white transition-all duration-300 shadow-md
-                         md:w-[160px] md:rounded-md md:px-[30px]"
-            >
-              To Member
-            </Link>
-
-            <Link
-              className="w-full max-w-[250px] text-center 
-                         bg-sky-950 text-white py-3 rounded-full font-semibold
-                         hover:bg-sky-800 transition-all duration-300 shadow-lg
-                         md:w-[160px] md:rounded-md md:px-[30px]"
-            >
-              Contact Us
-            </Link>
-
-          </div>
-        </div>
-
-        {/* RIGHT SECTION IMAGE */}
-        <div className="relative z-10 px-4 pb-10 md:w-[50%] md:pt-[8vw] md:mt-9">
-
-          {/* Mobile image style */}
-          <div className="rounded-2xl overflow-hidden md:shadow-none md:rounded-none">
             <img
-              src={rain}
-              alt="IIBA Protection"
-              className="w-full object-cover"
+              src={"/IIBA_logo.png"}
+              alt="IIBA Logo"
+              className="w-14 md:w-20 drop-shadow-md"
             />
+
+            <span className="text-5xl md:text-7xl font-extrabold text-sky-900 tracking-wide drop-shadow-lg">
+              IIBA
+            </span>
+
+          </div>
+
+          {/* Full Name */}
+          <span className="uppercase block text-xl md:text-6xl font-semibold text-gray-700 mt-3">
+            Indian Industries & Business Association
+          </span>
+
+          {/* Regd */}
+          <span className="block text-sm md:text-lg mt-3 text-gray-600">
+            (Regd.) India
+          </span>
+
+          {/* Blue Line */}
+          <div className="flex justify-center md:justify-start mt-4">
+            <div className="w-32 h-[3px] bg-sky-700 rounded"></div>
           </div>
 
         </div>
-      </div>
-    </>
-  )
-}
 
-export default Home
+        {/* Description */}
+        <p className="mt-6 text-gray-700 text-[15px] md:text-[17px] leading-relaxed md:w-[80%] text-center md:text-left">
+          The Indian Industries Business Association (IIBA) works on a
+          broad-based objective of fostering cooperation and providing support
+          for the promotion and development of Micro, Small & Medium
+          Enterprises (MSMEs).
+        </p>
+
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center md:justify-start">
+
+          <Link
+            to={"/Newuser"}
+            className="px-7 py-3 text-center border-2 border-sky-900 text-sky-900 
+            font-semibold rounded-md hover:bg-sky-900 hover:text-white 
+            transition duration-300 shadow-md"
+          >
+            Become Member
+          </Link>
+
+          <Link
+            to={"/contactpage"}
+            className="px-7 py-3 text-center bg-sky-900 text-white 
+            font-semibold rounded-md hover:bg-sky-800 
+            transition duration-300 shadow-lg"
+          >
+            Contact Us
+          </Link>
+
+        </div>
+
+      </div>
+
+      {/* RIGHT SECTION IMAGE */}
+      <div className="md:w-[50%] px-6 md:px-10 pb-10 md:pb-0">
+        <img
+          src={rain}
+          alt="IIBA Protection"
+          className="w-full max-w-lg mx-auto drop-shadow-2xl"
+        />
+      </div>
+
+    </div>
+  );
+};
+
+export default Home;

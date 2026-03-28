@@ -100,28 +100,37 @@ const Haryana_Add_Member = () => {
     formData.append("company", company);
     formData.append("image", image);
 
-    try {
+   try {
 
-      setloading(true);
+  setloading(true);
 
-      const res = await fetch("http://localhost:4500/Add_Haryana_Member", {
-        method: "POST",
-        body: formData
-      });
-
-      const result = await res.json();
-
-      if (result) {
-        alert("Member Added Successfully");
-        navigate("/haryanaLogin/Haryana_Admin_login");
-      }
-
-    } catch (error) {
-      console.log(error);
-      alert("Something went wrong");
-    } finally {
-      setloading(false);
+  const res = await fetch("http://localhost:4500/Add_Haryana_Member", {
+    method: "POST",
+    body: formData,
+    headers: {
+      authorization: `bearer ${JSON.parse(localStorage.getItem("hariyanaToken"))}`
     }
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    alert("❌ " + result.message);
+  } else {
+    alert("✅ Member Added Successfully");
+    navigate("/haryanaLogin/Haryana_Admin_login");
+  }
+
+} catch (error) {
+
+  console.log(error);
+  alert("❌ Server Error");
+
+} finally {
+
+  setloading(false);
+
+}
   };
 
   return (
