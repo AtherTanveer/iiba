@@ -102,7 +102,7 @@ const HrUser = () => {
     try {
       setLoading(true); // ✅ Start Loader
 
-      const data = await fetch("http://localhost:4500/userHRRequest", {
+      const data = await fetch("https://iiba.onrender.com/userHRRequest", {
         method: "POST",
         body: formData,
       });

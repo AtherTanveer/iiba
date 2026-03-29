@@ -100,7 +100,7 @@ const UpUser = () => {
       formData.append("company", company);
       formData.append("image", image);
 
-      const response = await fetch("http://localhost:4500/userUpRequest", {
+      const response = await fetch("https://iiba.onrender.com/userUpRequest", {
         method: "POST",
         body: formData,
       });

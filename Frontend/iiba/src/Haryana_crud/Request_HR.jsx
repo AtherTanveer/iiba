@@ -7,7 +7,7 @@ const Request_HR = () => {
   const [userData, setUserData] = useState([])
 
   const AllRequest = async () => {
-    const data = await fetch("http://localhost:4500/getHRuser");
+    const data = await fetch("https://iiba.onrender.com/getHRuser");
     const result = await data.json();
     // console.log(result)
     setUserData(result);
@@ -21,7 +21,7 @@ const Request_HR = () => {
 
   const acceptRequest = async (e) => {
 
-    const data = await fetch(`http://localhost:4500/findHRUser/${e}`, {
+    const data = await fetch(`https://iiba.onrender.com/findHRUser/${e}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -31,7 +31,7 @@ const Request_HR = () => {
     const result = await data.json();
 
     // Add Haryana Member
-    const res = await fetch("http://localhost:4500/ReAdd_Haryana_Member", {
+    const res = await fetch("https://iiba.onrender.com/ReAdd_Haryana_Member", {
       method: "POST",
       body: JSON.stringify(result),
       headers: {
@@ -51,7 +51,7 @@ const Request_HR = () => {
     alert("✅ Haryana Member Added Successfully");
 
     // Delete request
-    const dltdata = await fetch(`http://localhost:4500/deleteHRRequest/${e}`, {
+    const dltdata = await fetch(`https://iiba.onrender.com/deleteHRRequest/${e}`, {
       method: "DELETE"
     });
 
@@ -71,7 +71,7 @@ const Request_HR = () => {
 
 
     if (confirm("Are You Sure Decline The Request!")) {
-      const data = await fetch(`http://localhost:4500/AdminDeleteHRRequest/${e}`, {
+      const data = await fetch(`https://iiba.onrender.com/AdminDeleteHRRequest/${e}`, {
         method: "delete"
       })
 

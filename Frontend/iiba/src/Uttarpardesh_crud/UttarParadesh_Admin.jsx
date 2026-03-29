@@ -12,42 +12,54 @@ const UttarParadesh_Admin = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   // ✅ Fetch Data
   const getData = async () => {
 
-    const token = localStorage.getItem("UpToken");
+    try {
 
-    if (token) {
-      const decoded = jwtDecode(token);
-      const expTime = decoded.exp * 1000;
+      setLoading(true);
 
-      if (Date.now() > expTime) {
-        localStorage.removeItem("UpToken");
-        localStorage.removeItem("uttarparadesh_87");
+      const token = localStorage.getItem("UpToken");
 
-        alert("Session expired, login again");
-        window.location.href = "/UttarAdmin_Login";
-        return;
-      }
-    }
+      if (token) {
+        const decoded = jwtDecode(token);
+        const expTime = decoded.exp * 1000;
 
-    const data = await fetch(
-      `http://localhost:4500/get_Uttarparadesh_member?page=${page}&search=${search}`,
-      {
-        headers: {
-          authorization: `bearer ${JSON.parse(localStorage.getItem("UpToken"))}`
+        if (Date.now() > expTime) {
+          localStorage.removeItem("UpToken");
+          localStorage.removeItem("uttarparadesh_87");
+
+          alert("Session expired, login again");
+          window.location.href = "/UttarAdmin_Login";
+          return;
         }
       }
-    );
 
-    const result = await data.json();
+      const data = await fetch(
+        `https://iiba.onrender.com/get_Uttarparadesh_member?page=${page}&search=${search}`,
+        {
+          headers: {
+            authorization: `bearer ${JSON.parse(localStorage.getItem("UpToken"))}`
+          }
+        }
+      );
 
-    if (result) {
-      setlist(result.data);
-      setTotalPages(result.totalPages);
+      const result = await data.json();
+
+      if (result) {
+        setlist(result.data);
+        setTotalPages(result.totalPages);
+      }
+
+      setLoading(false);
+
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
     }
   };
 
@@ -58,13 +70,14 @@ const UttarParadesh_Admin = () => {
   // ✅ Search
   const searchData = (e) => {
     setSearch(e.target.value);
-    setPage(1); // reset page on search
+    setPage(1);
   };
 
   // ✅ Delete
   const deleteData = async (id) => {
     if (confirm("Are Sure Delete Member !")) {
-      const data = await fetch(`http://localhost:4500/Delete_Uttarparadesh_Member/${id}`, {
+
+      const data = await fetch(`https://iiba.onrender.com/Delete_Uttarparadesh_Member/${id}`, {
         method: "delete",
         headers: {
           authorization: `bearer ${JSON.parse(localStorage.getItem("UpToken"))}`
@@ -141,7 +154,14 @@ const UttarParadesh_Admin = () => {
         </div>
       </div>
 
-      {/* Table */}
+      {/* Loader */}
+      {loading ? (
+        <div className="flex justify-center items-center h-60">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-900"></div>
+        </div>
+      ) : (
+
+      /* Table */
       <div className="overflow-x-auto mt-5 p-4 mb-6">
         <table className="w-full border border-gray-300">
           <thead className="bg-blue-900 text-white">
@@ -157,7 +177,7 @@ const UttarParadesh_Admin = () => {
               <th className="p-2">Company</th>
               <th className="p-2">Image</th>
               <th className="p-2">Action</th>
-               <th className="p-2">Certificate</th>
+              <th className="p-2">Certificate</th>
             </tr>
           </thead>
 
@@ -173,11 +193,11 @@ const UttarParadesh_Admin = () => {
                 <td className="p-2">{elem.city}</td>
                 <td className="p-2">{elem.address}</td>
                 <td className="p-2">{elem.company}</td>
+
                 <td className="p-2">
                   <img className='w-12' src={elem.image} alt="" />
                 </td>
 
-                {/* ✅ ACTION COLUMN */}
                 <td className="p-2">
                   <div className="flex flex-wrap gap-2 justify-center">
 
@@ -194,15 +214,13 @@ const UttarParadesh_Admin = () => {
                       Delete
                     </button>
 
-
-
                   </div>
                 </td>
 
                 <td className='p-2'>
                   <button
                     onClick={() =>
-                      window.open(`http://localhost:4500/generateCertificate/${elem._id}`)
+                      window.open(`https://iiba.onrender.com/generateCertificate/${elem._id}`)
                     }
                     className="bg-green-900 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
                   >
@@ -210,13 +228,16 @@ const UttarParadesh_Admin = () => {
                     Download
                   </button>
                 </td>
+
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* ✅ Pagination */}
+      )}
+
+      {/* Pagination */}
       <div className="flex justify-center items-center gap-4 pb-10">
 
         <button

@@ -34,7 +34,7 @@ const UttrKhnd_CRUD_portal = () => {
     }
 
     const data = await fetch(
-      `http://localhost:4500/getMember?page=${page}&search=${search}`,
+      `https://iiba.onrender.com/getMember?page=${page}&search=${search}`,
       {
         headers: {
           authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -63,7 +63,7 @@ const UttrKhnd_CRUD_portal = () => {
   // ✅ DELETE
   const deleteData = async (id) => {
     if (confirm("Are You Sure Delete Member !")) {
-      const data = await fetch(`http://localhost:4500/deleteMember/${id}`, {
+      const data = await fetch(`https://iiba.onrender.com/deleteMember/${id}`, {
         method: "delete",
         headers: {
           authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -206,7 +206,7 @@ const UttrKhnd_CRUD_portal = () => {
                 <td className='p-2'>
                   <button
                     onClick={() =>
-                      window.open(`http://localhost:4500/generateCertificate/${elem._id}`)
+                      window.open(`https://iiba.onrender.com/generateCertificate/${elem._id}`)
                     }
                     className="bg-green-900 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
                   >

@@ -6,9 +6,10 @@ export default function RequestUK() {
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState([])
+  const API = "https://iiba.onrender.com";
 
   const AllRequest = async () => {
-    const data = await fetch("http://localhost:4500/getuser");
+    const data = await fetch(`${API}/getuser`);
     const result = await data.json();
     // console.log(result)
     setUserData(result);
@@ -22,7 +23,7 @@ export default function RequestUK() {
 
   const acceptRequest = async (e) => {
 
-    const data = await fetch(`http://localhost:4500/findUser/${e}`, {
+    const data = await fetch(`${API}/findUser/${e}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -32,7 +33,7 @@ export default function RequestUK() {
     const result = await data.json();
 
     // Add member
-    const res = await fetch("http://localhost:4500/Re_addMember", {
+    const res = await fetch(`${API}/Re_addMember`, {
       method: "POST",
       body: JSON.stringify(result),
       headers: {
@@ -52,7 +53,7 @@ export default function RequestUK() {
     alert("Member Added Successfully");
 
     // Delete request
-    const dltdata = await fetch(`http://localhost:4500/deleteRequest/${e}`, {
+    const dltdata = await fetch(`${API}/deleteRequest/${e}`, {
       method: "DELETE"
     });
 
@@ -72,7 +73,7 @@ export default function RequestUK() {
 
 
     if (confirm("Are You Sure Decline The Request!")) {
-      const data = await fetch(`http://localhost:4500/AdminDeleteRequest/${e}`, {
+      const data = await fetch(`${API}/AdminDeleteRequest/${e}`, {
         method: "delete"
       })
 

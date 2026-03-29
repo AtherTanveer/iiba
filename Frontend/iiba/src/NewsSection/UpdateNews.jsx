@@ -20,7 +20,7 @@ const UpdateNews = () => {
     const fetchSingleNews = async () => {
       try {
         const res = await fetch(
-          `http://localhost:4500/goNewsUpdate/${id}`
+          `https://iiba.onrender.com/goNewsUpdate/${id}`
         );
         const data = await res.json();
 
@@ -61,7 +61,7 @@ const UpdateNews = () => {
       }
 
       const response = await fetch(
-        `http://localhost:4500/updateNews/${id}`,
+        `https://iiba.onrender.com/updateNews/${id}`,
         {
           method: "PUT",
           body: formData,
@@ -169,7 +169,7 @@ const UpdateNews = () => {
                 Current Image:
               </p>
               <img
-                src={`http://localhost:4500/uploads/${oldImage}?${new Date().getTime()}`}
+                src={`https://iiba.onrender.com/uploads/${oldImage}?${new Date().getTime()}`}
                 alt=""
                 className="h-40 rounded-lg"
               />

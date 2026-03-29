@@ -1,76 +1,98 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-const UttarPardeshLogin = () => {
-  const navigate = useNavigate()
 
+const UttarPardeshLogin = () => {
+  const navigate = useNavigate();
 
   const [userID, setUserID] = useState("");
-  const [password, setpassword] = useState("");
-  const[boolval,setboolval] = useState(false);
+  const [password, setPassword] = useState("");
+  const [boolval, setBoolval] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!userID,!password){
-      setboolval(true)
-      alert("Please Enter Input Feilds")
-      result(false)
+
+    if (!userID || !password) {
+      setBoolval(true);
+      return;
     }
 
+    setLoading(true);
+    try {
+      const data = await fetch("https://iiba.onrender.com/UttarParadesh_adminLogin", {
+        method: "POST",
+        body: JSON.stringify({ userID, password }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
 
-    const data = await fetch("http://localhost:4500/UttarParadesh_adminLogin", {
-      method: "post",
-      body: JSON.stringify({ userID, password }),
-      headers: {
-        "content-Type": "application/json"
+      const result = await data.json();
+      if (result.auth) {
+        localStorage.setItem("uttarparadesh_87", JSON.stringify(result.data));
+        localStorage.setItem("UpToken", JSON.stringify(result.auth));
+        navigate("/UttarAdmin_Login");
+      } else {
+        alert("Enter valid UserID and Password");
       }
-    })
 
-    const result = await data.json();
-    if (result.auth) {
-      console.log(result);
-      localStorage.setItem("uttarparadesh_87", JSON.stringify(result.data))
-       localStorage.setItem("UpToken", JSON.stringify(result.auth))
-      alert("Admin you are login")
-      navigate("/UttarAdmin_Login")
-
-    }
-    else {
-      alert("Enter Valid UserID Password")
-      console.log(userID, password, "enter valid user id and password");
+    } catch (err) {
+      console.log(err);
+      alert("Something went wrong!");
+    } finally {
+      setLoading(false);
     }
   }
 
-  const userIDHandle = (e) => {
-    setUserID(e.target.value)
-  }
-
-  const passwordHandler = (e) => {
-    setpassword(e.target.value)
-  }
   return (
-    <>
-    <h1 className=" text-3xl md:text-4xl font-bold text-center mt-6">
-        IIBA UttarParadesh
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-sky-100 via-white to-sky-50 px-4">
+
+      <h1 className="text-4xl font-bold text-center text-sky-900 mb-2">
+        IIBA Uttar Pradesh
       </h1>
-      <p className="text-gray-800 text-center mt-2">
+      <p className="text-gray-700 text-center mb-8">
         Indian Industries Business Association
       </p>
-      <h1 className='w-full text-center mt-8 text-3xl font-medium'>Login</h1>
-      <div className='w-full flex justify-center items-center mb-4'>
 
+      <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-md">
+        {boolval ? (
+          <p className="text-red-600 text-center mb-4">Fill all input fields!</p>
+        ) : (
+          <p className="text-gray-600 text-center mb-4">Enter your UserID & Password</p>
+        )}
 
-        <div className='m-2 p-3 rounded-2xl bg-slate-500'>
-            {boolval?<h1 className='text-red-600 p-4'>Fill The input Feilds</h1>:<h1 className='text-white p-4'>Enter UserID & Passwornd</h1>}
-          <form action="" onSubmit={handleSubmit} className='grid grid-cols-1 text-lg'>
-            <input value={userID} onChange={userIDHandle} className='m-4 p-2 bg-white rounded-md' type="text" placeholder='Enter User ID' />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-            <input value={password} onChange={passwordHandler} className='m-4 p-2  bg-white rounded-md' type="password" placeholder='Enter Password' />
-            <button className='p-2 bg-sky-950 rounded-md text-white' >Submit</button>
-          </form>
-        </div>
+          <input
+            type="text"
+            value={userID}
+            onChange={(e) => setUserID(e.target.value)}
+            placeholder="User ID"
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500"
+          />
+
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500"
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`p-3 rounded-xl text-white font-medium ${
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-sky-900 hover:bg-sky-800"
+            }`}
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
       </div>
-    </>
+
+    </div>
   )
 }
 
-export default UttarPardeshLogin
+export default UttarPardeshLogin;

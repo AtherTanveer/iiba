@@ -32,7 +32,7 @@ const NewsSection = () => {
       formData.append("image", image);
 
       const response = await fetch(
-        "http://localhost:4500/postNews",
+        "https://iiba.onrender.com/postNews",
         {
           method: "POST",
           body: formData,
@@ -43,7 +43,7 @@ const NewsSection = () => {
 
       if (result) {
         alert("News / Event Added Successfully ✅");
-        navigate("/NewsAdmin");
+        navigate("/UTNewsAdmin");
       }
     } catch (err) {
       console.log("Error:", err);

@@ -22,6 +22,7 @@ const AllMembersWithFilter = () => {
   const [stateFilter, setStateFilter] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   // 🔥 Debounced Search
   const debouncedSearch = useDebounce(search, 500);
@@ -29,10 +30,12 @@ const AllMembersWithFilter = () => {
   const fetchAllMembers = async () => {
     try {
 
+      setLoading(true);
+
       const [haryana, uttarakhand, up] = await Promise.all([
-        fetch(`http://localhost:4500/get_Haryana_member?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
-        fetch(`http://localhost:4500/getMember?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
-        fetch(`http://localhost:4500/get_Uttarparadesh_member?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
+        fetch(`https://iiba.onrender.com/get_Haryana_member?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
+        fetch(`https://iiba.onrender.com/getMember?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
+        fetch(`https://iiba.onrender.com/get_Uttarparadesh_member?page=${page}&search=${debouncedSearch}`).then(res => res.json()),
       ]);
 
       let combinedData = [
@@ -50,7 +53,6 @@ const AllMembersWithFilter = () => {
 
       setAllMembers(combinedData);
 
-      // 🔹 Total Pages (max of all)
       const maxTotal = Math.max(
         haryana.total,
         uttarakhand.total,
@@ -59,8 +61,11 @@ const AllMembersWithFilter = () => {
 
       setTotalPages(Math.ceil(maxTotal / 8));
 
+      setLoading(false);
+
     } catch (error) {
       console.log("Error:", error);
+      setLoading(false);
     }
   };
 
@@ -126,7 +131,33 @@ const AllMembersWithFilter = () => {
       {/* 🧾 MEMBERS GRID */}
       <div className="max-w-7xl mx-auto px-4 py-16">
 
-        {allMembers.length > 0 ? (
+        {loading ? (
+
+          <div className="grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="group bg-white rounded-3xl shadow-lg overflow-hidden animate-pulse"
+              >
+
+                <div className="bg-gray-300 flex justify-center items-center p-8">
+                  <div className="w-32 h-32 rounded-full bg-gray-400"></div>
+                </div>
+
+                <div className="p-6 space-y-3">
+                  <div className="h-6 bg-gray-300 rounded"></div>
+                  <div className="h-4 bg-gray-200 rounded"></div>
+                  <div className="h-4 bg-gray-200 rounded"></div>
+                  <div className="h-4 bg-gray-200 rounded"></div>
+                </div>
+
+              </div>
+            ))}
+
+          </div>
+
+        ) : allMembers.length > 0 ? (
 
           <div className="grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
@@ -173,7 +204,9 @@ const AllMembersWithFilter = () => {
 
         ) : (
           <div className="text-center mt-20">
-            <h1 className="text-2xl text-gray-600">Loading...</h1>
+            <h1 className="text-2xl text-gray-600">
+              No Members Found
+            </h1>
           </div>
         )}
 

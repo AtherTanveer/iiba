@@ -83,7 +83,7 @@ const AddMemberUttarParadesh = () => {
 
       setloading(true);
 
-      const data = await fetch("http://localhost:4500/Add_Uttarparadesh_Member", {
+      const data = await fetch("https://iiba.onrender.com/Add_Uttarparadesh_Member", {
         method: "POST",
         body: formData,
         headers: {

@@ -1,78 +1,108 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HaryanaLogin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const [userID, setUserID] = useState("");
-  const [password, setpassword] = useState("");
-   const[boolval,setboolval] = useState(false);
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(!userID,!password){
-      setboolval(true)
-      alert("Please Enter Input Feilds")
-      result(false)
+    if (!userID || !password) {
+      setError("Please enter User ID and Password");
+      return;
     }
 
+    try {
+      setLoading(true);
 
-    const data = await fetch("http://localhost:4500/Hariyana_adminLogin", {
-      method: "post",
-      body: JSON.stringify({ userID, password }),
-      headers: {
-        "content-Type": "application/json"
+      const data = await fetch(
+        "https://iiba.onrender.com/Hariyana_adminLogin",
+        {
+          method: "POST",
+          body: JSON.stringify({ userID, password }),
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      const result = await data.json();
+
+      if (result.auth) {
+        localStorage.setItem("hariyana", JSON.stringify(result.data));
+        localStorage.setItem("hariyanaToken", JSON.stringify(result.auth));
+
+        navigate("/haryanaLogin/Haryana_Admin_login");
+      } else {
+        setError("Invalid UserID or Password");
       }
-    })
-
-    const result = await data.json();
-    if (result.auth) {
-      console.log(result);
-      localStorage.setItem("hariyana", JSON.stringify(result.data))
-      localStorage.setItem("hariyanaToken", JSON.stringify(result.auth))
-      alert("Admin you are login")
-      navigate("/haryanaLogin/Haryana_Admin_login")
-
+    } catch (error) {
+      console.log(error);
+      setError("Server error");
+    } finally {
+      setLoading(false);
     }
-    else {
-      alert("Enter Valid UserID Password")
-      console.log(userID, password, "enter valid user id and password");
-    }
-    console.log(userID, password);
-  }
+  };
 
-  const userIDHandle = (e) => {
-    setUserID(e.target.value)
-  }
-
-  const passwordHandler = (e) => {
-    setpassword(e.target.value)
-  }
   return (
-    <>
-    <h1 className=" text-3xl md:text-4xl font-bold text-center mt-6">
-        IIBA Haryana
-      </h1>
-      <p className="text-gray-800 text-center mt-2">
-        Indian Industries Business Association
-      </p>
-      <h1 className='w-full text-center mt-8 text-3xl font-medium'>Login</h1>
-      <div className='w-full flex justify-center items-center mb-4'>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
 
+      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
 
-        <div className='m-2 p-3 rounded-2xl bg-slate-500'>
-           {boolval?<h1 className='text-red-600 p-4'>Fill The input Feilds</h1>:<h1 className='text-white p-4'>Enter UserID & Passwornd</h1>}
-          <form action="" onSubmit={handleSubmit} className='grid grid-cols-1 text-lg'>
-            <input value={userID} onChange={userIDHandle} className='m-4 p-2 bg-white rounded-md' type="text" placeholder='Enter User ID' />
+        <h1 className="text-3xl font-bold text-center text-gray-800">
+          IIBA Haryana
+        </h1>
 
-            <input value={password} onChange={passwordHandler} className='m-4 p-2  bg-white rounded-md' type="password" placeholder='Enter Password' />
-            <button className='p-2 bg-sky-950 rounded-md text-white' >Submit</button>
-          </form>
-        </div>
+        <p className="text-center text-gray-500 mt-1">
+          Indian Industries Business Association
+        </p>
+
+        <h2 className="text-center text-xl font-semibold mt-6">
+          Admin Login
+        </h2>
+
+        {error && (
+          <p className="text-red-500 text-center mt-3">{error}</p>
+        )}
+
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+
+          <input
+            type="text"
+            placeholder="Enter User ID"
+            value={userID}
+            onChange={(e) => setUserID(e.target.value)}
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          <button
+            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition flex justify-center items-center"
+          >
+            {loading ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Login"
+            )}
+          </button>
+
+        </form>
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default HaryanaLogin
+export default HaryanaLogin;

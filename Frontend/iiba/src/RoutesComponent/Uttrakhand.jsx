@@ -1,80 +1,111 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const API = "https://iiba.onrender.com";
 
 const Uttrakhand = () => {
   const navigate = useNavigate();
 
   const [userID, setUserID] = useState("");
-  const [password, setpassword] = useState("");
+  const [password, setPassword] = useState("");
   const [boolval, setboolval] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const HandleSubmit = async (e) => {
-
     e.preventDefault();
 
-    if (!userID, !password) {
-      setboolval(true)
-      return (false)
+    if (!userID || !password) {
+      setboolval(true);
+      return;
     }
 
-    const data = await fetch("http://localhost:4500/Uttrakhnd_adminLogin", {
-      method: "post",
-      body: JSON.stringify({ userID, password }),
-      headers: {
-        "content-Type": "application/json"
+    try {
+      setLoading(true);
+
+      const data = await fetch(`${API}/Uttrakhnd_adminLogin`, {
+        method: "POST",
+        body: JSON.stringify({ userID, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const result = await data.json();
+
+      if (result.auth) {
+        localStorage.setItem("user", JSON.stringify(result.data));
+        localStorage.setItem("token", JSON.stringify(result.auth));
+
+        navigate("/uttrakhandLogin/addmember");
+      } else {
+        alert("Enter Valid UserID Password");
       }
-    })
 
-    const result = await data.json();
-    if (result.auth) {
-      console.log(result);
-      localStorage.setItem("user", JSON.stringify(result.data))
-      localStorage.setItem("token", JSON.stringify(result.auth))
-      alert("Admin you are login")
-      navigate("/uttrakhandLogin/addmember")
-
+    } catch (error) {
+      console.log(error);
+      alert("Server Error");
+    } finally {
+      setLoading(false);
     }
-    else {
-      alert("Enter Valid UserID Password")
-      console.log(userID, password, "enter valid user id and password");
-    }
-
-
-  }
-
-  const userIDHandle = (e) => {
-    setUserID(e.target.value)
-  }
-
-  const passwordHandler = (e) => {
-    setpassword(e.target.value)
-  }
+  };
 
   return (
-    <>
-      <h1 className=" text-3xl md:text-4xl font-bold text-center mt-6">
-        IIBA Uttrakhand
-      </h1>
-      <p className="text-gray-800 text-center mt-2">
-        Indian Industries Business Association
-      </p>
-      <h1 className='w-full text-center mt-8 text-3xl font-medium'>Login</h1>
-      <div className='w-full flex justify-center items-center mb-4'>
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-sky-100 via-white to-sky-50 px-4">
 
+      <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-md">
 
-        <div className='m-2 p-3 rounded-2xl bg-slate-500'>
-          {boolval ? <h1 className='text-red-600 p-4'>Fill The input Feilds</h1> : <h1 className='text-white p-4'>Enter UserID & Passwornd</h1>}
-          <form action="" onSubmit={HandleSubmit} className='grid grid-cols-1 text-lg'>
-            <input value={userID} onChange={userIDHandle} className='m-4 p-2 bg-white rounded-md' type="text" placeholder='Enter User ID' />
+        <h1 className="text-3xl font-bold text-center text-sky-900">
+          IIBA Uttarakhand
+        </h1>
 
-            <input value={password} onChange={passwordHandler} className='m-4 p-2  bg-white rounded-md' type="password" placeholder='Enter Password' />
-            <button className='p-2 bg-sky-950 rounded-md text-white' >Login</button>
-          </form>
-        </div>
+        <p className="text-center text-gray-500 mt-2">
+          Indian Industries Business Association
+        </p>
+
+        <h2 className="text-center text-xl font-semibold mt-6">
+          Admin Login
+        </h2>
+
+        {boolval && (
+          <p className="text-red-500 text-center mt-3">
+            Please Fill All Fields
+          </p>
+        )}
+
+        <form onSubmit={HandleSubmit} className="mt-6 space-y-4">
+
+          <input
+            value={userID}
+            onChange={(e) => setUserID(e.target.value)}
+            type="text"
+            placeholder="Enter User ID"
+            className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+          />
+
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Enter Password"
+            className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+          />
+
+          <button
+            disabled={loading}
+            className="w-full bg-sky-900 hover:bg-sky-950 text-white py-2 rounded-lg flex justify-center items-center"
+          >
+            {loading ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Login"
+            )}
+          </button>
+
+        </form>
       </div>
-    </>
-  )
-}
 
-export default Uttrakhand
+    </div>
+  );
+};
+
+export default Uttrakhand;

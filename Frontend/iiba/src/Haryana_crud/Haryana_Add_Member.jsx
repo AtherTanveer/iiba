@@ -104,7 +104,7 @@ const Haryana_Add_Member = () => {
 
   setloading(true);
 
-  const res = await fetch("http://localhost:4500/Add_Haryana_Member", {
+  const res = await fetch("https://iiba.onrender.com/Add_Haryana_Member", {
     method: "POST",
     body: formData,
     headers: {

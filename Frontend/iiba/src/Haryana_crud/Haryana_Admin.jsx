@@ -12,11 +12,15 @@ const Haryana_Admin = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const getData = async () => {
     try {
+
+      setLoading(true);
+
       const token = localStorage.getItem("hariyanaToken");
 
       if (token) {
@@ -34,7 +38,7 @@ const Haryana_Admin = () => {
       }
 
       const data = await fetch(
-        `http://localhost:4500/get_Haryana_member?page=${page}&search=${search}`,
+        `https://iiba.onrender.com/get_Haryana_member?page=${page}&search=${search}`,
         {
           headers: {
             authorization: `bearer ${token}`
@@ -49,8 +53,11 @@ const Haryana_Admin = () => {
         setTotalPages(result.totalPages);
       }
 
+      setLoading(false);
+
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -58,17 +65,15 @@ const Haryana_Admin = () => {
     getData();
   }, [page, search]);
 
-  // 🔍 Search
   const searchData = (e) => {
     setSearch(e.target.value);
-    setPage(1); // reset page on search
+    setPage(1);
   };
 
-  // ❌ Delete
   const deleteData = async (id) => {
     if (confirm("Are You Sure Delete Member !")) {
       const data = await fetch(
-        `http://localhost:4500/Delete_Haryana_Member/${id}`,
+        `https://iiba.onrender.com/Delete_Haryana_Member/${id}`,
         {
           method: "delete",
           headers: {
@@ -86,7 +91,6 @@ const Haryana_Admin = () => {
     }
   };
 
-  // 🚪 Logout
   const logoutfn = () => {
     if (confirm("Are You Sure To Logout !")) {
       localStorage.removeItem("hariyana");
@@ -147,7 +151,14 @@ const Haryana_Admin = () => {
         </div>
       </div>
 
-      {/* Table */}
+      {/* Loader */}
+      {loading ? (
+        <div className="flex justify-center items-center h-60">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-900"></div>
+        </div>
+      ) : (
+
+      /* Table */
       <div className="overflow-x-auto mt-5 p-4 mb-12">
         <table className="w-full border border-gray-300 shadow-sm">
           <thead className="bg-blue-900 text-white">
@@ -163,7 +174,7 @@ const Haryana_Admin = () => {
               <th className="p-2">Company</th>
               <th className="p-2">Image</th>
               <th className="p-2">Action</th>
-                <th className="p-2">Certificate</th>
+              <th className="p-2">Certificate</th>
             </tr>
           </thead>
 
@@ -179,15 +190,11 @@ const Haryana_Admin = () => {
                 <td className="p-2">{elem.city}</td>
                 <td className="p-2">{elem.address}</td>
                 <td className="p-2">{elem.company}</td>
+
                 <td className="p-2">
-                  <img
-                    className='w-12'
-                    src={elem.image}
-                    alt=""
-                  />
+                  <img className='w-12' src={elem.image} alt="" />
                 </td>
 
-                {/* ✅ ACTION COLUMN */}
                 <td className="p-2">
                   <div className="flex flex-wrap gap-2 justify-center">
 
@@ -204,15 +211,13 @@ const Haryana_Admin = () => {
                       Delete
                     </button>
 
-
-
                   </div>
                 </td>
 
                 <td className='p-2'>
                   <button
                     onClick={() =>
-                      window.open(`http://localhost:4500/generateCertificate/${elem._id}`)
+                      window.open(`https://iiba.onrender.com/generateCertificate/${elem._id}`)
                     }
                     className="bg-green-900 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
                   >
@@ -220,13 +225,16 @@ const Haryana_Admin = () => {
                     Download
                   </button>
                 </td>
+
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* ✅ Pagination */}
+      )}
+
+      {/* Pagination */}
       <div className="flex justify-center gap-4 pb-10">
 
         <button

@@ -16,7 +16,7 @@ const NewsAdmin = () => {
       setLoading(true);
 
       const response = await fetch(
-        `http://localhost:4500/getNews?page=${page}&limit=${limit}`
+        `https://iiba.onrender.com/getNews?page=${page}&limit=${limit}`
       );
 
       const data = await response.json();
@@ -43,7 +43,7 @@ const NewsAdmin = () => {
     if (!confirmDelete) return;
 
     try {
-      await fetch(`http://localhost:4500/DeleteNews/${id}`, {
+      await fetch(`https://iiba.onrender.com/DeleteNews/${id}`, {
         method: "DELETE",
       });
 
@@ -63,7 +63,7 @@ const NewsAdmin = () => {
         </h1>
 
         <button
-          onClick={() => navigate("/NewsSecion")}
+          onClick={() => navigate("/UtNewsSecion")}
           className="bg-sky-900 hover:bg-sky-800 text-white px-6 py-3 rounded-xl shadow-lg transition"
         >
           + Add News

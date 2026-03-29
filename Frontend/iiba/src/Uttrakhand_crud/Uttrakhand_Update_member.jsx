@@ -48,7 +48,7 @@ const Uttrakhand_Update_member = () => {
         formData.append("image", image);
       }
 
-      const data = await fetch(`http://localhost:4500/updatemember/${params.id}`, {
+      const data = await fetch(`https://iiba.onrender.com/updatemember/${params.id}`, {
 
         method: "put",
         body: formData,
@@ -79,7 +79,7 @@ const Uttrakhand_Update_member = () => {
 
   const getdata = async () => {
 
-    const data = await fetch(`http://localhost:4500/goUpdate/${params.id}`)
+    const data = await fetch(`https://iiba.onrender.com/goUpdate/${params.id}`)
     const result = await data.json();
 
     setname(result.name);

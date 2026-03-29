@@ -46,7 +46,7 @@ const Haryana_Update_Member = () => {
         formData.append("image", image)
       }
 
-      const data = await fetch(`http://localhost:4500/update_Haryana_Member/${params.id}`, {
+      const data = await fetch(`https://iiba.onrender.com/update_Haryana_Member/${params.id}`, {
         method: "PUT",
         body: formData,
         headers: {
@@ -79,7 +79,7 @@ const Haryana_Update_Member = () => {
 
     try {
 
-      const data = await fetch(`http://localhost:4500/goHaryanaUpdate/${params.id}`)
+      const data = await fetch(`https://iiba.onrender.com/goHaryanaUpdate/${params.id}`)
       const result = await data.json()
 
       setname(result.name)

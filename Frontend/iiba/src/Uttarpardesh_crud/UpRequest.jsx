@@ -7,7 +7,7 @@ const UpRequest = () => {
   const [userData, setUserData] = useState([])
 
   const AllRequest = async () => {
-    const data = await fetch("http://localhost:4500/getUpUser");
+    const data = await fetch("https://iiba.onrender.com/getUpUser");
     const result = await data.json();
     // console.log(result)
     setUserData(result);
@@ -21,7 +21,7 @@ const UpRequest = () => {
 
   const acceptRequest = async (e) => {
 
-    const data = await fetch(`http://localhost:4500/findUpUser/${e}`, {
+    const data = await fetch(`https://iiba.onrender.com/findUpUser/${e}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -31,7 +31,7 @@ const UpRequest = () => {
     const result = await data.json();
 
     // Add Uttar Pradesh Member
-    const res = await fetch("http://localhost:4500/ReAdd_Uttarparadesh_Member", {
+    const res = await fetch("https://iiba.onrender.com/ReAdd_Uttarparadesh_Member", {
       method: "POST",
       body: JSON.stringify(result),
       headers: {
@@ -51,7 +51,7 @@ const UpRequest = () => {
     alert("✅ Uttar Pradesh Member Added Successfully");
 
     // Delete request
-    const dltdata = await fetch(`http://localhost:4500/deleteUpRequest/${e}`, {
+    const dltdata = await fetch(`https://iiba.onrender.com/deleteUpRequest/${e}`, {
       method: "DELETE"
     });
 
@@ -71,7 +71,7 @@ const UpRequest = () => {
 
 
     if (confirm("Are You Sure Decline The Request!")) {
-      const data = await fetch(`http://localhost:4500/AdminDeleteUpRequest/${e}`, {
+      const data = await fetch(`https://iiba.onrender.com/AdminDeleteUpRequest/${e}`, {
         method: "delete"
       })
 
