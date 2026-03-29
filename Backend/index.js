@@ -2069,7 +2069,7 @@ function verifyToken(req, res, next) {
 }
 
 app.get("/serveralive", (req, res) => {
-  res.status(200).json({ status: "ok", message: "Server is alive!" });
+  res.status(200).json({ status: "ok", message: "Server is sdsdalive!" });
 });
 
 
