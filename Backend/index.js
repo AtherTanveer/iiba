@@ -2068,7 +2068,13 @@ function verifyToken(req, res, next) {
     })
 }
 
+app.get("/serveralive", (req, res) => {
+  res.status(200).json({ status: "ok", message: "Server is alive!" });
+});
 
 
+const PORT = process.env.PORT || 4500;
 
-app.listen(4500)
+app.listen(PORT, () => {
+  console.log("Server running");
+});
