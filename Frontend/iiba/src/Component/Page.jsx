@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import HomePage from './HomePage'
 import MemberShipComp from '../RoutesComponent/MemberShipComp'
 import StateCom from '../RoutesComponent/StateCom'
@@ -46,14 +46,15 @@ const Page = () => {
         <Route path='/uttarpardeshLogin' element={<UttarPardeshLogin />} />
         <Route path='/haryanaLogin' element={<HaryanaLogin />} />
         <Route path='/Newuser' element={<NewUser />} />
-        <Route path='/Members' element={<Members/>}/>
-        <Route path='/AboutIIBA' element={<AboutIIBA/>}/>
-        <Route path='/HelpPage' element={<HelpPage/>}/>
-        <Route path='/HelpPage' element={<HelpPage/>}/>
-        <Route path='/News' element={<NewsPage/>}/>
-        <Route path="/contactpage" element={<ContactPage/>}/>
-        <Route path="/WorkSection" element={<WorkSection/>}/>
-        
+        <Route path='/Members' element={<Members />} />
+        <Route path='/AboutIIBA' element={<AboutIIBA />} />
+        <Route path='/HelpPage' element={<HelpPage />} />
+        <Route path='/HelpPage' element={<HelpPage />} />
+        <Route path='/News' element={<NewsPage />} />
+        <Route path="/contactpage" element={<ContactPage />} />
+        <Route path="/WorkSection" element={<WorkSection />} />
+        {/* Fix for index.html */}
+        <Route path="/index.html" element={<Navigate to="/" replace />} />
 
 
 
@@ -63,13 +64,13 @@ const Page = () => {
           <Route path='/uttarakhandAddMember' element={<UttarPardesh_Add_Member />} />
           <Route path='/uttrakhandUpdateMember/:id' element={<Uttrakhand_Update_member />} />
           <Route path='/requestuk' element={<RequestUK />} />
-          <Route path="/NewsSecion" element={<NewsSection/>}/>
-          <Route path='/updateNews/:id' element={<UpdateNews/>}/>
-        <Route path='/NewsAdmin' element={<NewsAdmin/>}/>
+          <Route path="/NewsSecion" element={<NewsSection />} />
+          <Route path='/updateNews/:id' element={<UpdateNews />} />
+          <Route path='/NewsAdmin' element={<NewsAdmin />} />
         </Route>
-         {/* ----Uttrakhand Routes End  */}
+        {/* ----Uttrakhand Routes End  */}
 
-                      {/* *** */}
+        {/* *** */}
 
         {/* Haryana Section Start---> */}
         <Route element={<HrPrivateCo />}>
@@ -77,27 +78,27 @@ const Page = () => {
           <Route path='/Haryana_Admin_login/Haryana_ADD-Member' element={<Haryana_Add_Member />} />
           <Route path='/HaryanaUpdateMember/:id' element={<Haryana_Update_Member />} />
           <Route path='/HrRequest' element={<Request_HR />} />
-           <Route path="/H$NewsSecion" element={<NewsSection/>}/>
-            <Route path='/H$updateNews/:id' element={<UpdateNews/>}/>
-        <Route path='/H$NewsAdmin' element={<NewsAdmin/>}/>
+          <Route path="/H$NewsSecion" element={<NewsSection />} />
+          <Route path='/H$updateNews/:id' element={<UpdateNews />} />
+          <Route path='/H$NewsAdmin' element={<NewsAdmin />} />
         </Route>
         {/* Haryana Section End---> */}
 
 
         {/* ---Uttarparadesh Routes Start */}
-        <Route element={<UpPrivateCo/>}>
-        <Route path='/UttarAdmin_Login' element={<UttarParadesh_Admin/>}/>
-        <Route path='uttarParadeshAddMember' element={<AddMemberUttarParadesh/>}/>
-        <Route path='UpdateMemberUttarparadesh/:id' element={<UpdateMemberUttarParadesh/>}/>
-        <Route path='UpRequest' element={<UpRequest/>}/>
-         <Route path="/UtNewsSecion" element={<NewsSection/>}/>
-          <Route path='/UTupdateNews/:id' element={<UpdateNews/>}/>
-        <Route path='/UTNewsAdmin' element={<NewsAdmin/>}/>
+        <Route element={<UpPrivateCo />}>
+          <Route path='/UttarAdmin_Login' element={<UttarParadesh_Admin />} />
+          <Route path='uttarParadeshAddMember' element={<AddMemberUttarParadesh />} />
+          <Route path='UpdateMemberUttarparadesh/:id' element={<UpdateMemberUttarParadesh />} />
+          <Route path='UpRequest' element={<UpRequest />} />
+          <Route path="/UtNewsSecion" element={<NewsSection />} />
+          <Route path='/UTupdateNews/:id' element={<UpdateNews />} />
+          <Route path='/UTNewsAdmin' element={<NewsAdmin />} />
         </Route>
         {/* ---Uttarparadesh Routes End */}
 
 
-        <Route path='/AdminMain' element={<Admin/>}/>
+        <Route path='/AdminMain' element={<Admin />} />
 
 
         {/* NevbarComponents END*/}
