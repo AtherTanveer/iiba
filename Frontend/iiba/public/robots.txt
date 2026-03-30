@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Allow important pages
+Allow: /members
+Allow: /membership
+Allow: /news
+Allow: /about
+Allow: /contact
+
+# Block unnecessary files
+Disallow: /admin
+Disallow: /api
+Disallow: /private
+
+Sitemap: https://www.iibaorg.com/sitemap.xml
