@@ -1,108 +1,102 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const HaryanaLogin = () => {
   const navigate = useNavigate();
 
   const [userID, setUserID] = useState("");
   const [password, setPassword] = useState("");
+  const [boolval, setBoolval] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!userID || !password) {
-      setError("Please enter User ID and Password");
+      setBoolval(true);
       return;
     }
 
+    setLoading(true);
     try {
-      setLoading(true);
-
-      const data = await fetch(
-        "https://iiba.onrender.com/Hariyana_adminLogin",
-        {
-          method: "POST",
-          body: JSON.stringify({ userID, password }),
-          headers: {
-            "content-type": "application/json",
-          },
+      const data = await fetch("https://iiba.onrender.com/Hariyana_adminLogin", {
+        method: "POST",
+        body: JSON.stringify({ userID, password }),
+        headers: {
+          "Content-Type": "application/json"
         }
-      );
+      });
 
       const result = await data.json();
 
       if (result.auth) {
         localStorage.setItem("hariyana", JSON.stringify(result.data));
         localStorage.setItem("hariyanaToken", JSON.stringify(result.auth));
-
         navigate("/haryanaLogin/Haryana_Admin_login");
       } else {
-        setError("Invalid UserID or Password");
+        alert("Enter valid UserID and Password");
       }
-    } catch (error) {
-      console.log(error);
-      setError("Server error");
+
+    } catch (err) {
+      console.log(err);
+      alert("Something went wrong!");
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-sky-100 via-white to-sky-50 px-4">
 
-      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
+      <h1 className="text-4xl font-bold text-center text-sky-900 mb-2">
+        IIBA Haryana
+      </h1>
 
-        <h1 className="text-3xl font-bold text-center text-gray-800">
-          IIBA Haryana
-        </h1>
+      <p className="text-gray-700 text-center mb-8">
+        Indian Industries Business Association
+      </p>
 
-        <p className="text-center text-gray-500 mt-1">
-          Indian Industries Business Association
-        </p>
+      <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-md">
 
-        <h2 className="text-center text-xl font-semibold mt-6">
-          Admin Login
-        </h2>
-
-        {error && (
-          <p className="text-red-500 text-center mt-3">{error}</p>
+        {boolval ? (
+          <p className="text-red-600 text-center mb-4">Fill all input fields!</p>
+        ) : (
+          <p className="text-gray-600 text-center mb-4">Enter your UserID & Password</p>
         )}
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
           <input
             type="text"
-            placeholder="Enter User ID"
             value={userID}
             onChange={(e) => setUserID(e.target.value)}
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="User ID"
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
 
           <input
             type="password"
-            placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Password"
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
 
           <button
+            type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition flex justify-center items-center"
+            className={`p-3 rounded-xl text-white font-medium ${
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-sky-900 hover:bg-sky-800"
+            }`}
           >
-            {loading ? (
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            ) : (
-              "Login"
-            )}
+            {loading ? "Logging in..." : "Login"}
           </button>
 
         </form>
       </div>
+
     </div>
-  );
-};
+  )
+}
 
 export default HaryanaLogin;

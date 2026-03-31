@@ -16,22 +16,126 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <Link to={"/"}>
-            <img src={IIBA_LOGO} alt="IIBA Logo" className="w-10 md:w-12" />
+              <img src={IIBA_LOGO} alt="IIBA Logo" className="w-10 md:w-12" />
             </Link>
-            
-            
+
+
           </div>
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex gap-8 font-medium text-lg">
-            <li><Link to="/" className="hover:text-sky-300 transition">Home</Link></li>
-             <li><Link to="/WorkSection" className="hover:text-sky-300 transition">Our Work</Link></li>
-             <li><Link to="/Members" className="hover:text-sky-300 transition">Members</Link></li>
-            <li><Link to="/membership" className="hover:text-sky-300 transition">Membership</Link></li>
-           
-            <li><Link to="/AboutIIBA" className="hover:text-sky-300 transition">About</Link></li>
-            <li><Link to="/News" className="hover:text-sky-300 transition">News & Events</Link></li>
-            <li><Link to="/HelpPage" className="hover:text-sky-300 transition">Help</Link></li>
+
+            <li>
+              <Link to="/" className="hover:text-sky-300 transition">Home</Link>
+            </li>
+
+            <li>
+              <Link to="/WorkSection" className="hover:text-sky-300 transition">Our Work</Link>
+            </li>
+
+            <li>
+              <Link to="/Members" className="hover:text-sky-300 transition">Members</Link>
+            </li>
+
+            {/* Membership Dropdown */}
+            <li className="relative group">
+
+              <button className="flex items-center gap-1 hover:text-sky-300 transition font-medium">
+                Membership
+                <svg
+                  className="w-4 h-4 mt-[2px] group-hover:rotate-180 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <ul className="absolute left-0 top-8 w-60 bg-white text-gray-700 rounded-xl shadow-xl border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+
+                <li>
+                  <Link
+                    to="/membership"
+                    className="block px-5 py-3 hover:bg-sky-50 hover:text-sky-700 transition"
+                  >
+                    Become Member
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/membership-benefits"
+                    className="block px-5 py-3 hover:bg-sky-50 hover:text-sky-700 transition"
+                  >
+                    Membership Benefits
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/iiba-certificate"
+                    className="block px-5 py-3 hover:bg-sky-50 hover:text-sky-700 transition"
+                  >
+                    Membership Certificate
+                  </Link>
+                </li>
+
+              </ul>
+
+            </li>
+
+            <li>
+              <Link to="/AboutIIBA" className="hover:text-sky-300 transition">About</Link>
+            </li>
+
+            {/* News & Events Dropdown */}
+            <li className="relative group">
+
+              <button className="flex items-center gap-1 hover:text-sky-300 transition font-medium">
+                News & Events
+                <svg
+                  className="w-4 h-4 mt-[2px] group-hover:rotate-180 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <ul className="absolute left-0 top-8 w-60 bg-white text-gray-700 rounded-xl shadow-xl border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+
+                <li>
+                  <Link
+                    to="/News"
+                    className="block px-5 py-3 hover:bg-sky-50 hover:text-sky-700 transition"
+                  >
+                    IIBA News
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/business-news"
+                    className="block px-5 py-3 hover:bg-sky-50 hover:text-sky-700 transition"
+                  >
+                    Business News
+                  </Link>
+                </li>
+
+              </ul>
+
+            </li>
+
+            <li>
+              <Link to="/HelpPage" className="hover:text-sky-300 transition">Help</Link>
+            </li>
+
+
+
           </ul>
 
           {/* Contact (Desktop Only) */}
@@ -56,22 +160,56 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden bg-sky-900 px-6 py-4 space-y-4 text-lg font-medium">
-            <Link to="/" onClick={() => setMenuOpen(false)} className="block">Home</Link>
-              <Link to="/WorkSection" onClick={() => setMenuOpen(false)} className="block">Our Work</Link>
-            <Link to="/membership" onClick={() => setMenuOpen(false)} className="block">Membership</Link>
-            <Link to="/Members" onClick={() => setMenuOpen(false)} className="block">Member</Link>
-            <Link to="/AboutIIBA" onClick={() => setMenuOpen(false)} className="block">About</Link>
-            <Link to="/News" onClick={() => setMenuOpen(false)} className="block">News</Link>
-            <Link to="/HelpPage" onClick={() => setMenuOpen(false)} className="block">Help</Link>
+          <div className="md:hidden bg-sky-900 px-6 py-5 space-y-3 text-lg font-medium shadow-lg">
+
+            <Link to="/" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              Home
+            </Link>
+
+            <Link to="/WorkSection" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              Our Work
+            </Link>
+
+            <Link to="/membership" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              Become Member
+            </Link>
+
+            <Link to="/membership-benefits" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              Membership Benefits
+            </Link>
+
+            <Link to="/iiba-certificate" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              Membership Certificate
+            </Link>
+
+            <Link to="/Members" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              Members
+            </Link>
+
+            <Link to="/AboutIIBA" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              About
+            </Link>
+
+            <Link to="/News" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              News
+            </Link>
+
+            <Link to="/business-news" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              Business News
+            </Link>
+
+            <Link to="/HelpPage" onClick={() => setMenuOpen(false)} className="block py-2 border-b border-sky-700 hover:text-sky-300 transition">
+              Help
+            </Link>
+
             <Link
               to="/contactpage"
               onClick={() => setMenuOpen(false)}
-              className="block text-white rounded-lg flex"
+              className="flex items-center gap-2 bg-white text-sky-900 px-4 py-2 rounded-lg hover:bg-sky-200 transition mt-2"
             >
-              Contact Us <h1 className="text-2xl ps-2"><IoIosCall /></h1>
+              Contact Us <h1 className="text-2xl"><IoIosCall /></h1>
             </Link>
-            
+
           </div>
         )}
       </nav>

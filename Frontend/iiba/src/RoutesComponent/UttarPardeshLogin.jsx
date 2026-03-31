@@ -48,7 +48,7 @@ const UttarPardeshLogin = () => {
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-sky-100 via-white to-sky-50 px-4">
 
       <h1 className="text-4xl font-bold text-center text-sky-900 mb-2">
-        IIBA Uttar Pradesh
+        IIBA UttarPradesh
       </h1>
       <p className="text-gray-700 text-center mb-8">
         Indian Industries Business Association

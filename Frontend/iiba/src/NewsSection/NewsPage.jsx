@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 export default function NewsPage() {
   const [newsData, setNewsData] = useState([]);
@@ -39,6 +40,19 @@ export default function NewsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10">
+      <Helmet>
+        <title>IIBA News & Events | Industry Updates & Seminars</title>
+
+        <meta
+          name="description"
+          content="Latest news, industry events and seminars organized by Indian Industries & Business Association."
+        />
+
+        <meta
+          name="keywords"
+          content="IIBA news, business seminars India, industry events, IIBA updates"
+        />
+      </Helmet>
 
       {/* Header */}
       <div className="text-center mb-8">
@@ -67,11 +81,10 @@ export default function NewsPage() {
                 setCategory(cat);
                 setCurrentPage(1);
               }}
-              className={`px-4 py-2 rounded-xl ${
-                category === cat
+              className={`px-4 py-2 rounded-xl ${category === cat
                   ? "bg-blue-600 text-white"
                   : "bg-white border"
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -154,11 +167,10 @@ export default function NewsPage() {
             <button
               key={index}
               onClick={() => setCurrentPage(index + 1)}
-              className={`px-4 py-2 rounded-xl ${
-                currentPage === index + 1
+              className={`px-4 py-2 rounded-xl ${currentPage === index + 1
                   ? "bg-blue-600 text-white"
                   : "bg-white border"
-              }`}
+                }`}
             >
               {index + 1}
             </button>

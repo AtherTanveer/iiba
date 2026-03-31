@@ -194,7 +194,7 @@ const UpUser = () => {
 
         {/* New Image Upload */}
         <div className="w-full">
-          <p className='text-gray-900 pb-2 '>Upload Profile Image*</p>
+          <p className='text-gray-900 pb-2 '>Upload Profile Image* (optional)</p>
 
           <input
             type="file"

@@ -32,6 +32,9 @@ import UpdateNews from '../NewsSection/UpdateNews'
 import NewsAdmin from '../NewsSection/NewsAdmin'
 import ContactPage from './ContactPage'
 import WorkSection from './WorkSection'
+import MembershipBenifits from './MembershipBenifits'
+import MembershipCertificate from './MembershipCertificate'
+import BusinessNews from './BusinessNews'
 
 const Page = () => {
   return (
@@ -53,8 +56,12 @@ const Page = () => {
         <Route path='/News' element={<NewsPage />} />
         <Route path="/contactpage" element={<ContactPage />} />
         <Route path="/WorkSection" element={<WorkSection />} />
+        <Route path="/iiba-certificate" element={<MembershipCertificate/>} />
+        <Route path="/business-news" element={<BusinessNews/>} />
+        <Route path="/membership-benefits" element={<MembershipBenifits/>} />
         {/* Fix for index.html */}
         <Route path="/index.html" element={<Navigate to="/" replace />} />
+
 
 
 

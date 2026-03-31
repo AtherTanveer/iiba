@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HrUser from "./HrUser";
 import UpUser from "./UpUser";
+import { Helmet } from "react-helmet";
 
 const NewUser = () => {
   const [value, setValue] = useState("");
@@ -109,6 +110,24 @@ const NewUser = () => {
 
   return (
     <>
+      <Helmet>
+        <title>IIBA Membership Registration | Indian Industries Business Association</title>
+
+        <meta
+          name="description"
+          content="Apply for IIBA membership. Join Indian Importers Business Association and connect with verified business members across India."
+        />
+
+        <meta
+          name="keywords"
+          content="IIBA membership, business association India, importers association, verified business members, IIBA registration"
+        />
+
+        <meta property="og:title" content="IIBA Membership Registration" />
+        <meta property="og:description" content="Apply for IIBA membership and become a verified member." />
+
+      </Helmet>
+
       <div className="min-h-screen bg-gradient-to-br from-sky-900 to-indigo-950 flex justify-center items-center p-5 rounded-b-2xl">
 
         <div className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-4xl">
@@ -206,7 +225,7 @@ const NewUser = () => {
 
               {/* New Image Upload */}
               <div className="w-full">
-                <p className='text-gray-900 pb-2 '>Upload Profile Image*</p>
+                <p className='text-gray-900 pb-2 '>Upload Profile Image* (optional)</p>
 
                 <input
                   type="file"
@@ -216,7 +235,7 @@ const NewUser = () => {
               </div>
 
               {/* //check box */}
-                 <div className="mt-6 flex items-center gap-3 justify-center">
+              <div className="mt-6 flex items-center gap-3 justify-center">
 
                 <input
                   type="checkbox"
@@ -243,7 +262,7 @@ const NewUser = () => {
 
                 {loading ? "Submitting..." : "Submit Membership Request"}
               </button>
-           
+
             </form>
           )}
 

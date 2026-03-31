@@ -1,33 +1,30 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const API = "https://iiba.onrender.com";
-
-const Uttrakhand = () => {
+const UttrakhandLogin = () => {
   const navigate = useNavigate();
 
   const [userID, setUserID] = useState("");
   const [password, setPassword] = useState("");
-  const [boolval, setboolval] = useState(false);
+  const [boolval, setBoolval] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const HandleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!userID || !password) {
-      setboolval(true);
+      setBoolval(true);
       return;
     }
 
+    setLoading(true);
     try {
-      setLoading(true);
-
-      const data = await fetch(`${API}/Uttrakhnd_adminLogin`, {
+      const data = await fetch("https://iiba.onrender.com/Uttrakhnd_adminLogin", {
         method: "POST",
         body: JSON.stringify({ userID, password }),
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       });
 
       const result = await data.json();
@@ -35,77 +32,71 @@ const Uttrakhand = () => {
       if (result.auth) {
         localStorage.setItem("user", JSON.stringify(result.data));
         localStorage.setItem("token", JSON.stringify(result.auth));
-
         navigate("/uttrakhandLogin/addmember");
       } else {
-        alert("Enter Valid UserID Password");
+        alert("Enter valid UserID and Password");
       }
 
-    } catch (error) {
-      console.log(error);
-      alert("Server Error");
+    } catch (err) {
+      console.log(err);
+      alert("Something went wrong!");
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-sky-100 via-white to-sky-50 px-4">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-sky-100 via-white to-sky-50 px-4">
+
+      <h1 className="text-4xl font-bold text-center text-sky-900 mb-2">
+        IIBA Uttarakhand
+      </h1>
+
+      <p className="text-gray-700 text-center mb-8">
+        Indian Industries Business Association
+      </p>
 
       <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-md">
 
-        <h1 className="text-3xl font-bold text-center text-sky-900">
-          IIBA Uttarakhand
-        </h1>
-
-        <p className="text-center text-gray-500 mt-2">
-          Indian Industries Business Association
-        </p>
-
-        <h2 className="text-center text-xl font-semibold mt-6">
-          Admin Login
-        </h2>
-
-        {boolval && (
-          <p className="text-red-500 text-center mt-3">
-            Please Fill All Fields
-          </p>
+        {boolval ? (
+          <p className="text-red-600 text-center mb-4">Fill all input fields!</p>
+        ) : (
+          <p className="text-gray-600 text-center mb-4">Enter your UserID & Password</p>
         )}
 
-        <form onSubmit={HandleSubmit} className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
           <input
+            type="text"
             value={userID}
             onChange={(e) => setUserID(e.target.value)}
-            type="text"
-            placeholder="Enter User ID"
-            className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+            placeholder="User ID"
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
 
           <input
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Enter Password"
-            className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+            placeholder="Password"
+            className="p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
 
           <button
+            type="submit"
             disabled={loading}
-            className="w-full bg-sky-900 hover:bg-sky-950 text-white py-2 rounded-lg flex justify-center items-center"
+            className={`p-3 rounded-xl text-white font-medium ${
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-sky-900 hover:bg-sky-800"
+            }`}
           >
-            {loading ? (
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            ) : (
-              "Login"
-            )}
+            {loading ? "Logging in..." : "Login"}
           </button>
 
         </form>
       </div>
 
     </div>
-  );
-};
+  )
+}
 
-export default Uttrakhand;
+export default UttrakhandLogin;

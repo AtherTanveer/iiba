@@ -1,5 +1,7 @@
 import React from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaUserTie } from "react-icons/fa";
+import { Helmet } from "react-helmet";
+
 
 const ContactPage = () => {
 
@@ -31,81 +33,117 @@ const ContactPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-indigo-100 py-12 px-5">
+    <>
+      <Helmet>
 
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-          Contact IIBA
-        </h1>
+        <title>Contact IIBA | Indian Industries & Business Association Offices</title>
 
-        <p className="text-gray-600 mt-3 text-sm md:text-base">
-          Indian Industries Business Association – Get in touch with our state offices for membership and support.
-        </p>
-      </div>
+        <meta
+          name="description"
+          content="Contact Indian Industries & Business Association (IIBA) for membership support, industrial collaboration, and business networking. Reach our offices in Delhi, Uttar Pradesh, Uttarakhand, and Haryana."
+        />
 
-      {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 max-w-7xl mx-auto">
+        <meta
+          name="keywords"
+          content="IIBA contact, Indian Industries Business Association contact, IIBA office India, industry association contact India, business association India, IIBA membership support"
+        />
 
-        {contacts.map((contact, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition duration-300"
-          >
+        <meta name="author" content="Indian Industries & Business Association" />
 
-            {/* Icon */}
-            <div className="w-12 h-12 flex items-center justify-center bg-indigo-100 rounded-lg mb-4">
-              <FaUserTie className="text-indigo-600 text-xl" />
+        <meta name="robots" content="index, follow" />
+
+        <link rel="canonical" href="https://www.iibaorg.com/contactpage" />
+
+        {/* Open Graph (for social sharing) */}
+        <meta property="og:title" content="Contact IIBA | Indian Industries & Business Association" />
+        <meta property="og:description" content="Get in touch with Indian Industries & Business Association for membership, industrial networking, and business support across India." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.iibaorg.com/contactpage" />
+
+        {/* Twitter SEO */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact IIBA | Indian Industries & Business Association" />
+        <meta name="twitter:description" content="Reach the Indian Industries & Business Association offices for membership inquiries, industry support and collaboration opportunities." />
+
+      </Helmet>
+
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-indigo-100 py-12 px-5">
+
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+            Contact IIBA
+          </h1>
+
+          <p className="text-gray-600 mt-3 text-sm md:text-base">
+            Indian Industries Business Association – Get in touch with our state offices for membership and support.
+          </p>
+        </div>
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 max-w-7xl mx-auto">
+
+          {contacts.map((contact, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition duration-300"
+            >
+
+              {/* Icon */}
+              <div className="w-12 h-12 flex items-center justify-center bg-indigo-100 rounded-lg mb-4">
+                <FaUserTie className="text-indigo-600 text-xl" />
+              </div>
+
+              {/* Title */}
+              <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                {contact.name}
+              </h2>
+
+              {/* Phone */}
+              <a
+                href={`tel:${contact.phone}`}
+                className="flex items-center text-gray-600 mb-3 hover:text-indigo-600"
+              >
+                <FaPhoneAlt className="mr-3 text-indigo-500" />
+                {contact.phone}
+              </a>
+
+              {/* Email */}
+              <a
+                href={`mailto:${contact.email}`}
+                className="flex items-center text-gray-600 mb-3 hover:text-indigo-600"
+              >
+                <FaEnvelope className="mr-3 text-indigo-500" />
+                {contact.email}
+              </a>
+
+              {/* Address */}
+              <p className="flex items-center text-gray-600">
+                <FaMapMarkerAlt className="mr-3 text-indigo-500" />
+                {contact.address}
+              </p>
+
             </div>
+          ))}
 
-            {/* Title */}
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
-              {contact.name}
-            </h2>
+        </div>
 
-            {/* Phone */}
-            <a
-              href={`tel:${contact.phone}`}
-              className="flex items-center text-gray-600 mb-3 hover:text-indigo-600"
-            >
-              <FaPhoneAlt className="mr-3 text-indigo-500" />
-              {contact.phone}
-            </a>
+        {/* Bottom Section */}
+        <div className="text-center mt-16">
 
-            {/* Email */}
-            <a
-              href={`mailto:${contact.email}`}
-              className="flex items-center text-gray-600 mb-3 hover:text-indigo-600"
-            >
-              <FaEnvelope className="mr-3 text-indigo-500" />
-              {contact.email}
-            </a>
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">
+            Need Help With Membership?
+          </h2>
 
-            {/* Address */}
-            <p className="flex items-center text-gray-600">
-              <FaMapMarkerAlt className="mr-3 text-indigo-500" />
-              {contact.address}
-            </p>
+          <p className="text-gray-600 mb-5">
+            Our team is available to assist you with registration and membership queries.
+          </p>
 
-          </div>
-        ))}
+        </div>
 
       </div>
+    </>
 
-      {/* Bottom Section */}
-      <div className="text-center mt-16">
-
-        <h2 className="text-xl font-semibold text-gray-800 mb-3">
-          Need Help With Membership?
-        </h2>
-
-        <p className="text-gray-600 mb-5">
-          Our team is available to assist you with registration and membership queries.
-        </p>
-
-      </div>
-
-    </div>
   );
 };
 
