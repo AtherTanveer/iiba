@@ -41,8 +41,8 @@ const Contact = () => {
               <div className="text-3xl mb-4">📍</div>
               <h3 className="font-semibold text-sky-950 mb-2">Address</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                National Office: 110, Chandan Nagar,<br />
-                Dehradun-247001, Uttarakhand, India
+                National Office: Mandi Samiti Road,<br />
+                Saharanpur-247001, UttarParadesh, India
               </p>
             </div>
 
@@ -52,8 +52,16 @@ const Contact = () => {
               <h3 className="font-semibold text-sky-950 mb-2">Phone</h3>
               <p className="text-gray-600 text-sm">
                 <a href="tel:+917906856465" className="hover:text-sky-600">
-                  +91 7906856465
+                  +91 9412480207
+                 
                 </a>
+                 <br />
+                <a href="tel:+917906856465" className="hover:text-sky-600">
+                
+                  +91 9058403030
+
+                </a>
+                
               </p>
             </div>
 
@@ -88,7 +96,7 @@ const Contact = () => {
 
             <iframe
               title="IIBA Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.631124244739!2d77.55468407462824!3d29.961287222507554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390eea9ed92a0ebf%3A0xe7782c82dad28cf1!2s110%2C%20Dehradun%20Rd%2C%20chokh%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001!5e0!3m2!1sen!2sin!4v1771319297428!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.9999957205937!2d77.53141083840016!3d29.979430122376296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390eea5fcb445f35%3A0x8ef8187f54d35893!2sMandi%20Samiti%20Rd%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001!5e0!3m2!1sen!2sin!4v1775066952290!5m2!1sen!2sin"
               className="w-full h-[300px] md:h-[450px]"
               loading="lazy"
               allowFullScreen

@@ -3,10 +3,11 @@ import Mission from "../assets/mission.jpg"
 import vision from "../assets/vision.png"
 import aboutimg from "../assets/about.png"
 import { Link } from 'react-router-dom'
+import { motion } from "framer-motion"
 
 const Hero = () => {
     return (
-        <div className='bg-slate-50 py-12 px-4 md:px-16'>
+        <div className='bg-slate-50 py-12 px-4 md:px-16 overflow-x-hidden'>
 
             {/* ================= ABOUT SECTION ================= */}
             <div className="max-w-7xl mx-auto px-4">
@@ -14,10 +15,10 @@ const Hero = () => {
                 <h1 className="text-center text-3xl md:text-5xl font-bold text-sky-950">
                     About IIBA
                 </h1>
+
                 <div className='flex justify-around'>
                     <div className="w-19 h-1 bg-sky-600 mt-2 mb-5"></div>
                 </div>
-
 
                 <p className="text-center text-gray-600 mt-3 max-w-3xl mx-auto">
                     Indian Industries Business Association – Empowering MSMEs,
@@ -26,17 +27,29 @@ const Hero = () => {
 
                 <div className="grid md:grid-cols-2 gap-10 items-center mt-10">
 
-                    {/* Image First on Mobile */}
-                    <div className="flex justify-center order-1 md:order-2">
+                    {/* Image */}
+                    <motion.div
+                        className="flex justify-center order-1 md:order-2"
+                        initial={{ opacity: 0, x: 40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >
                         <img
                             src={aboutimg}
                             alt="About IIBA"
                             className="w-full max-w-sm md:max-w-lg rounded-xl shadow-lg"
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Text */}
-                    <div className="space-y-5 text-gray-700 text-base leading-relaxed order-2 md:order-1">
+                    <motion.div
+                        className="space-y-5 text-gray-700 text-base leading-relaxed order-2 md:order-1"
+                        initial={{ opacity: 0, x: -40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >
 
                         <p>
                             The Indian Industries Business Association (IIBA) is a premier
@@ -57,13 +70,13 @@ const Hero = () => {
                         </p>
 
                         <Link
-                        to={"/AboutIIBA"} className="mt-3 px-6 py-3 bg-sky-950 text-white rounded-lg shadow-md
-      hover:bg-sky-800 hover:shadow-xl transition">
-         Learn More
+                            to={"/AboutIIBA"}
+                            className="mt-3 px-6 py-3 bg-sky-950 text-white rounded-lg shadow-md hover:bg-sky-800 hover:shadow-xl transition"
+                        >
+                            Learn More
                         </Link>
-                      
 
-                    </div>
+                    </motion.div>
 
                 </div>
 
@@ -76,16 +89,27 @@ const Hero = () => {
                 <div className="grid md:grid-cols-2 gap-10 items-center">
 
                     {/* Image */}
-                    <div className="flex justify-center">
+                    <motion.div
+                        className="flex justify-center"
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >
                         <img
                             src={Mission}
                             alt="Mission"
                             className="w-full max-w-sm md:max-w-lg rounded-xl shadow-lg"
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Content */}
-                    <div>
+                    <motion.div
+                        initial={{ opacity: 0, x: 40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >
                         <h2 className="text-3xl md:text-4xl font-bold text-sky-950">
                             Our Mission
                         </h2>
@@ -103,7 +127,7 @@ const Hero = () => {
                             <li>• Encouraging collaboration and innovation.</li>
                             <li>• Helping industries solve real business challenges.</li>
                         </ul>
-                    </div>
+                    </motion.div>
 
                 </div>
             </div>
@@ -115,16 +139,28 @@ const Hero = () => {
                 <div className="grid md:grid-cols-2 gap-10 items-center">
 
                     {/* Image */}
-                    <div className="flex justify-center md:order-2">
+                    <motion.div
+                        className="flex justify-center md:order-2"
+                        initial={{ opacity: 0, x: 40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >
                         <img
                             src={vision}
                             alt="Vision"
                             className="w-full max-w-sm md:max-w-lg rounded-xl shadow-lg"
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Content */}
-                    <div className="md:order-1">
+                    <motion.div
+                        className="md:order-1"
+                        initial={{ opacity: 0, x: -40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >
                         <h2 className="text-3xl md:text-4xl font-bold text-sky-950">
                             Our Vision
                         </h2>
@@ -142,7 +178,7 @@ const Hero = () => {
                             <li>• Promoting sustainable development.</li>
                             <li>• Supporting MSMEs for national growth.</li>
                         </ul>
-                    </div>
+                    </motion.div>
 
                 </div>
 

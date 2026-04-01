@@ -8,27 +8,27 @@ const ContactPage = () => {
   const contacts = [
     {
       name: "Main Office",
-      phone: "+918449319224",
-      email: "admin@iiba.org",
-      address: "Delhi, India",
+      phone: " +91 9412480207",
+      email: "Admin***@iibaorg.com",
+      address: "UttarParadesh Saharanpur - 247001, India",
     },
     {
       name: "Uttar Pradesh State Office",
-      phone: "+919000000001",
-      email: "up@iiba.org",
-      address: "Lucknow, Uttar Pradesh",
+      phone: "+91 7906856465",
+      email: "up***@iibaorg.com",
+      address: " Ambala Road Saharanpur, Uttar Pradesh",
     },
     {
       name: "Uttarakhand State Office",
       phone: "+919000000002",
-      email: "uk@iiba.org",
+      email: "uk***8@iibaorg.com",
       address: "Dehradun, Uttarakhand",
     },
     {
       name: "Haryana State Office",
       phone: "+919000000003",
-      email: "hr@iiba.org",
-      address: "Chandigarh, Haryana",
+      email: "hr***@iibaorg.com",
+      address: "Haryana , Haryana",
     },
   ];
 

@@ -3,14 +3,13 @@ import IIBA_LOGO from "./assets/IIBA_logo1.png";
 import { FiAlignJustify, FiX } from "react-icons/fi";
 import { IoIosCall } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
-      <nav className="bg-sky-950 text-white shadow-md">
+      <nav className="bg-sky-950 text-white shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
 
           {/* Logo */}
@@ -18,32 +17,36 @@ const Navbar = () => {
             <Link to={"/"}>
               <img src={IIBA_LOGO} alt="IIBA Logo" className="w-10 md:w-12" />
             </Link>
-
-
           </div>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex gap-8 font-medium text-lg">
+          <ul className="hidden md:flex gap-8 font-medium text-lg items-center">
 
             <li>
-              <Link to="/" className="hover:text-sky-300 transition">Home</Link>
+              <Link to="/" className="hover:text-sky-300 transition">
+                Home
+              </Link>
             </li>
 
             <li>
-              <Link to="/WorkSection" className="hover:text-sky-300 transition">Our Work</Link>
+              <Link to="/WorkSection" className="hover:text-sky-300 transition">
+                Our Work
+              </Link>
             </li>
 
             <li>
-              <Link to="/Members" className="hover:text-sky-300 transition">Members</Link>
+              <Link to="/Members" className="hover:text-sky-300 transition">
+                Members
+              </Link>
             </li>
 
             {/* Membership Dropdown */}
             <li className="relative group">
 
-              <button className="flex items-center gap-1 hover:text-sky-300 transition font-medium">
+              <button className="flex items-center gap-1 hover:text-sky-300 transition">
                 Membership
                 <svg
-                  className="w-4 h-4 mt-[2px] group-hover:rotate-180 transition-transform duration-200"
+                  className="w-4 h-4 group-hover:rotate-180 transition-transform duration-200"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -53,7 +56,7 @@ const Navbar = () => {
                 </svg>
               </button>
 
-              <ul className="absolute left-0 top-8 w-60 bg-white text-gray-700 rounded-xl shadow-xl border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+              <ul className="absolute left-0 top-full mt-2 w-60 bg-white text-gray-700 rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
 
                 <li>
                   <Link
@@ -87,16 +90,18 @@ const Navbar = () => {
             </li>
 
             <li>
-              <Link to="/AboutIIBA" className="hover:text-sky-300 transition">About</Link>
+              <Link to="/AboutIIBA" className="hover:text-sky-300 transition">
+                About
+              </Link>
             </li>
 
             {/* News & Events Dropdown */}
             <li className="relative group">
 
-              <button className="flex items-center gap-1 hover:text-sky-300 transition font-medium">
+              <button className="flex items-center gap-1 hover:text-sky-300 transition">
                 News & Events
                 <svg
-                  className="w-4 h-4 mt-[2px] group-hover:rotate-180 transition-transform duration-200"
+                  className="w-4 h-4 group-hover:rotate-180 transition-transform duration-200"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -106,7 +111,7 @@ const Navbar = () => {
                 </svg>
               </button>
 
-              <ul className="absolute left-0 top-8 w-60 bg-white text-gray-700 rounded-xl shadow-xl border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+              <ul className="absolute left-0 top-full mt-2 w-60 bg-white text-gray-700 rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
 
                 <li>
                   <Link
@@ -131,10 +136,10 @@ const Navbar = () => {
             </li>
 
             <li>
-              <Link to="/HelpPage" className="hover:text-sky-300 transition">Help</Link>
+              <Link to="/HelpPage" className="hover:text-sky-300 transition">
+                Help
+              </Link>
             </li>
-
-
 
           </ul>
 
@@ -156,6 +161,7 @@ const Navbar = () => {
               <FiAlignJustify onClick={() => setMenuOpen(true)} />
             )}
           </div>
+
         </div>
 
         {/* Mobile Menu */}
@@ -207,11 +213,12 @@ const Navbar = () => {
               onClick={() => setMenuOpen(false)}
               className="flex items-center gap-2 bg-white text-sky-900 px-4 py-2 rounded-lg hover:bg-sky-200 transition mt-2"
             >
-              Contact Us <h1 className="text-2xl"><IoIosCall /></h1>
+              Contact Us <IoIosCall className="text-xl" />
             </Link>
 
           </div>
         )}
+
       </nav>
     </>
   );
