@@ -5,8 +5,8 @@ Allow: /
 Allow: /members
 Allow: /membership
 Allow: /news
-Allow: /about
-Allow: /contact
+Allow: /AboutIIBA
+Allow: /contactpage
 
 # Block unnecessary files
 Disallow: /admin
