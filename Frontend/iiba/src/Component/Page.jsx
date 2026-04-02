@@ -35,12 +35,15 @@ import WorkSection from './WorkSection'
 import MembershipBenifits from './MembershipBenifits'
 import MembershipCertificate from './MembershipCertificate'
 import BusinessNews from './BusinessNews'
+import IibaBharat from './IibaBharat'
 
 const Page = () => {
   return (
     <>
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/iiba-bharat' element={<IibaBharat/>} />
+
 
         {/* NevbarComponents Start*/}
         <Route path='/membership' element={<MemberShipComp />} />
@@ -51,7 +54,6 @@ const Page = () => {
         <Route path='/Newuser' element={<NewUser />} />
         <Route path='/Members' element={<Members />} />
         <Route path='/AboutIIBA' element={<AboutIIBA />} />
-        <Route path='/HelpPage' element={<HelpPage />} />
         <Route path='/HelpPage' element={<HelpPage />} />
         <Route path='/News' element={<NewsPage />} />
         <Route path="/contactpage" element={<ContactPage />} />

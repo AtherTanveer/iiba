@@ -19,10 +19,10 @@ const Footer = () => {
               <img src={IIBA_LOGO} alt="IIBA Logo" className="w-12" />
               <h2 className="text-xl font-semibold">IIBA</h2>
             </div>
-            <p className="text-sm text-gray-300 leading-relaxed">
-              Empowering industries, supporting MSMEs, and strengthening 
-              business networks across India since 1985.
-            </p>
+           <p className="text-sm text-gray-300 leading-relaxed ">
+  Empowering industries, supporting MSMEs, and strengthening business networks across India since 1999. <br />
+  IIBA Bharat – Registered Semi-Government Business & Industry Association, India
+</p>
           </div>
 
           {/* Quick Links */}
@@ -49,11 +49,15 @@ const Footer = () => {
                 <IoLocationSharp /> India
               </li>
               <li className="flex items-center gap-2">
-                <FaPhoneAlt /> +91 9876543210
+                <FaPhoneAlt /> +91 9412480207
+              </li>
+               <li className="flex items-center gap-2">
+                <FaPhoneAlt /> +91 9058403030
               </li>
               <li className="flex items-center gap-2">
-                <MdEmail /> info@iibaindia.org
+                <MdEmail /> msranagroup07@gmail.com
               </li>
+              
             </ul>
           </div>
 
