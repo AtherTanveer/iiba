@@ -42,16 +42,15 @@ export default function NewsPage() {
     <div className="min-h-screen bg-gray-50 px-6 py-10">
       <Helmet>
         <title>IIBA News & Events | Industry Updates & Seminars</title>
-
         <meta
           name="description"
           content="Latest news, industry events and seminars organized by Indian Industries & Business Association."
         />
-
         <meta
           name="keywords"
           content="IIBA news, business seminars India, industry events, IIBA updates"
         />
+        <link rel="canonical" href="https://www.iibaorg.com/news" />
       </Helmet>
 
       {/* Header */}
@@ -82,8 +81,8 @@ export default function NewsPage() {
                 setCurrentPage(1);
               }}
               className={`px-4 py-2 rounded-xl ${category === cat
-                  ? "bg-blue-600 text-white"
-                  : "bg-white border"
+                ? "bg-blue-600 text-white"
+                : "bg-white border"
                 }`}
             >
               {cat}
@@ -168,8 +167,8 @@ export default function NewsPage() {
               key={index}
               onClick={() => setCurrentPage(index + 1)}
               className={`px-4 py-2 rounded-xl ${currentPage === index + 1
-                  ? "bg-blue-600 text-white"
-                  : "bg-white border"
+                ? "bg-blue-600 text-white"
+                : "bg-white border"
                 }`}
             >
               {index + 1}
