@@ -9,7 +9,7 @@ const ContactPage = () => {
     {
       name: "Main Office",
       phone: " +91 9412480207",
-      email: "Admin***@iibaorg.com",
+      email: "msranagroup07@gmail.com",
       address: "UttarParadesh Saharanpur - 247001, India",
     },
     {
