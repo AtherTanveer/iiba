@@ -53,6 +53,27 @@ const NewsAdmin = () => {
     }
   };
 
+  const handleAddNews = () => {
+
+  if (localStorage.getItem("uttarparadesh_87")) {
+     navigate("/UtNewsSecion");
+  }
+
+  else if (localStorage.getItem("hariyana")) {
+    navigate("/H$NewsSecion");
+  }
+
+  else if (localStorage.getItem("user")) {
+   
+    navigate("/NewsSecion");
+  }
+
+  else {
+    alert("Unauthorized Admin");
+  }
+
+};
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-gray-100 p-6 md:p-10">
 
@@ -63,7 +84,7 @@ const NewsAdmin = () => {
         </h1>
 
         <button
-          onClick={() => navigate("/UtNewsSecion")}
+          onClick={handleAddNews}
           className="bg-sky-900 hover:bg-sky-800 text-white px-6 py-3 rounded-xl shadow-lg transition"
         >
           + Add News
@@ -145,11 +166,10 @@ const NewsAdmin = () => {
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index + 1)}
-                  className={`px-4 py-2 rounded-xl ${
-                    currentPage === index + 1
+                  className={`px-4 py-2 rounded-xl ${currentPage === index + 1
                       ? "bg-sky-900 text-white"
                       : "bg-white border"
-                  }`}
+                    }`}
                 >
                   {index + 1}
                 </button>
